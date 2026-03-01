@@ -5,7 +5,6 @@
 <br/>
 
 [![npm version](https://img.shields.io/npm/v/%40kayf%2Fui?style=flat-square&color=6366f1&labelColor=0a0a0f&label=version)](https://www.npmjs.com/package/@kayf/ui)
-[![npm downloads](https://img.shields.io/npm/dw/%40kayf%2Fui?style=flat-square&color=06b6d4&labelColor=0a0a0f&label=downloads%2Fweek)](https://www.npmjs.com/package/@kayf/ui)
 [![license](https://img.shields.io/npm/l/%40kayf%2Fui?style=flat-square&color=f472b6&labelColor=0a0a0f)](./LICENSE)
 [![bundle size](https://img.shields.io/bundlephobia/minzip/@kayf/ui?style=flat-square&color=10b981&labelColor=0a0a0f&label=gzip)](https://bundlephobia.com/package/@kayf/ui)
 [![TypeScript](https://img.shields.io/badge/TypeScript-strict-3178c6?style=flat-square&labelColor=0a0a0f)](https://www.typescriptlang.org/)
