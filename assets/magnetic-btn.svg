@@ -1,0 +1,103 @@
+<svg width="800" height="200" viewBox="0 0 800 200" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg4" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#050508"/>
+      <stop offset="100%" stop-color="#080510"/>
+    </linearGradient>
+    <linearGradient id="btn-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#6366f1"/>
+      <stop offset="100%" stop-color="#8b5cf6"/>
+    </linearGradient>
+    <filter id="btn-glow">
+      <feGaussianBlur stdDeviation="6" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="cursor-glow">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <!-- Shimmer gradient -->
+    <linearGradient id="shimmer" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="rgba(255,255,255,0)"/>
+      <stop offset="50%" stop-color="rgba(255,255,255,0.2)"/>
+      <stop offset="100%" stop-color="rgba(255,255,255,0)"/>
+    </linearGradient>
+    <clipPath id="btn1-clip"><rect x="220" y="76" width="160" height="48" rx="24"/></clipPath>
+    <clipPath id="btn2-clip"><rect x="420" y="76" width="160" height="48" rx="24"/></clipPath>
+  </defs>
+
+  <rect width="800" height="200" fill="url(#bg4)"/>
+  <g stroke="rgba(255,255,255,0.025)" stroke-width="1">
+    <line x1="0" y1="50" x2="800" y2="50"/><line x1="0" y1="100" x2="800" y2="100"/><line x1="0" y1="150" x2="800" y2="150"/>
+    <line x1="200" y1="0" x2="200" y2="200"/><line x1="400" y1="0" x2="400" y2="200"/><line x1="600" y1="0" x2="600" y2="200"/>
+  </g>
+
+  <!-- Magnetic field rings (behind buttons) -->
+  <g opacity="0.06">
+    <circle cx="300" cy="100" r="55" fill="none" stroke="#6366f1" stroke-width="1">
+      <animate attributeName="r" values="45;60;45" dur="3s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0.06;0.02;0.06" dur="3s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="300" cy="100" r="70" fill="none" stroke="#6366f1" stroke-width="0.5">
+      <animate attributeName="r" values="60;80;60" dur="3s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0.04;0.01;0.04" dur="3s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="500" cy="100" r="55" fill="none" stroke="#06b6d4" stroke-width="1">
+      <animate attributeName="r" values="45;65;45" dur="4s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0.06;0.02;0.06" dur="4s" repeatCount="indefinite"/>
+    </circle>
+  </g>
+
+  <!-- Button 1: Primary (with magnetic pull animation) -->
+  <g filter="url(#btn-glow)">
+    <rect rx="24" fill="url(#btn-grad)">
+      <animate attributeName="x" values="220;226;218;222;220" dur="3s" repeatCount="indefinite"/>
+      <animate attributeName="y" values="76;80;72;78;76" dur="3s" repeatCount="indefinite"/>
+      <animate attributeName="width" values="160;160;160;160;160" dur="3s" repeatCount="indefinite"/>
+      <animate attributeName="height" values="48;48;48;48;48" dur="3s" repeatCount="indefinite"/>
+    </rect>
+  </g>
+  <!-- Shimmer sweep on btn1 -->
+  <rect x="-200" y="76" width="200" height="48" rx="24" fill="url(#shimmer)" clip-path="url(#btn1-clip)">
+    <animate attributeName="x" values="180;580;180" dur="3s" repeatCount="indefinite"/>
+  </rect>
+  <text text-anchor="middle" font-family="'Segoe UI', system-ui, sans-serif" font-size="14" font-weight="600" fill="white">
+    <animate attributeName="x" values="300;306;298;302;300" dur="3s" repeatCount="indefinite"/>
+    <animate attributeName="y" values="104;108;100;106;104" dur="3s" repeatCount="indefinite"/>
+    ◈ Get Started
+  </text>
+
+  <!-- Button 2: Outline glow -->
+  <g>
+    <rect rx="24" fill="transparent" stroke="rgba(6,182,212,0.4)" stroke-width="1">
+      <animate attributeName="x" values="420;414;424;416;420" dur="4s" repeatCount="indefinite"/>
+      <animate attributeName="y" values="76;72;80;74;76" dur="4s" repeatCount="indefinite"/>
+      <animate attributeName="width" values="160;160;160;160;160" dur="4s" repeatCount="indefinite"/>
+      <animate attributeName="height" values="48;48;48;48;48" dur="4s" repeatCount="indefinite"/>
+    </rect>
+    <text text-anchor="middle" font-family="'Segoe UI', system-ui, sans-serif" font-size="14" font-weight="600" fill="#06b6d4">
+      <animate attributeName="x" values="500;494;504;496;500" dur="4s" repeatCount="indefinite"/>
+      <animate attributeName="y" values="104;100;108;102;104" dur="4s" repeatCount="indefinite"/>
+      ◎ Connect
+    </text>
+  </g>
+
+  <!-- Cursor -->
+  <g filter="url(#cursor-glow)">
+    <circle r="6" fill="rgba(255,255,255,0.9)" stroke="rgba(255,255,255,0.3)" stroke-width="1">
+      <animate attributeName="cx" values="400;306;298;302;494;504;496;400" dur="5s" repeatCount="indefinite"/>
+      <animate attributeName="cy" values="30;108;100;106;100;108;102;170" dur="5s" repeatCount="indefinite"/>
+    </circle>
+    <!-- Cursor dot -->
+    <circle r="2" fill="white">
+      <animate attributeName="cx" values="400;306;298;302;494;504;496;400" dur="5s" repeatCount="indefinite"/>
+      <animate attributeName="cy" values="30;108;100;106;100;108;102;170" dur="5s" repeatCount="indefinite"/>
+    </circle>
+  </g>
+
+  <!-- Label -->
+  <text x="400" y="182" text-anchor="middle" font-family="'Courier New', monospace" font-size="10" fill="rgba(255,255,255,0.2)" letter-spacing="2">MAGNETIC PULL ACTIVE</text>
+
+  <text x="60" y="105" text-anchor="middle" font-family="'Courier New', monospace" font-size="11" fill="rgba(255,255,255,0.12)" transform="rotate(-90 60 105)">@kayf/ui</text>
+  <text x="740" y="105" text-anchor="middle" font-family="'Courier New', monospace" font-size="11" fill="rgba(255,255,255,0.12)" transform="rotate(90 740 105)">@kayf/ui</text>
+</svg>

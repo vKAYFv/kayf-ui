@@ -1,0 +1,97 @@
+<svg width="800" height="200" viewBox="0 0 800 200" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#050508"/>
+      <stop offset="100%" stop-color="#050510"/>
+    </linearGradient>
+    <filter id="glow-p">
+      <feGaussianBlur stdDeviation="2.5" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <linearGradient id="top-line2" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#6366f1" stop-opacity="0"/>
+      <stop offset="50%" stop-color="#6366f1" stop-opacity="0.5"/>
+      <stop offset="100%" stop-color="#6366f1" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="800" height="200" fill="url(#bg2)"/>
+  <g stroke="rgba(255,255,255,0.025)" stroke-width="1">
+    <line x1="0" y1="50" x2="800" y2="50"/><line x1="0" y1="100" x2="800" y2="100"/><line x1="0" y1="150" x2="800" y2="150"/>
+    <line x1="100" y1="0" x2="100" y2="200"/><line x1="200" y1="0" x2="200" y2="200"/><line x1="300" y1="0" x2="300" y2="200"/>
+    <line x1="400" y1="0" x2="400" y2="200"/><line x1="500" y1="0" x2="500" y2="200"/><line x1="600" y1="0" x2="600" y2="200"/><line x1="700" y1="0" x2="700" y2="200"/>
+  </g>
+
+  <!-- Animated particles -->
+  <g filter="url(#glow-p)">
+    <!-- Particle 1 -->
+    <circle r="2.5" fill="#6366f1" opacity="0.8">
+      <animate attributeName="cx" values="120;180;140;200;120" dur="8s" repeatCount="indefinite"/>
+      <animate attributeName="cy" values="60;80;120;70;60" dur="8s" repeatCount="indefinite"/>
+    </circle>
+    <!-- Particle 2 -->
+    <circle r="2" fill="#6366f1" opacity="0.6">
+      <animate attributeName="cx" values="200;160;220;180;200" dur="6s" repeatCount="indefinite"/>
+      <animate attributeName="cy" values="130;100;150;120;130" dur="6s" repeatCount="indefinite"/>
+    </circle>
+    <!-- Particle 3 -->
+    <circle r="1.5" fill="#818cf8" opacity="0.7">
+      <animate attributeName="cx" values="280;320;290;350;280" dur="9s" repeatCount="indefinite"/>
+      <animate attributeName="cy" values="80;110;60;90;80" dur="9s" repeatCount="indefinite"/>
+    </circle>
+    <!-- Particle 4 -->
+    <circle r="2" fill="#6366f1" opacity="0.5">
+      <animate attributeName="cx" values="340;300;360;320;340" dur="7s" repeatCount="indefinite"/>
+      <animate attributeName="cy" values="150;130;170;140;150" dur="7s" repeatCount="indefinite"/>
+    </circle>
+    <!-- Particle 5 - center -->
+    <circle r="3" fill="#6366f1" opacity="0.9">
+      <animate attributeName="cx" values="400;430;390;420;400" dur="5s" repeatCount="indefinite"/>
+      <animate attributeName="cy" values="100;85;115;95;100" dur="5s" repeatCount="indefinite"/>
+    </circle>
+    <!-- Particle 6 -->
+    <circle r="1.8" fill="#818cf8" opacity="0.6">
+      <animate attributeName="cx" values="460;490;450;480;460" dur="7.5s" repeatCount="indefinite"/>
+      <animate attributeName="cy" values="60;80;50;70;60" dur="7.5s" repeatCount="indefinite"/>
+    </circle>
+    <!-- Particle 7 -->
+    <circle r="2.2" fill="#6366f1" opacity="0.7">
+      <animate attributeName="cx" values="520;560;510;550;520" dur="8.5s" repeatCount="indefinite"/>
+      <animate attributeName="cy" values="140;120;160;130;140" dur="8.5s" repeatCount="indefinite"/>
+    </circle>
+    <!-- Particle 8 -->
+    <circle r="1.5" fill="#6366f1" opacity="0.5">
+      <animate attributeName="cx" values="600;640;590;620;600" dur="6.5s" repeatCount="indefinite"/>
+      <animate attributeName="cy" values="90;70;110;80;90" dur="6.5s" repeatCount="indefinite"/>
+    </circle>
+    <!-- Particle 9 -->
+    <circle r="2" fill="#818cf8" opacity="0.6">
+      <animate attributeName="cx" values="660;680;650;670;660" dur="10s" repeatCount="indefinite"/>
+      <animate attributeName="cy" values="50;80;40;70;50" dur="10s" repeatCount="indefinite"/>
+    </circle>
+    <!-- Particle 10 -->
+    <circle r="1.8" fill="#6366f1" opacity="0.7">
+      <animate attributeName="cx" values="700;720;690;710;700" dur="7s" repeatCount="indefinite"/>
+      <animate attributeName="cy" values="150;130;160;140;150" dur="7s" repeatCount="indefinite"/>
+    </circle>
+  </g>
+
+  <!-- Connecting lines (static approximation) -->
+  <g stroke="#6366f1" stroke-width="0.5" opacity="0.15">
+    <line x1="120" y1="60" x2="200" y2="130"/><line x1="200" y1="130" x2="280" y2="80"/>
+    <line x1="280" y1="80" x2="400" y2="100"/><line x1="400" y1="100" x2="460" y2="60"/>
+    <line x1="460" y1="60" x2="520" y2="140"/><line x1="520" y1="140" x2="600" y2="90"/>
+    <line x1="600" y1="90" x2="660" y2="50"/><line x1="660" y1="50" x2="700" y2="150"/>
+    <line x1="120" y1="60" x2="280" y2="80"/><line x1="340" y1="150" x2="400" y2="100"/>
+  </g>
+
+  <!-- Card overlay for text -->
+  <rect x="250" y="60" width="300" height="80" rx="12" fill="rgba(5,5,8,0.7)" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+  <rect x="250" y="60" width="300" height="1" rx="1" fill="url(#top-line2)"/>
+
+  <text x="400" y="100" text-anchor="middle" font-family="'Segoe UI', system-ui, sans-serif" font-size="22" font-weight="700" fill="#e8e8f0" letter-spacing="-0.5">ParticleField</text>
+  <text x="400" y="122" text-anchor="middle" font-family="'Segoe UI', system-ui, sans-serif" font-size="12" fill="rgba(232,232,240,0.4)">Interactive canvas particle system</text>
+
+  <text x="60" y="105" text-anchor="middle" font-family="'Courier New', monospace" font-size="11" fill="rgba(255,255,255,0.12)" transform="rotate(-90 60 105)">@kayf/ui</text>
+  <text x="740" y="105" text-anchor="middle" font-family="'Courier New', monospace" font-size="11" fill="rgba(255,255,255,0.12)" transform="rotate(90 740 105)">@kayf/ui</text>
+</svg>

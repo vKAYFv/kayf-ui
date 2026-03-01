@@ -1,0 +1,41 @@
+{
+  "name": "@kayf/ui",
+  "version": "0.2.3",
+  "description": "Dark premium Web Components with game DNA. No React, no dependencies.",
+  "main": "dist/kayf-ui.cjs.js",
+  "module": "dist/kayf-ui.esm.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/kayf-ui.esm.js",
+      "require": "./dist/kayf-ui.cjs.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "keywords": [
+    "web-components",
+    "ui",
+    "game-ui",
+    "dark-theme",
+    "glassmorphism"
+  ],
+  "author": "KAYF",
+  "license": "MIT",
+  "scripts": {
+    "build": "rollup -c",
+    "dev": "rollup -c -w",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@rollup/plugin-typescript": "^11.0.0",
+    "rollup": "^4.0.0",
+    "tslib": "^2.6.0",
+    "typescript": "^5.0.0"
+  },
+  "dependencies": {
+    "@kayf/ui": "0.2.3"
+  }
+}
