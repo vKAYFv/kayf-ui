@@ -91,5 +91,5 @@
   <circle cx="373" cy="100" r="3" fill="#6366f1">
     <animate attributeName="opacity" values="1;0.3;1" dur="2s" repeatCount="indefinite"/>
   </circle>
-  <text x="400" y="104" text-anchor="middle" font-family="'Courier New', monospace" font-size="9" fill="#6366f1" letter-spacing="0.5">v0.2.0 · 8 components</text>
+  <text x="400" y="104" text-anchor="middle" font-family="'Courier New', monospace" font-size="9" fill="#6366f1" letter-spacing="0.5">v0.2.3 · 8 components</text>
 </svg>
