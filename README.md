@@ -1,6 +1,6 @@
 <div align="center">
 
-![hero](https://raw.githubusercontent.com/kayf-dev/kayf-ui/main/.github/assets/hero.png)
+![hero](svg-sources\hero.svg)
 
 <br/>
 
