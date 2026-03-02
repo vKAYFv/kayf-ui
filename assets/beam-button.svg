@@ -1,0 +1,98 @@
+<svg width="800" height="200" viewBox="0 0 800 200" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bb-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#050508"/>
+      <stop offset="100%" stop-color="#08050f"/>
+    </linearGradient>
+
+    <!-- Button gradients -->
+    <linearGradient id="bb-btn1" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#6366f1"/>
+      <stop offset="100%" stop-color="#8b5cf6"/>
+    </linearGradient>
+    <linearGradient id="bb-btn2" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#06b6d4"/>
+      <stop offset="100%" stop-color="#0891b2"/>
+    </linearGradient>
+    <linearGradient id="bb-btn3" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#f472b6"/>
+      <stop offset="100%" stop-color="#ec4899"/>
+    </linearGradient>
+
+    <!-- Beam sweep gradient -->
+    <linearGradient id="beam1" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="rgba(255,255,255,0)"/>
+      <stop offset="40%" stop-color="rgba(255,255,255,0)"/>
+      <stop offset="50%" stop-color="rgba(255,255,255,0.55)"/>
+      <stop offset="60%" stop-color="rgba(255,255,255,0)"/>
+      <stop offset="100%" stop-color="rgba(255,255,255,0)"/>
+    </linearGradient>
+
+    <!-- Ripple -->
+    <filter id="bb-glow">
+      <feGaussianBlur stdDeviation="5" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+
+    <!-- Clip paths for each button -->
+    <clipPath id="clip-btn1"><rect x="90" y="76" width="160" height="48" rx="10"/></clipPath>
+    <clipPath id="clip-btn2"><rect x="320" y="76" width="160" height="48" rx="10"/></clipPath>
+    <clipPath id="clip-btn3"><rect x="550" y="76" width="160" height="48" rx="10"/></clipPath>
+
+    <linearGradient id="bb-top-line" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="rgba(99,102,241,0)"/>
+      <stop offset="50%" stop-color="rgba(99,102,241,0.4)"/>
+      <stop offset="100%" stop-color="rgba(99,102,241,0)"/>
+    </linearGradient>
+  </defs>
+
+  <!-- BG -->
+  <rect width="800" height="200" fill="url(#bb-bg)"/>
+  <g stroke="rgba(255,255,255,0.02)" stroke-width="1">
+    <line x1="0" y1="50" x2="800" y2="50"/><line x1="0" y1="100" x2="800" y2="100"/><line x1="0" y1="150" x2="800" y2="150"/>
+    <line x1="100" y1="0" x2="100" y2="200"/><line x1="200" y1="0" x2="200" y2="200"/><line x1="300" y1="0" x2="300" y2="200"/>
+    <line x1="400" y1="0" x2="400" y2="200"/><line x1="500" y1="0" x2="500" y2="200"/><line x1="600" y1="0" x2="600" y2="200"/><line x1="700" y1="0" x2="700" y2="200"/>
+  </g>
+
+  <!-- Glow halos behind buttons -->
+  <ellipse cx="170" cy="100" rx="90" ry="30" fill="#6366f1" opacity="0.12" filter="url(#bb-glow)"/>
+  <ellipse cx="400" cy="100" rx="90" ry="30" fill="#06b6d4" opacity="0.10" filter="url(#bb-glow)"/>
+  <ellipse cx="630" cy="100" rx="90" ry="30" fill="#f472b6" opacity="0.10" filter="url(#bb-glow)"/>
+
+  <!-- BUTTON 1 — Indigo -->
+  <rect x="90" y="76" width="160" height="48" rx="10" fill="url(#bb-btn1)"/>
+  <!-- Beam sweep animation -->
+  <rect x="-200" y="76" width="480" height="48" rx="10" fill="url(#beam1)" clip-path="url(#clip-btn1)">
+    <animate attributeName="x" values="-110;290;-110" dur="2.5s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.6 1;0.4 0 0.6 1"/>
+  </rect>
+  <!-- Top shine -->
+  <rect x="90" y="76" width="160" height="1" rx="1" fill="rgba(255,255,255,0.3)"/>
+  <text x="170" y="105" text-anchor="middle" font-family="'Segoe UI', system-ui, sans-serif" font-size="14" font-weight="600" fill="white" letter-spacing="-0.3">◈ Launch</text>
+  <text x="170" y="148" text-anchor="middle" font-family="'Courier New', monospace" font-size="10" fill="rgba(99,102,241,0.6)" letter-spacing="1">color="indigo"</text>
+
+  <!-- BUTTON 2 — Cyan, delayed beam -->
+  <rect x="320" y="76" width="160" height="48" rx="10" fill="url(#bb-btn2)"/>
+  <rect x="-200" y="76" width="480" height="48" rx="10" fill="url(#beam1)" clip-path="url(#clip-btn2)">
+    <animate attributeName="x" values="-110;290;-110" dur="2.5s" begin="0.8s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.6 1;0.4 0 0.6 1"/>
+  </rect>
+  <rect x="320" y="76" width="160" height="1" rx="1" fill="rgba(255,255,255,0.3)"/>
+  <text x="400" y="105" text-anchor="middle" font-family="'Segoe UI', system-ui, sans-serif" font-size="14" font-weight="600" fill="white" letter-spacing="-0.3">◇ Connect</text>
+  <text x="400" y="148" text-anchor="middle" font-family="'Courier New', monospace" font-size="10" fill="rgba(6,182,212,0.6)" letter-spacing="1">color="cyan"</text>
+
+  <!-- BUTTON 3 — Pink, delayed more -->
+  <rect x="550" y="76" width="160" height="48" rx="10" fill="url(#bb-btn3)"/>
+  <rect x="-200" y="76" width="480" height="48" rx="10" fill="url(#beam1)" clip-path="url(#clip-btn3)">
+    <animate attributeName="x" values="-110;290;-110" dur="2.5s" begin="1.6s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.6 1;0.4 0 0.6 1"/>
+  </rect>
+  <rect x="550" y="76" width="160" height="1" rx="1" fill="rgba(255,255,255,0.3)"/>
+  <text x="630" y="105" text-anchor="middle" font-family="'Segoe UI', system-ui, sans-serif" font-size="14" font-weight="600" fill="white" letter-spacing="-0.3">◉ Deploy</text>
+  <text x="630" y="148" text-anchor="middle" font-family="'Courier New', monospace" font-size="10" fill="rgba(244,114,182,0.6)" letter-spacing="1">color="pink"</text>
+
+  <!-- Component label top -->
+  <text x="400" y="36" text-anchor="middle" font-family="'Segoe UI', system-ui, sans-serif" font-size="13" fill="rgba(232,232,240,0.3)" letter-spacing="0.5">kayf-beam-button — animated light sweep on hover · ripple on click</text>
+  <rect x="0" y="0" width="800" height="1" fill="url(#bb-top-line)"/>
+
+  <!-- Side labels -->
+  <text x="26" y="105" text-anchor="middle" font-family="'Courier New', monospace" font-size="10" fill="rgba(255,255,255,0.1)" transform="rotate(-90 26 105)">@kayf/ui</text>
+  <text x="774" y="105" text-anchor="middle" font-family="'Courier New', monospace" font-size="10" fill="rgba(255,255,255,0.1)" transform="rotate(90 774 105)">@kayf/ui</text>
+</svg>

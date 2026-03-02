@@ -1,0 +1,149 @@
+<svg width="800" height="200" viewBox="0 0 800 200" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="gt-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#050508"/>
+      <stop offset="100%" stop-color="#060510"/>
+    </linearGradient>
+    <linearGradient id="gt-border" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="rgba(6,182,212,0)"/>
+      <stop offset="50%" stop-color="rgba(6,182,212,0.5)"/>
+      <stop offset="100%" stop-color="rgba(6,182,212,0)"/>
+    </linearGradient>
+    <filter id="gt-glow-cyan">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="gt-glow-strong">
+      <feGaussianBlur stdDeviation="6" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <clipPath id="gt-clip-top">
+      <rect x="0" y="0" width="800" height="200"/>
+    </clipPath>
+  </defs>
+
+  <!-- BG -->
+  <rect width="800" height="200" fill="url(#gt-bg)"/>
+  <!-- Grid -->
+  <g stroke="rgba(255,255,255,0.02)" stroke-width="1">
+    <line x1="0" y1="50" x2="800" y2="50"/><line x1="0" y1="100" x2="800" y2="100"/><line x1="0" y1="150" x2="800" y2="150"/>
+    <line x1="100" y1="0" x2="100" y2="200"/><line x1="200" y1="0" x2="200" y2="200"/><line x1="300" y1="0" x2="300" y2="200"/>
+    <line x1="400" y1="0" x2="400" y2="200"/><line x1="500" y1="0" x2="500" y2="200"/><line x1="600" y1="0" x2="600" y2="200"/><line x1="700" y1="0" x2="700" y2="200"/>
+  </g>
+
+  <!-- Scanlines -->
+  <g opacity="0.04">
+    <rect x="0" y="0" width="800" height="1" fill="#06b6d4"/>
+    <rect x="0" y="4" width="800" height="1" fill="#06b6d4"/>
+    <rect x="0" y="8" width="800" height="1" fill="#06b6d4"/>
+    <rect x="0" y="12" width="800" height="1" fill="#06b6d4"/>
+    <rect x="0" y="16" width="800" height="1" fill="#06b6d4"/>
+    <rect x="0" y="20" width="800" height="1" fill="#06b6d4"/>
+    <rect x="0" y="24" width="800" height="1" fill="#06b6d4"/>
+    <rect x="0" y="28" width="800" height="1" fill="#06b6d4"/>
+    <rect x="0" y="32" width="800" height="1" fill="#06b6d4"/>
+    <rect x="0" y="36" width="800" height="1" fill="#06b6d4"/>
+    <rect x="0" y="40" width="800" height="1" fill="#06b6d4"/>
+    <rect x="0" y="44" width="800" height="1" fill="#06b6d4"/>
+    <rect x="0" y="48" width="800" height="1" fill="#06b6d4"/>
+    <rect x="0" y="52" width="800" height="1" fill="#06b6d4"/>
+    <rect x="0" y="56" width="800" height="1" fill="#06b6d4"/>
+    <rect x="0" y="60" width="800" height="1" fill="#06b6d4"/>
+    <rect x="0" y="64" width="800" height="1" fill="#06b6d4"/>
+    <rect x="0" y="68" width="800" height="1" fill="#06b6d4"/>
+    <rect x="0" y="72" width="800" height="1" fill="#06b6d4"/>
+    <rect x="0" y="76" width="800" height="1" fill="#06b6d4"/>
+    <rect x="0" y="80" width="800" height="1" fill="#06b6d4"/>
+    <rect x="0" y="84" width="800" height="1" fill="#06b6d4"/>
+    <rect x="0" y="88" width="800" height="1" fill="#06b6d4"/>
+    <rect x="0" y="92" width="800" height="1" fill="#06b6d4"/>
+    <rect x="0" y="96" width="800" height="1" fill="#06b6d4"/>
+    <rect x="0" y="100" width="800" height="1" fill="#06b6d4"/>
+    <rect x="0" y="104" width="800" height="1" fill="#06b6d4"/>
+    <rect x="0" y="108" width="800" height="1" fill="#06b6d4"/>
+    <rect x="0" y="112" width="800" height="1" fill="#06b6d4"/>
+    <rect x="0" y="116" width="800" height="1" fill="#06b6d4"/>
+    <rect x="0" y="120" width="800" height="1" fill="#06b6d4"/>
+    <rect x="0" y="124" width="800" height="1" fill="#06b6d4"/>
+    <rect x="0" y="128" width="800" height="1" fill="#06b6d4"/>
+    <rect x="0" y="132" width="800" height="1" fill="#06b6d4"/>
+    <rect x="0" y="136" width="800" height="1" fill="#06b6d4"/>
+    <rect x="0" y="140" width="800" height="1" fill="#06b6d4"/>
+    <rect x="0" y="144" width="800" height="1" fill="#06b6d4"/>
+    <rect x="0" y="148" width="800" height="1" fill="#06b6d4"/>
+    <rect x="0" y="152" width="800" height="1" fill="#06b6d4"/>
+    <rect x="0" y="156" width="800" height="1" fill="#06b6d4"/>
+    <rect x="0" y="160" width="800" height="1" fill="#06b6d4"/>
+    <rect x="0" y="164" width="800" height="1" fill="#06b6d4"/>
+    <rect x="0" y="168" width="800" height="1" fill="#06b6d4"/>
+    <rect x="0" y="172" width="800" height="1" fill="#06b6d4"/>
+    <rect x="0" y="176" width="800" height="1" fill="#06b6d4"/>
+    <rect x="0" y="180" width="800" height="1" fill="#06b6d4"/>
+    <rect x="0" y="184" width="800" height="1" fill="#06b6d4"/>
+    <rect x="0" y="188" width="800" height="1" fill="#06b6d4"/>
+    <rect x="0" y="192" width="800" height="1" fill="#06b6d4"/>
+    <rect x="0" y="196" width="800" height="1" fill="#06b6d4"/>
+  </g>
+
+  <!-- Main text — base (always visible) -->
+  <text x="400" y="115" text-anchor="middle"
+    font-family="'Courier New', 'Lucida Console', monospace"
+    font-size="54" font-weight="700" letter-spacing="4"
+    fill="#e8e8f0" filter="url(#gt-glow-cyan)">SYSTEM ONLINE</text>
+
+  <!-- Glitch layer 1 — red channel shift left -->
+  <text x="400" y="115" text-anchor="middle"
+    font-family="'Courier New', 'Lucida Console', monospace"
+    font-size="54" font-weight="700" letter-spacing="4"
+    fill="rgba(255,0,80,0.7)" opacity="0" clip-path="url(#gt-clip-top)">SYSTEM ONLINE
+    <animate attributeName="opacity" dur="4s" repeatCount="indefinite" calcMode="linear"
+      keyTimes="0;    0.70; 0.701;0.71; 0.711;0.72; 0.721;0.73; 0.80; 0.801;0.82; 0.821;1"
+      values=  "0;    0;    1;    0;    0;    1;    0;    0;    0;    1;    0;    0;   0"/>
+    <animateTransform attributeName="transform" type="translate" dur="4s" repeatCount="indefinite" calcMode="linear"
+      keyTimes="0;    0.70; 0.701;0.71; 0.711;0.72; 0.721;0.73; 0.80; 0.801;0.82; 0.821;1"
+      values=  "0,0;  0,0;  -6,2; -6,2; -6,-3;-6,-3;0,0;  0,0;  0,0;  5,-4; 5,-4; 0,0;  0,0"/>
+  </text>
+
+  <!-- Glitch layer 2 — cyan channel shift right -->
+  <text x="400" y="115" text-anchor="middle"
+    font-family="'Courier New', 'Lucida Console', monospace"
+    font-size="54" font-weight="700" letter-spacing="4"
+    fill="rgba(0,255,220,0.6)" opacity="0" clip-path="url(#gt-clip-top)">SYSTEM ONLINE
+    <animate attributeName="opacity" dur="4s" repeatCount="indefinite" calcMode="linear"
+      keyTimes="0;    0.70; 0.701;0.71; 0.711;0.72; 0.721;0.73; 0.80; 0.801;0.82; 0.821;1"
+      values=  "0;    0;    1;    0;    0;    1;    0;    0;    0;    1;    0;    0;   0"/>
+    <animateTransform attributeName="transform" type="translate" dur="4s" repeatCount="indefinite" calcMode="linear"
+      keyTimes="0;    0.70; 0.701;0.71; 0.711;0.72; 0.721;0.73; 0.80; 0.801;0.82; 0.821;1"
+      values=  "0,0;  0,0;  6,-2; 6,-2; 6,3;  6,3;  0,0;  0,0;  0,0;  -5,4; -5,4; 0,0;  0,0"/>
+  </text>
+
+  <!-- Glitch horizontal slice — covers a band and displaces it -->
+  <rect x="0" y="88" width="800" height="14" fill="url(#gt-bg)" opacity="0">
+    <animate attributeName="opacity" dur="4s" repeatCount="indefinite" calcMode="linear"
+      keyTimes="0;    0.705;0.706;0.715;0.716;0.80; 0.802;0.812;0.813;1"
+      values=  "0;    0;    1;    1;    0;    0;    1;    1;    0;    0"/>
+    <animate attributeName="y" dur="4s" repeatCount="indefinite" calcMode="linear"
+      keyTimes="0;    0.705;0.706;0.715;0.716;0.80; 0.802;0.812;0.813;1"
+      values=  "88;   88;   88;   88;   88;   95;   95;   95;   95;   88"/>
+  </rect>
+  <text x="412" y="101" text-anchor="middle"
+    font-family="'Courier New', 'Lucida Console', monospace"
+    font-size="54" font-weight="700" letter-spacing="4"
+    fill="#e8e8f0" opacity="0" clip-path="url(#gt-clip-top)">SYSTEM ONLINE
+    <animate attributeName="opacity" dur="4s" repeatCount="indefinite" calcMode="linear"
+      keyTimes="0;    0.705;0.706;0.715;0.716;1"
+      values=  "0;    0;    1;    1;    0;    0"/>
+  </text>
+
+  <!-- Subtag -->
+  <text x="400" y="152" text-anchor="middle"
+    font-family="'Courier New', monospace" font-size="11"
+    fill="rgba(6,182,212,0.5)" letter-spacing="3">kayf-glitch-text · intensity=0.8 · interval=3000</text>
+
+  <!-- Top border glow -->
+  <rect x="0" y="0" width="800" height="1" fill="url(#gt-border)"/>
+
+  <!-- Side labels -->
+  <text x="26" y="105" text-anchor="middle" font-family="'Courier New', monospace" font-size="10" fill="rgba(6,182,212,0.2)" transform="rotate(-90 26 105)">@kayf/ui</text>
+  <text x="774" y="105" text-anchor="middle" font-family="'Courier New', monospace" font-size="10" fill="rgba(6,182,212,0.2)" transform="rotate(90 774 105)">@kayf/ui</text>
+</svg>

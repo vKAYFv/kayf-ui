@@ -1,0 +1,103 @@
+<svg width="800" height="200" viewBox="0 0 800 200" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="ac-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#04040a"/>
+      <stop offset="100%" stop-color="#060410"/>
+    </linearGradient>
+
+    <!-- Aurora blobs as radial gradients -->
+    <radialGradient id="blob1" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#6366f1" stop-opacity="0.7"/>
+      <stop offset="100%" stop-color="#6366f1" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="blob2" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#06b6d4" stop-opacity="0.6"/>
+      <stop offset="100%" stop-color="#06b6d4" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="blob3" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#f472b6" stop-opacity="0.5"/>
+      <stop offset="100%" stop-color="#f472b6" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="blob4" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#8b5cf6" stop-opacity="0.55"/>
+      <stop offset="100%" stop-color="#8b5cf6" stop-opacity="0"/>
+    </radialGradient>
+
+    <filter id="ac-blur">
+      <feGaussianBlur stdDeviation="22"/>
+    </filter>
+    <filter id="ac-blur-soft">
+      <feGaussianBlur stdDeviation="8"/>
+    </filter>
+
+    <!-- Card glass -->
+    <linearGradient id="ac-glass" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="rgba(255,255,255,0.07)"/>
+      <stop offset="100%" stop-color="rgba(255,255,255,0.02)"/>
+    </linearGradient>
+    <linearGradient id="ac-top-line" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="rgba(255,255,255,0)"/>
+      <stop offset="30%" stop-color="rgba(255,255,255,0.2)"/>
+      <stop offset="70%" stop-color="rgba(139,92,246,0.3)"/>
+      <stop offset="100%" stop-color="rgba(255,255,255,0)"/>
+    </linearGradient>
+    <clipPath id="ac-card-clip">
+      <rect x="180" y="20" width="440" height="160" rx="18"/>
+    </clipPath>
+  </defs>
+
+  <!-- BG -->
+  <rect width="800" height="200" fill="url(#ac-bg)"/>
+  <!-- Grid -->
+  <g stroke="rgba(255,255,255,0.02)" stroke-width="1">
+    <line x1="0" y1="50" x2="800" y2="50"/><line x1="0" y1="100" x2="800" y2="100"/><line x1="0" y1="150" x2="800" y2="150"/>
+    <line x1="100" y1="0" x2="100" y2="200"/><line x1="200" y1="0" x2="200" y2="200"/><line x1="300" y1="0" x2="300" y2="200"/>
+    <line x1="400" y1="0" x2="400" y2="200"/><line x1="500" y1="0" x2="500" y2="200"/><line x1="600" y1="0" x2="600" y2="200"/><line x1="700" y1="0" x2="700" y2="200"/>
+  </g>
+
+  <!-- Aurora blobs INSIDE card clip -->
+  <g clip-path="url(#ac-card-clip)" filter="url(#ac-blur)">
+    <!-- Blob 1 — indigo, drifts slowly -->
+    <ellipse rx="160" ry="120" fill="url(#blob1)">
+      <animate attributeName="cx" values="280;350;300;260;280" dur="8s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.6 1;0.4 0 0.6 1;0.4 0 0.6 1;0.4 0 0.6 1"/>
+      <animate attributeName="cy" values="80;110;140;90;80" dur="8s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.6 1;0.4 0 0.6 1;0.4 0 0.6 1;0.4 0 0.6 1"/>
+    </ellipse>
+    <!-- Blob 2 — cyan, opposite drift -->
+    <ellipse rx="140" ry="100" fill="url(#blob2)">
+      <animate attributeName="cx" values="520;460;500;540;520" dur="7s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.6 1;0.4 0 0.6 1;0.4 0 0.6 1;0.4 0 0.6 1"/>
+      <animate attributeName="cy" values="130;90;110;140;130" dur="7s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.6 1;0.4 0 0.6 1;0.4 0 0.6 1;0.4 0 0.6 1"/>
+    </ellipse>
+    <!-- Blob 3 — pink, center drift -->
+    <ellipse rx="120" ry="90" fill="url(#blob3)">
+      <animate attributeName="cx" values="400;420;380;410;400" dur="9s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.6 1;0.4 0 0.6 1;0.4 0 0.6 1;0.4 0 0.6 1"/>
+      <animate attributeName="cy" values="100;130;80;110;100" dur="9s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.6 1;0.4 0 0.6 1;0.4 0 0.6 1;0.4 0 0.6 1"/>
+    </ellipse>
+    <!-- Blob 4 — purple, slow large -->
+    <ellipse rx="180" ry="130" fill="url(#blob4)" opacity="0.6">
+      <animate attributeName="cx" values="400;350;430;380;400" dur="12s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.6 1;0.4 0 0.6 1;0.4 0 0.6 1;0.4 0 0.6 1"/>
+      <animate attributeName="cy" values="100;120;90;110;100" dur="12s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.6 1;0.4 0 0.6 1;0.4 0 0.6 1;0.4 0 0.6 1"/>
+    </ellipse>
+  </g>
+
+  <!-- Glass card overlay -->
+  <rect x="180" y="20" width="440" height="160" rx="18" fill="url(#ac-glass)" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+  <!-- Top shine line -->
+  <rect x="180" y="20" width="440" height="1" rx="1" fill="url(#ac-top-line)"/>
+
+  <!-- Content -->
+  <text x="400" y="96" text-anchor="middle"
+    font-family="'Segoe UI', system-ui, sans-serif"
+    font-size="22" font-weight="700" letter-spacing="-0.5"
+    fill="rgba(255,255,255,0.9)">AuroraCard</text>
+  <text x="400" y="120" text-anchor="middle"
+    font-family="'Segoe UI', system-ui, sans-serif"
+    font-size="13" fill="rgba(232,232,240,0.45)">Canvas aurora drifting beneath glass</text>
+
+  <!-- Pill tag -->
+  <rect x="338" y="132" width="124" height="22" rx="11" fill="rgba(99,102,241,0.12)" stroke="rgba(99,102,241,0.25)" stroke-width="1"/>
+  <text x="400" y="147" text-anchor="middle" font-family="'Courier New', monospace" font-size="10" fill="#8b5cf6" letter-spacing="0.5">speed · blur · opacity</text>
+
+  <!-- Side labels -->
+  <text x="26" y="105" text-anchor="middle" font-family="'Courier New', monospace" font-size="10" fill="rgba(255,255,255,0.1)" transform="rotate(-90 26 105)">@kayf/ui</text>
+  <text x="774" y="105" text-anchor="middle" font-family="'Courier New', monospace" font-size="10" fill="rgba(255,255,255,0.1)" transform="rotate(90 774 105)">@kayf/ui</text>
+</svg>

@@ -1,0 +1,166 @@
+<svg width="800" height="200" viewBox="0 0 800 200" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="hp-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#040509"/>
+      <stop offset="100%" stop-color="#050410"/>
+    </linearGradient>
+    <linearGradient id="hp-panel-bg" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="rgba(255,255,255,0.04)"/>
+      <stop offset="100%" stop-color="rgba(255,255,255,0.01)"/>
+    </linearGradient>
+    <linearGradient id="hp-header" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="rgba(6,182,212,0.15)"/>
+      <stop offset="100%" stop-color="rgba(6,182,212,0.05)"/>
+    </linearGradient>
+    <linearGradient id="hp-top-accent" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#06b6d4"/>
+      <stop offset="60%" stop-color="rgba(6,182,212,0.3)"/>
+      <stop offset="100%" stop-color="rgba(6,182,212,0)"/>
+    </linearGradient>
+    <linearGradient id="hp-bar1" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#06b6d4"/>
+      <stop offset="100%" stop-color="rgba(6,182,212,0.3)"/>
+    </linearGradient>
+    <linearGradient id="hp-bar2" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#6366f1"/>
+      <stop offset="100%" stop-color="rgba(99,102,241,0.3)"/>
+    </linearGradient>
+    <linearGradient id="hp-bar3" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#10b981"/>
+      <stop offset="100%" stop-color="rgba(16,185,129,0.3)"/>
+    </linearGradient>
+    <filter id="hp-glow-cyan">
+      <feGaussianBlur stdDeviation="2.5" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <clipPath id="hp-panel-clip">
+      <rect x="100" y="18" width="600" height="164" rx="4"/>
+    </clipPath>
+  </defs>
+
+  <!-- BG -->
+  <rect width="800" height="200" fill="url(#hp-bg)"/>
+  <!-- Grid — slightly denser for HUD feel -->
+  <g stroke="rgba(0,200,255,0.03)" stroke-width="1">
+    <line x1="0" y1="25" x2="800" y2="25"/><line x1="0" y1="50" x2="800" y2="50"/>
+    <line x1="0" y1="75" x2="800" y2="75"/><line x1="0" y1="100" x2="800" y2="100"/>
+    <line x1="0" y1="125" x2="800" y2="125"/><line x1="0" y1="150" x2="800" y2="150"/>
+    <line x1="0" y1="175" x2="800" y2="175"/>
+    <line x1="50" y1="0" x2="50" y2="200"/><line x1="100" y1="0" x2="100" y2="200"/>
+    <line x1="150" y1="0" x2="150" y2="200"/><line x1="200" y1="0" x2="200" y2="200"/>
+    <line x1="250" y1="0" x2="250" y2="200"/><line x1="300" y1="0" x2="300" y2="200"/>
+    <line x1="350" y1="0" x2="350" y2="200"/><line x1="400" y1="0" x2="400" y2="200"/>
+    <line x1="450" y1="0" x2="450" y2="200"/><line x1="500" y1="0" x2="500" y2="200"/>
+    <line x1="550" y1="0" x2="550" y2="200"/><line x1="600" y1="0" x2="600" y2="200"/>
+    <line x1="650" y1="0" x2="650" y2="200"/><line x1="700" y1="0" x2="700" y2="200"/>
+    <line x1="750" y1="0" x2="750" y2="200"/>
+  </g>
+
+  <!-- Panel body -->
+  <rect x="100" y="18" width="600" height="164" rx="4" fill="url(#hp-panel-bg)" stroke="rgba(6,182,212,0.2)" stroke-width="1"/>
+
+  <!-- Scanlines inside panel -->
+  <g clip-path="url(#hp-panel-clip)" opacity="0.04">
+    <rect x="100" y="18" width="600" height="2" fill="#06b6d4"/>
+    <rect x="100" y="22" width="600" height="2" fill="#06b6d4"/>
+    <rect x="100" y="26" width="600" height="2" fill="#06b6d4"/>
+    <rect x="100" y="30" width="600" height="2" fill="#06b6d4"/>
+    <rect x="100" y="34" width="600" height="2" fill="#06b6d4"/>
+    <rect x="100" y="38" width="600" height="2" fill="#06b6d4"/>
+    <rect x="100" y="42" width="600" height="2" fill="#06b6d4"/>
+    <rect x="100" y="46" width="600" height="2" fill="#06b6d4"/>
+    <rect x="100" y="50" width="600" height="2" fill="#06b6d4"/>
+    <rect x="100" y="54" width="600" height="2" fill="#06b6d4"/>
+    <rect x="100" y="58" width="600" height="2" fill="#06b6d4"/>
+    <rect x="100" y="62" width="600" height="2" fill="#06b6d4"/>
+    <rect x="100" y="66" width="600" height="2" fill="#06b6d4"/>
+    <rect x="100" y="70" width="600" height="2" fill="#06b6d4"/>
+    <rect x="100" y="74" width="600" height="2" fill="#06b6d4"/>
+    <rect x="100" y="78" width="600" height="2" fill="#06b6d4"/>
+    <rect x="100" y="82" width="600" height="2" fill="#06b6d4"/>
+    <rect x="100" y="86" width="600" height="2" fill="#06b6d4"/>
+    <rect x="100" y="90" width="600" height="2" fill="#06b6d4"/>
+    <rect x="100" y="94" width="600" height="2" fill="#06b6d4"/>
+    <rect x="100" y="98" width="600" height="2" fill="#06b6d4"/>
+    <rect x="100" y="102" width="600" height="2" fill="#06b6d4"/>
+    <rect x="100" y="106" width="600" height="2" fill="#06b6d4"/>
+    <rect x="100" y="110" width="600" height="2" fill="#06b6d4"/>
+    <rect x="100" y="114" width="600" height="2" fill="#06b6d4"/>
+    <rect x="100" y="118" width="600" height="2" fill="#06b6d4"/>
+    <rect x="100" y="122" width="600" height="2" fill="#06b6d4"/>
+    <rect x="100" y="126" width="600" height="2" fill="#06b6d4"/>
+    <rect x="100" y="130" width="600" height="2" fill="#06b6d4"/>
+    <rect x="100" y="134" width="600" height="2" fill="#06b6d4"/>
+    <rect x="100" y="138" width="600" height="2" fill="#06b6d4"/>
+    <rect x="100" y="142" width="600" height="2" fill="#06b6d4"/>
+    <rect x="100" y="146" width="600" height="2" fill="#06b6d4"/>
+    <rect x="100" y="150" width="600" height="2" fill="#06b6d4"/>
+    <rect x="100" y="154" width="600" height="2" fill="#06b6d4"/>
+    <rect x="100" y="158" width="600" height="2" fill="#06b6d4"/>
+    <rect x="100" y="162" width="600" height="2" fill="#06b6d4"/>
+    <rect x="100" y="166" width="600" height="2" fill="#06b6d4"/>
+    <rect x="100" y="170" width="600" height="2" fill="#06b6d4"/>
+    <rect x="100" y="174" width="600" height="2" fill="#06b6d4"/>
+    <rect x="100" y="178" width="600" height="2" fill="#06b6d4"/>
+  </g>
+
+  <!-- Header bar -->
+  <rect x="100" y="18" width="600" height="32" rx="0" fill="url(#hp-header)"/>
+  <rect x="100" y="18" width="600" height="1" fill="url(#hp-top-accent)"/>
+  <rect x="100" y="49" width="600" height="1" fill="rgba(6,182,212,0.15)"/>
+
+  <!-- Header text -->
+  <text x="122" y="38" font-family="'Courier New', monospace" font-size="11" font-weight="700" fill="#06b6d4" letter-spacing="2">SYSTEM STATUS</text>
+
+  <!-- Status dot — pulsing -->
+  <circle cx="662" cy="34" r="4" fill="#10b981">
+    <animate attributeName="opacity" values="1;0.3;1" dur="1.5s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="662" cy="34" r="7" fill="rgba(16,185,129,0.2)">
+    <animate attributeName="r" values="5;9;5" dur="1.5s" repeatCount="indefinite"/>
+    <animate attributeName="opacity" values="0.4;0;0.4" dur="1.5s" repeatCount="indefinite"/>
+  </circle>
+  <text x="675" y="38" font-family="'Courier New', monospace" font-size="9" fill="rgba(16,185,129,0.7)" letter-spacing="1">ONLINE</text>
+
+  <!-- Corner accents -->
+  <!-- TL -->
+  <path d="M 100 38 L 100 18 L 120 18" stroke="#06b6d4" stroke-width="2" fill="none" filter="url(#hp-glow-cyan)"/>
+  <!-- TR -->
+  <path d="M 680 18 L 700 18 L 700 38" stroke="#06b6d4" stroke-width="2" fill="none" filter="url(#hp-glow-cyan)"/>
+  <!-- BL -->
+  <path d="M 100 162 L 100 182 L 120 182" stroke="#06b6d4" stroke-width="1.5" fill="none" opacity="0.5"/>
+  <!-- BR -->
+  <path d="M 680 182 L 700 182 L 700 162" stroke="#06b6d4" stroke-width="1.5" fill="none" opacity="0.5"/>
+
+  <!-- Panel content — metric bars -->
+  <!-- Bar 1: CPU -->
+  <text x="122" y="72" font-family="'Courier New', monospace" font-size="10" fill="rgba(6,182,212,0.6)" letter-spacing="1">CPU LOAD</text>
+  <rect x="200" y="62" width="360" height="6" rx="3" fill="rgba(255,255,255,0.04)"/>
+  <rect x="200" y="62" width="0" height="6" rx="3" fill="url(#hp-bar1)">
+    <animate attributeName="width" from="0" to="270" dur="1.5s" begin="0.2s" fill="freeze" calcMode="spline" keySplines="0.4 0 0.2 1"/>
+  </rect>
+  <text x="572" y="71" font-family="'Courier New', monospace" font-size="10" fill="rgba(6,182,212,0.5)">75%</text>
+
+  <!-- Bar 2: Memory -->
+  <text x="122" y="101" font-family="'Courier New', monospace" font-size="10" fill="rgba(99,102,241,0.6)" letter-spacing="1">MEMORY</text>
+  <rect x="200" y="91" width="360" height="6" rx="3" fill="rgba(255,255,255,0.04)"/>
+  <rect x="200" y="91" width="0" height="6" rx="3" fill="url(#hp-bar2)">
+    <animate attributeName="width" from="0" to="185" dur="1.5s" begin="0.5s" fill="freeze" calcMode="spline" keySplines="0.4 0 0.2 1"/>
+  </rect>
+  <text x="572" y="100" font-family="'Courier New', monospace" font-size="10" fill="rgba(99,102,241,0.5)">51%</text>
+
+  <!-- Bar 3: Network -->
+  <text x="122" y="130" font-family="'Courier New', monospace" font-size="10" fill="rgba(16,185,129,0.6)" letter-spacing="1">NETWORK</text>
+  <rect x="200" y="120" width="360" height="6" rx="3" fill="rgba(255,255,255,0.04)"/>
+  <rect x="200" y="120" width="0" height="6" rx="3" fill="url(#hp-bar3)">
+    <animate attributeName="width" from="0" to="324" dur="1.5s" begin="0.8s" fill="freeze" calcMode="spline" keySplines="0.4 0 0.2 1"/>
+  </rect>
+  <text x="572" y="129" font-family="'Courier New', monospace" font-size="10" fill="rgba(16,185,129,0.5)">90%</text>
+
+  <!-- Footer line -->
+  <text x="400" y="162" text-anchor="middle" font-family="'Courier New', monospace" font-size="9" fill="rgba(6,182,212,0.25)" letter-spacing="2">kayf-hud-panel · scanlines · corner accents · label</text>
+
+  <!-- Side labels -->
+  <text x="26" y="105" text-anchor="middle" font-family="'Courier New', monospace" font-size="10" fill="rgba(6,182,212,0.15)" transform="rotate(-90 26 105)">@kayf/ui</text>
+  <text x="774" y="105" text-anchor="middle" font-family="'Courier New', monospace" font-size="10" fill="rgba(6,182,212,0.15)" transform="rotate(90 774 105)">@kayf/ui</text>
+</svg>
