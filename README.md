@@ -9,9 +9,9 @@
 [![license](https://img.shields.io/npm/l/%40kayf%2Fui?style=flat-square&color=f472b6&labelColor=0a0a0f)](./LICENSE)
 [![bundle size](https://img.shields.io/bundlephobia/minzip/%40kayf%2Fui?style=flat-square&color=10b981&labelColor=0a0a0f&label=gzip)](https://bundlephobia.com/package/@kayf/ui)
 [![TypeScript](https://img.shields.io/badge/TypeScript-strict-3178c6?style=flat-square&labelColor=0a0a0f)](https://www.typescriptlang.org/)
-[![Storybook](https://img.shields.io/badge/Storybook-live-FF4785?style=flat-square&logo=storybook&logoColor=white&labelColor=0a0a0f)](https://69a564b0b16ce689ef423df8-pbjbpnksoj.chromatic.com/)
+[![Storybook](https://img.shields.io/badge/Storybook-live-FF4785?style=flat-square&logo=storybook&logoColor=white&labelColor=0a0a0f)](https://69a564b0b16ce689ef423df8-cxjiutvipa.chromatic.com/)
 
-**[→ Live Storybook](https://69a564b0b16ce689ef423df8-pbjbpnksoj.chromatic.com/)** · Interactive demos for all 12 components
+**[→ Live Storybook](https://69a564b0b16ce689ef423df8-cxjiutvipa.chromatic.com/)** · Interactive demos for all 12 components
 
 </div>
 
