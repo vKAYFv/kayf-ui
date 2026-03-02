@@ -1,6 +1,6 @@
 <div align="center">
 
-![hero](.github/assets/hero.svg)
+![hero](assets/hero.svg)
 
 <br/>
 
@@ -51,7 +51,7 @@ import '@kayf/ui'
 
 ### `<kayf-spotlight-card>`
 
-![spotlight-card preview](.github/assets/spotlight-card.svg)
+![spotlight-card preview](assets/spotlight-card.svg)
 
 > A card that casts a radial spotlight following your cursor — revealing depth through light.
 
@@ -138,7 +138,7 @@ import '@kayf/ui'
 
 ### `<kayf-particle-field>` ✦ *new in 0.2.0*
 
-![particle-field preview](.github/assets/particle-field.svg)
+![particle-field preview](assets/particle-field.svg)
 
 > An interactive canvas particle system — particles connect with lines and repel from the cursor.
 
@@ -162,7 +162,7 @@ import '@kayf/ui'
 
 ### `<kayf-counter>` ✦ *new in 0.2.0*
 
-![counter preview](.github/assets/counter.svg)
+![counter preview](assets/counter.svg)
 
 > Animated number counter that triggers on scroll into view with easeOutExpo easing.
 
@@ -192,7 +192,7 @@ import '@kayf/ui'
 
 ### `<kayf-magnetic-btn>` ✦ *new in 0.2.0*
 
-![magnetic-btn preview](.github/assets/magnetic-btn.svg)
+![magnetic-btn preview](assets/magnetic-btn.svg)
 
 > A wrapper that makes any button magnetically attracted to the cursor. Physics-based lerp animation.
 
