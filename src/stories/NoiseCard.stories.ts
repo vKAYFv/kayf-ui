@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/web-components';
 import { html } from 'lit';
-import '../../components/NoiseCard/NoiseCard';
+import '../components/NoiseCard/NoiseCard';
 
 const CARD_CONTENT = html`
   <div style="color:rgba(255,255,255,0.9);">

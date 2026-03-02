@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/web-components';
 import { html } from 'lit';
-import '../../components/RippleGrid/RippleGrid';
+import '../components/RippleGrid/RippleGrid';
 
 const meta: Meta = {
   title: 'Components/RippleGrid',

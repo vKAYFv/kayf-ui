@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/web-components';
 import { html } from 'lit';
-import '../../components/TiltCard3D/TiltCard3D';
+import '../components/TiltCard3D/TiltCard3D';
 
 const meta: Meta = {
   title: 'Components/TiltCard3D',
