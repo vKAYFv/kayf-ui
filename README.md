@@ -126,8 +126,6 @@ import '@kayf/ui'
 
 ### `<kayf-hud-panel>`
 
-![hud-panel preview](assets/hud-panel.svg)
-
 > A scanline-overlay panel with HUD corner accents — straight out of a sci-fi cockpit.
 
 ```html
