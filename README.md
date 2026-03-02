@@ -1,4 +1,4 @@
-![@kayf/ui](https://raw.githubusercontent.com/vKAYFv/kayf-ui/main/hero.png)
+![@kayf/ui](https://raw.githubusercontent.com/vKAYFv/kayf-ui/refs/heads/main/.github/assets/hero.png)
 
 <div align="center">
 
