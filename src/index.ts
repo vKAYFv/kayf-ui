@@ -21,4 +21,10 @@ export { TypewriterText }  from './components/TypewriterText/TypewriterText'
 export { CommandPalette }  from './components/CommandPalette/CommandPalette'
 export type { CommandItem } from './components/CommandPalette/CommandPalette'
 
-export const version = '0.3.0'
+// v0.4.0
+export { LiquidButton }  from './components/LiquidButton/LiquidButton'
+export { NoiseCard }     from './components/NoiseCard/NoiseCard'
+export { RippleGrid }    from './components/RippleGrid/RippleGrid'
+export { TiltCard3D }    from './components/TiltCard3D/TiltCard3D'
+
+export const version = '0.4.0'
