@@ -1,6 +1,6 @@
 <div align="center">
 
-![hero](svg-sources\hero.svg)
+![hero](svg-sources/hero.svg)
 
 <br/>
 
