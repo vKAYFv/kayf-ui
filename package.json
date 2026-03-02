@@ -1,10 +1,12 @@
 {
   "name": "@kayf/ui",
-  "version": "0.2.3",
-  "description": "Dark premium Web Components with game DNA. No React, no dependencies.",
+  "version": "0.3.0",
+  "description": "Premium dark glassmorphism Web Components. No React. No dependencies.",
+  "type": "module",
   "main": "dist/kayf-ui.cjs.js",
   "module": "dist/kayf-ui.esm.js",
   "types": "dist/index.d.ts",
+  "homepage": "https://main--YOUR_CHROMATIC_ID.chromatic.com",
   "exports": {
     ".": {
       "import": "./dist/kayf-ui.esm.js",
@@ -12,30 +14,40 @@
       "types": "./dist/index.d.ts"
     }
   },
-  "files": [
-    "dist"
-  ],
+  "scripts": {
+    "build": "rollup -c",
+    "dev": "rollup -c -w",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build",
+    "chromatic": "npx chromatic --project-token=$CHROMATIC_PROJECT_TOKEN",
+    "type-check": "tsc --noEmit",
+    "prepublishOnly": "npm run build"
+  },
   "keywords": [
     "web-components",
     "ui",
     "game-ui",
     "dark-theme",
-    "glassmorphism"
+    "glassmorphism",
+    "typescript"
   ],
-  "author": "KAYF",
+  "author": "kayf",
   "license": "MIT",
-  "scripts": {
-    "build": "rollup -c",
-    "dev": "rollup -c -w",
-    "typecheck": "tsc --noEmit"
-  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
   "devDependencies": {
-    "@rollup/plugin-typescript": "^11.0.0",
+    "@storybook/addon-a11y": "^8.0.0",
+    "@storybook/addon-backgrounds": "^8.0.0",
+    "@storybook/addon-essentials": "^8.0.0",
+    "@storybook/web-components-vite": "^8.0.0",
+    "chromatic": "^15.2.0",
+    "lit": "^3.0.0",
     "rollup": "^4.0.0",
-    "tslib": "^2.6.0",
+    "rollup-plugin-typescript2": "^0.36.0",
+    "storybook": "^8.0.0",
     "typescript": "^5.0.0"
-  },
-  "dependencies": {
-    "@kayf/ui": "0.2.3"
   }
 }

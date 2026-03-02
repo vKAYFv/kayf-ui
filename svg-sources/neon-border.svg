@@ -1,0 +1,134 @@
+<svg width="800" height="200" viewBox="0 0 800 200" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="nb-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#050508"/>
+      <stop offset="100%" stop-color="#060510"/>
+    </linearGradient>
+    <linearGradient id="nb-top" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%"   stop-color="rgba(99,102,241,0)"/>
+      <stop offset="50%"  stop-color="rgba(99,102,241,0.35)"/>
+      <stop offset="100%" stop-color="rgba(99,102,241,0)"/>
+    </linearGradient>
+    <filter id="nb-glow1"><feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    <filter id="nb-glow2"><feGaussianBlur stdDeviation="6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    <filter id="nb-glow3"><feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+  </defs>
+
+  <rect width="800" height="200" fill="url(#nb-bg)"/>
+  <g stroke="rgba(255,255,255,0.02)" stroke-width="1">
+    <line x1="0" y1="50" x2="800" y2="50"/><line x1="0" y1="100" x2="800" y2="100"/><line x1="0" y1="150" x2="800" y2="150"/>
+    <line x1="100" y1="0" x2="100" y2="200"/><line x1="200" y1="0" x2="200" y2="200"/>
+    <line x1="400" y1="0" x2="400" y2="200"/><line x1="600" y1="0" x2="600" y2="200"/><line x1="700" y1="0" x2="700" y2="200"/>
+  </g>
+
+  <!-- CARD 1 — Indigo rotating border -->
+  <g>
+    <!-- Glow halo -->
+    <rect x="88" y="38" width="174" height="124" rx="16" fill="rgba(99,102,241,0.06)"/>
+    <!-- Animated border segments simulating conic rotation -->
+    <!-- Top segment -->
+    <rect x="88" y="38" width="174" height="2" rx="1" fill="rgba(99,102,241,0.1)">
+      <animate attributeName="fill" dur="3s" repeatCount="indefinite" calcMode="linear"
+        keyTimes="0;0.25;0.5;0.75;1"
+        values="rgba(99,102,241,0.1);rgba(99,102,241,0.9);rgba(99,102,241,0.1);rgba(99,102,241,0.15);rgba(99,102,241,0.1)"/>
+    </rect>
+    <!-- Right segment -->
+    <rect x="260" y="38" width="2" height="124" rx="1" fill="rgba(99,102,241,0.1)">
+      <animate attributeName="fill" dur="3s" repeatCount="indefinite" calcMode="linear"
+        keyTimes="0;0.25;0.5;0.75;1"
+        values="rgba(99,102,241,0.15);rgba(99,102,241,0.1);rgba(99,102,241,0.9);rgba(99,102,241,0.1);rgba(99,102,241,0.15)"/>
+    </rect>
+    <!-- Bottom segment -->
+    <rect x="88" y="160" width="174" height="2" rx="1" fill="rgba(99,102,241,0.1)">
+      <animate attributeName="fill" dur="3s" repeatCount="indefinite" calcMode="linear"
+        keyTimes="0;0.25;0.5;0.75;1"
+        values="rgba(99,102,241,0.15);rgba(99,102,241,0.1);rgba(99,102,241,0.15);rgba(99,102,241,0.9);rgba(99,102,241,0.15)"/>
+    </rect>
+    <!-- Left segment -->
+    <rect x="88" y="38" width="2" height="124" rx="1" fill="rgba(99,102,241,0.8)" filter="url(#nb-glow1)">
+      <animate attributeName="fill" dur="3s" repeatCount="indefinite" calcMode="linear"
+        keyTimes="0;0.25;0.5;0.75;1"
+        values="rgba(99,102,241,0.9);rgba(99,102,241,0.1);rgba(99,102,241,0.1);rgba(99,102,241,0.1);rgba(99,102,241,0.9)"/>
+    </rect>
+    <!-- Moving bright dot -->
+    <circle r="5" fill="#6366f1" filter="url(#nb-glow1)">
+      <animateMotion dur="3s" repeatCount="indefinite"
+        path="M 90,40 L 260,40 L 260,160 L 90,160 Z"/>
+    </circle>
+    <!-- Inner content -->
+    <rect x="90" y="40" width="170" height="120" rx="14" fill="rgba(255,255,255,0.02)"/>
+    <text x="175" y="97" text-anchor="middle" font-family="'Segoe UI',sans-serif" font-size="13" font-weight="700" fill="#e8e8f0">NeonBorder</text>
+    <text x="175" y="116" text-anchor="middle" font-family="'Courier New',monospace" font-size="10" fill="rgba(99,102,241,0.6)">color="indigo"</text>
+    <text x="175" y="133" text-anchor="middle" font-family="'Courier New',monospace" font-size="10" fill="rgba(99,102,241,0.4)">speed="3"</text>
+  </g>
+
+  <!-- CARD 2 — Cyan, offset timing -->
+  <g>
+    <rect x="313" y="38" width="174" height="124" rx="16" fill="rgba(6,182,212,0.05)"/>
+    <rect x="313" y="38" width="174" height="2" rx="1" fill="rgba(6,182,212,0.1)">
+      <animate attributeName="fill" dur="3s" begin="0.75s" repeatCount="indefinite" calcMode="linear"
+        keyTimes="0;0.25;0.5;0.75;1"
+        values="rgba(6,182,212,0.1);rgba(6,182,212,0.9);rgba(6,182,212,0.1);rgba(6,182,212,0.15);rgba(6,182,212,0.1)"/>
+    </rect>
+    <rect x="485" y="38" width="2" height="124" rx="1" fill="rgba(6,182,212,0.1)">
+      <animate attributeName="fill" dur="3s" begin="0.75s" repeatCount="indefinite" calcMode="linear"
+        keyTimes="0;0.25;0.5;0.75;1"
+        values="rgba(6,182,212,0.15);rgba(6,182,212,0.1);rgba(6,182,212,0.9);rgba(6,182,212,0.1);rgba(6,182,212,0.15)"/>
+    </rect>
+    <rect x="313" y="160" width="174" height="2" rx="1" fill="rgba(6,182,212,0.1)">
+      <animate attributeName="fill" dur="3s" begin="0.75s" repeatCount="indefinite" calcMode="linear"
+        keyTimes="0;0.25;0.5;0.75;1"
+        values="rgba(6,182,212,0.15);rgba(6,182,212,0.1);rgba(6,182,212,0.15);rgba(6,182,212,0.9);rgba(6,182,212,0.15)"/>
+    </rect>
+    <rect x="313" y="38" width="2" height="124" rx="1" fill="rgba(6,182,212,0.8)" filter="url(#nb-glow2)">
+      <animate attributeName="fill" dur="3s" begin="0.75s" repeatCount="indefinite" calcMode="linear"
+        keyTimes="0;0.25;0.5;0.75;1"
+        values="rgba(6,182,212,0.9);rgba(6,182,212,0.1);rgba(6,182,212,0.1);rgba(6,182,212,0.1);rgba(6,182,212,0.9)"/>
+    </rect>
+    <circle r="5" fill="#06b6d4" filter="url(#nb-glow2)">
+      <animateMotion dur="3s" begin="0.75s" repeatCount="indefinite"
+        path="M 315,40 L 485,40 L 485,160 L 315,160 Z"/>
+    </circle>
+    <rect x="315" y="40" width="170" height="120" rx="14" fill="rgba(255,255,255,0.02)"/>
+    <text x="400" y="97" text-anchor="middle" font-family="'Segoe UI',sans-serif" font-size="13" font-weight="700" fill="#e8e8f0">NeonBorder</text>
+    <text x="400" y="116" text-anchor="middle" font-family="'Courier New',monospace" font-size="10" fill="rgba(6,182,212,0.6)">color="cyan"</text>
+    <text x="400" y="133" text-anchor="middle" font-family="'Courier New',monospace" font-size="10" fill="rgba(6,182,212,0.4)">speed="3"</text>
+  </g>
+
+  <!-- CARD 3 — Pink, offset timing -->
+  <g>
+    <rect x="538" y="38" width="174" height="124" rx="16" fill="rgba(244,114,182,0.05)"/>
+    <rect x="538" y="38" width="174" height="2" rx="1" fill="rgba(244,114,182,0.1)">
+      <animate attributeName="fill" dur="3s" begin="1.5s" repeatCount="indefinite" calcMode="linear"
+        keyTimes="0;0.25;0.5;0.75;1"
+        values="rgba(244,114,182,0.1);rgba(244,114,182,0.9);rgba(244,114,182,0.1);rgba(244,114,182,0.15);rgba(244,114,182,0.1)"/>
+    </rect>
+    <rect x="710" y="38" width="2" height="124" rx="1" fill="rgba(244,114,182,0.1)">
+      <animate attributeName="fill" dur="3s" begin="1.5s" repeatCount="indefinite" calcMode="linear"
+        keyTimes="0;0.25;0.5;0.75;1"
+        values="rgba(244,114,182,0.15);rgba(244,114,182,0.1);rgba(244,114,182,0.9);rgba(244,114,182,0.1);rgba(244,114,182,0.15)"/>
+    </rect>
+    <rect x="538" y="160" width="174" height="2" rx="1" fill="rgba(244,114,182,0.1)">
+      <animate attributeName="fill" dur="3s" begin="1.5s" repeatCount="indefinite" calcMode="linear"
+        keyTimes="0;0.25;0.5;0.75;1"
+        values="rgba(244,114,182,0.15);rgba(244,114,182,0.1);rgba(244,114,182,0.15);rgba(244,114,182,0.9);rgba(244,114,182,0.15)"/>
+    </rect>
+    <rect x="538" y="38" width="2" height="124" rx="1" fill="rgba(244,114,182,0.8)" filter="url(#nb-glow3)">
+      <animate attributeName="fill" dur="3s" begin="1.5s" repeatCount="indefinite" calcMode="linear"
+        keyTimes="0;0.25;0.5;0.75;1"
+        values="rgba(244,114,182,0.9);rgba(244,114,182,0.1);rgba(244,114,182,0.1);rgba(244,114,182,0.1);rgba(244,114,182,0.9)"/>
+    </rect>
+    <circle r="5" fill="#f472b6" filter="url(#nb-glow3)">
+      <animateMotion dur="3s" begin="1.5s" repeatCount="indefinite"
+        path="M 540,40 L 710,40 L 710,160 L 540,160 Z"/>
+    </circle>
+    <rect x="540" y="40" width="170" height="120" rx="14" fill="rgba(255,255,255,0.02)"/>
+    <text x="625" y="97" text-anchor="middle" font-family="'Segoe UI',sans-serif" font-size="13" font-weight="700" fill="#e8e8f0">NeonBorder</text>
+    <text x="625" y="116" text-anchor="middle" font-family="'Courier New',monospace" font-size="10" fill="rgba(244,114,182,0.6)">color="pink"</text>
+    <text x="625" y="133" text-anchor="middle" font-family="'Courier New',monospace" font-size="10" fill="rgba(244,114,182,0.4)">speed="3"</text>
+  </g>
+
+  <rect x="0" y="0" width="800" height="1" fill="url(#nb-top)"/>
+  <text x="26" y="105" text-anchor="middle" font-family="'Courier New',monospace" font-size="10" fill="rgba(255,255,255,0.08)" transform="rotate(-90 26 105)">@kayf/ui</text>
+  <text x="774" y="105" text-anchor="middle" font-family="'Courier New',monospace" font-size="10" fill="rgba(255,255,255,0.08)" transform="rotate(90 774 105)">@kayf/ui</text>
+</svg>

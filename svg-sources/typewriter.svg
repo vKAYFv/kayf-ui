@@ -1,0 +1,85 @@
+<svg width="800" height="200" viewBox="0 0 800 200" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="tw-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#050508"/>
+      <stop offset="100%" stop-color="#060510"/>
+    </linearGradient>
+    <linearGradient id="tw-top" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%"   stop-color="rgba(6,182,212,0)"/>
+      <stop offset="50%"  stop-color="rgba(6,182,212,0.4)"/>
+      <stop offset="100%" stop-color="rgba(6,182,212,0)"/>
+    </linearGradient>
+    <linearGradient id="tw-text-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%"   stop-color="#ffffff"/>
+      <stop offset="60%"  stop-color="#c7d2fe"/>
+      <stop offset="100%" stop-color="#6366f1"/>
+    </linearGradient>
+    <filter id="tw-cursor-glow">
+      <feGaussianBlur stdDeviation="2" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <rect width="800" height="200" fill="url(#tw-bg)"/>
+  <g stroke="rgba(255,255,255,0.02)" stroke-width="1">
+    <line x1="0" y1="50" x2="800" y2="50"/><line x1="0" y1="100" x2="800" y2="100"/><line x1="0" y1="150" x2="800" y2="150"/>
+    <line x1="100" y1="0" x2="100" y2="200"/><line x1="200" y1="0" x2="200" y2="200"/>
+    <line x1="400" y1="0" x2="400" y2="200"/><line x1="600" y1="0" x2="600" y2="200"/><line x1="700" y1="0" x2="700" y2="200"/>
+  </g>
+
+  <!-- Label -->
+  <text x="400" y="44" text-anchor="middle"
+    font-family="'Courier New', monospace" font-size="10"
+    fill="rgba(6,182,212,0.4)" letter-spacing="2">kayf-typewriter · speed=60 · loop</text>
+
+  <!-- Line 1 — main phrase cycles -->
+  <!-- Each phrase: fade in text by revealing chars (simulated via opacity on word groups) -->
+  <!-- Phrase 1: "Premium Web Components" -->
+  <g opacity="0">
+    <animate attributeName="opacity" dur="12s" repeatCount="indefinite" calcMode="linear"
+      keyTimes="0;    0.01; 0.18; 0.24; 0.25; 1"
+      values=  "0;    1;    1;    0;    0;    0"/>
+    <text x="156" y="108" font-family="'Segoe UI',system-ui,sans-serif" font-size="34" font-weight="700" letter-spacing="-1" fill="url(#tw-text-grad)">Premium Web Components</text>
+  </g>
+  <!-- Phrase 2: "Dark Glassmorphism 2.0" -->
+  <g opacity="0">
+    <animate attributeName="opacity" dur="12s" repeatCount="indefinite" calcMode="linear"
+      keyTimes="0; 0.25; 0.26; 0.43; 0.49; 0.50; 1"
+      values=  "0; 0;   1;    1;    0;    0;    0"/>
+    <text x="192" y="108" font-family="'Segoe UI',system-ui,sans-serif" font-size="34" font-weight="700" letter-spacing="-1" fill="url(#tw-text-grad)">Dark Glassmorphism 2.0</text>
+  </g>
+  <!-- Phrase 3: "Zero Dependencies" -->
+  <g opacity="0">
+    <animate attributeName="opacity" dur="12s" repeatCount="indefinite" calcMode="linear"
+      keyTimes="0; 0.50; 0.51; 0.68; 0.74; 0.75; 1"
+      values=  "0; 0;   1;    1;    0;    0;    0"/>
+    <text x="252" y="108" font-family="'Segoe UI',system-ui,sans-serif" font-size="34" font-weight="700" letter-spacing="-1" fill="url(#tw-text-grad)">Zero Dependencies</text>
+  </g>
+  <!-- Phrase 4: "TypeScript First" -->
+  <g opacity="0">
+    <animate attributeName="opacity" dur="12s" repeatCount="indefinite" calcMode="linear"
+      keyTimes="0; 0.75; 0.76; 0.93; 0.99; 1"
+      values=  "0; 0;   1;    1;    0;    0"/>
+    <text x="284" y="108" font-family="'Segoe UI',system-ui,sans-serif" font-size="34" font-weight="700" letter-spacing="-1" fill="url(#tw-text-grad)">TypeScript First</text>
+  </g>
+
+  <!-- Blinking cursor — always visible, positioned after text dynamically (approximate) -->
+  <!-- We place it at a fixed spot and pulse it -->
+  <rect x="645" y="78" width="3" height="36" rx="1.5" fill="#6366f1" filter="url(#tw-cursor-glow)">
+    <animate attributeName="opacity" values="1;1;0;0;1" dur="1s" repeatCount="indefinite" calcMode="linear"
+      keyTimes="0;0.45;0.5;0.95;1"/>
+    <!-- Cursor follows phrase widths approximately -->
+    <animate attributeName="x" dur="12s" repeatCount="indefinite" calcMode="linear"
+      keyTimes="0;    0.01; 0.24; 0.25; 0.26; 0.49; 0.50; 0.51; 0.74; 0.75; 0.76; 0.99; 1"
+      values=  "645;  645;  645;  645;  621;  621;  621;  536;  536;  536;  504;  504;  645"/>
+  </rect>
+
+  <!-- Subtitle -->
+  <text x="400" y="150" text-anchor="middle"
+    font-family="'Segoe UI',system-ui,sans-serif" font-size="12"
+    fill="rgba(232,232,240,0.25)" letter-spacing="0.3">organic jitter · multi-line cycling · erase animation</text>
+
+  <rect x="0" y="0" width="800" height="1" fill="url(#tw-top)"/>
+  <text x="26" y="105" text-anchor="middle" font-family="'Courier New',monospace" font-size="10" fill="rgba(255,255,255,0.08)" transform="rotate(-90 26 105)">@kayf/ui</text>
+  <text x="774" y="105" text-anchor="middle" font-family="'Courier New',monospace" font-size="10" fill="rgba(255,255,255,0.08)" transform="rotate(90 774 105)">@kayf/ui</text>
+</svg>

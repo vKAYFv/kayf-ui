@@ -1,14 +1,15 @@
 <div align="center">
 
-![hero](assets/hero.svg)
+![hero](https://raw.githubusercontent.com/kayf-dev/kayf-ui/main/.github/assets/hero.png)
 
 <br/>
 
-[![npm version](https://img.shields.io/npm/v/@kayf/ui?style=flat-square&color=6366f1&labelColor=0a0a0f&label=version)](https://www.npmjs.com/package/@kayf/ui)
-[![npm downloads](https://img.shields.io/npm/dm/@kayf/ui?style=flat-square&color=06b6d4&labelColor=0a0a0f)](https://www.npmjs.com/package/@kayf/ui)
-[![license](https://img.shields.io/npm/l/@kayf/ui?style=flat-square&color=f472b6&labelColor=0a0a0f)](./LICENSE)
-[![bundle size](https://img.shields.io/bundlephobia/minzip/@kayf/ui?style=flat-square&color=10b981&labelColor=0a0a0f&label=gzip)](https://bundlephobia.com/package/@kayf/ui)
+[![npm version](https://img.shields.io/npm/v/%40kayf%2Fui?style=flat-square&color=6366f1&labelColor=0a0a0f&label=version)](https://www.npmjs.com/package/@kayf/ui)
+[![npm downloads](https://img.shields.io/npm/dw/%40kayf%2Fui?style=flat-square&color=06b6d4&labelColor=0a0a0f&label=downloads%2Fweek)](https://www.npmjs.com/package/@kayf/ui)
+[![license](https://img.shields.io/npm/l/%40kayf%2Fui?style=flat-square&color=f472b6&labelColor=0a0a0f)](./LICENSE)
+[![bundle size](https://img.shields.io/bundlephobia/minzip/%40kayf%2Fui?style=flat-square&color=10b981&labelColor=0a0a0f&label=gzip)](https://bundlephobia.com/package/@kayf/ui)
 [![TypeScript](https://img.shields.io/badge/TypeScript-strict-3178c6?style=flat-square&labelColor=0a0a0f)](https://www.typescriptlang.org/)
+[![Storybook](https://img.shields.io/badge/Storybook-live-FF4785?style=flat-square&logo=storybook&logoColor=white&labelColor=0a0a0f)](https://69a564b0b16ce689ef423df8-pbjbpnksoj.chromatic.com/)
 
 </div>
 
@@ -51,7 +52,7 @@ import '@kayf/ui'
 
 ### `<kayf-spotlight-card>`
 
-![spotlight-card preview](assets/spotlight-card.svg)
+![spotlight-card](https://raw.githubusercontent.com/kayf-dev/kayf-ui/main/.github/assets/spotlight-card.png)
 
 > A card that casts a radial spotlight following your cursor — revealing depth through light.
 
@@ -70,8 +71,6 @@ import '@kayf/ui'
 
 ### `<kayf-beam-button>`
 
-![beam-button preview](assets/beam-button.svg)
-
 > A button with an animated light sweep on hover, plus ripple on click.
 
 ```html
@@ -87,8 +86,6 @@ import '@kayf/ui'
 ---
 
 ### `<kayf-aurora-card>`
-
-![aurora-card preview](assets/aurora-card.svg)
 
 > Canvas-animated aurora blobs drifting behind a glassmorphism surface.
 
@@ -107,8 +104,6 @@ import '@kayf/ui'
 ---
 
 ### `<kayf-glitch-text>`
-
-![glitch-text preview](assets/glitch-text.svg)
 
 > Text that randomly glitches — perfect for terminal UIs and game HUDs.
 
@@ -144,7 +139,7 @@ import '@kayf/ui'
 
 ### `<kayf-particle-field>` ✦ *new in 0.2.0*
 
-![particle-field preview](assets/particle-field.svg)
+![particle-field](https://raw.githubusercontent.com/kayf-dev/kayf-ui/main/.github/assets/particle-field.png)
 
 > An interactive canvas particle system — particles connect with lines and repel from the cursor.
 
@@ -168,7 +163,7 @@ import '@kayf/ui'
 
 ### `<kayf-counter>` ✦ *new in 0.2.0*
 
-![counter preview](assets/counter.svg)
+![counter](https://raw.githubusercontent.com/kayf-dev/kayf-ui/main/.github/assets/counter.png)
 
 > Animated number counter that triggers on scroll into view with easeOutExpo easing.
 
@@ -198,7 +193,7 @@ import '@kayf/ui'
 
 ### `<kayf-magnetic-btn>` ✦ *new in 0.2.0*
 
-![magnetic-btn preview](assets/magnetic-btn.svg)
+![magnetic-btn](https://raw.githubusercontent.com/kayf-dev/kayf-ui/main/.github/assets/magnetic-btn.png)
 
 > A wrapper that makes any button magnetically attracted to the cursor. Physics-based lerp animation.
 
@@ -216,8 +211,6 @@ import '@kayf/ui'
 ---
 
 ## 🎨 Color Variants
-
-All components that accept a `color` attribute support these built-in variants:
 
 ```ts
 type ColorVariant =
@@ -250,7 +243,6 @@ Or pass any hex value directly: `color="#ff6b35"`
 import { KayfParticleField, KayfCounter, KayfMagneticBtn } from '@kayf/ui'
 import type { ColorVariant } from '@kayf/ui'
 
-// Programmatic control
 const field = document.querySelector<KayfParticleField>('kayf-particle-field')
 field?.setAttribute('count', '200')
 ```
@@ -263,7 +255,6 @@ field?.setAttribute('count', '200')
 <summary><strong>React</strong></summary>
 
 ```tsx
-// Add to react-app-env.d.ts for JSX types
 declare namespace JSX {
   interface IntrinsicElements {
     'kayf-particle-field': React.HTMLAttributes<HTMLElement> & { color?: string; count?: number }
@@ -303,7 +294,6 @@ export default defineConfig({
 <script setup>
 import '@kayf/ui'
 </script>
-
 <template>
   <kayf-particle-field color="#6366f1" :count="120" />
 </template>
@@ -315,17 +305,11 @@ import '@kayf/ui'
 <summary><strong>Vanilla HTML</strong></summary>
 
 ```html
-<!DOCTYPE html>
-<html>
-<head>
-  <script type="module" src="https://unpkg.com/@kayf/ui/dist/kayf-ui.esm.js"></script>
-</head>
-<body>
-  <kayf-aurora-card>
-    <h1>No framework needed.</h1>
-  </kayf-aurora-card>
-</body>
-</html>
+<script type="module" src="https://unpkg.com/@kayf/ui/dist/kayf-ui.esm.js"></script>
+
+<kayf-aurora-card>
+  <h1>No framework needed.</h1>
+</kayf-aurora-card>
 ```
 
 </details>

@@ -1,0 +1,94 @@
+<svg width="800" height="200" viewBox="0 0 800 200" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="hc-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#050508"/>
+      <stop offset="100%" stop-color="#080512"/>
+    </linearGradient>
+    <!-- Card surface -->
+    <linearGradient id="hc-card" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="rgba(255,255,255,0.06)"/>
+      <stop offset="100%" stop-color="rgba(255,255,255,0.02)"/>
+    </linearGradient>
+    <!-- Rainbow conic shine -->
+    <radialGradient id="hc-shine" cx="38%" cy="38%" r="70%">
+      <stop offset="0%"   stop-color="rgba(255,0,128,0.22)"/>
+      <stop offset="16%"  stop-color="rgba(255,128,0,0.18)"/>
+      <stop offset="33%"  stop-color="rgba(255,255,0,0.14)"/>
+      <stop offset="50%"  stop-color="rgba(0,255,128,0.18)"/>
+      <stop offset="66%"  stop-color="rgba(0,128,255,0.18)"/>
+      <stop offset="83%"  stop-color="rgba(128,0,255,0.16)"/>
+      <stop offset="100%" stop-color="rgba(255,0,128,0.1)"/>
+    </radialGradient>
+    <!-- Tilt shadow -->
+    <filter id="hc-shadow">
+      <feDropShadow dx="8" dy="16" stdDeviation="20" flood-color="rgba(0,0,0,0.6)"/>
+    </filter>
+    <filter id="hc-glow">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <!-- Top line -->
+    <linearGradient id="hc-top" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%"   stop-color="rgba(255,255,255,0)"/>
+      <stop offset="40%"  stop-color="rgba(255,255,255,0.35)"/>
+      <stop offset="100%" stop-color="rgba(255,255,255,0)"/>
+    </linearGradient>
+    <linearGradient id="hc-border-top" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%"   stop-color="rgba(99,102,241,0)"/>
+      <stop offset="50%"  stop-color="rgba(99,102,241,0.4)"/>
+      <stop offset="100%" stop-color="rgba(99,102,241,0)"/>
+    </linearGradient>
+
+    <!-- Animated shine position -->
+    <radialGradient id="hc-shine-anim" cx="50%" cy="50%" r="60%">
+      <stop offset="0%"   stop-color="rgba(255,0,128,0.2)"/>
+      <stop offset="20%"  stop-color="rgba(255,100,0,0.15)"/>
+      <stop offset="40%"  stop-color="rgba(255,255,0,0.1)"/>
+      <stop offset="60%"  stop-color="rgba(0,255,128,0.15)"/>
+      <stop offset="80%"  stop-color="rgba(0,100,255,0.15)"/>
+      <stop offset="100%" stop-color="rgba(128,0,255,0.1)"/>
+      <animateTransform attributeName="gradientTransform" type="rotate"
+        values="0 0.5 0.5; 360 0.5 0.5" dur="4s" repeatCount="indefinite"/>
+    </radialGradient>
+
+    <clipPath id="hc-card-clip">
+      <rect x="220" y="16" width="360" height="168" rx="16"/>
+    </clipPath>
+  </defs>
+
+  <rect width="800" height="200" fill="url(#hc-bg)"/>
+  <g stroke="rgba(255,255,255,0.02)" stroke-width="1">
+    <line x1="0" y1="50" x2="800" y2="50"/><line x1="0" y1="100" x2="800" y2="100"/><line x1="0" y1="150" x2="800" y2="150"/>
+    <line x1="100" y1="0" x2="100" y2="200"/><line x1="200" y1="0" x2="200" y2="200"/><line x1="300" y1="0" x2="300" y2="200"/>
+    <line x1="400" y1="0" x2="400" y2="200"/><line x1="500" y1="0" x2="500" y2="200"/><line x1="600" y1="0" x2="600" y2="200"/><line x1="700" y1="0" x2="700" y2="200"/>
+  </g>
+
+  <!-- 3D tilt effect — card shadow/depth -->
+  <rect x="228" y="24" width="360" height="168" rx="16" fill="rgba(0,0,0,0.4)" filter="url(#hc-shadow)"/>
+
+  <!-- Card body with slight tilt via transform -->
+  <g transform="skewY(-2) translate(0, 4)">
+    <rect x="220" y="16" width="360" height="168" rx="16" fill="url(#hc-card)" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+    <!-- Rainbow shine layer -->
+    <rect x="220" y="16" width="360" height="168" rx="16" fill="url(#hc-shine-anim)" clip-path="url(#hc-card-clip)" opacity="0.9"/>
+    <!-- Top shine line -->
+    <rect x="220" y="16" width="360" height="1" rx="1" fill="url(#hc-top)"/>
+  </g>
+
+  <!-- Content on top -->
+  <text x="400" y="90" text-anchor="middle"
+    font-family="'Segoe UI', system-ui, sans-serif"
+    font-size="13" font-weight="600" letter-spacing="0.1em" text-transform="uppercase"
+    fill="rgba(232,232,240,0.4)">LEGENDARY</text>
+  <text x="400" y="118" text-anchor="middle"
+    font-family="'Segoe UI', system-ui, sans-serif"
+    font-size="24" font-weight="700" letter-spacing="-0.03em"
+    fill="#e8e8f0">HolographicCard</text>
+  <text x="400" y="140" text-anchor="middle"
+    font-family="'Segoe UI', system-ui, sans-serif"
+    font-size="12" fill="rgba(232,232,240,0.35)">3D tilt · rainbow shine · perspective</text>
+
+  <rect x="0" y="0" width="800" height="1" fill="url(#hc-border-top)"/>
+  <text x="26" y="105" text-anchor="middle" font-family="'Courier New', monospace" font-size="10" fill="rgba(255,255,255,0.1)" transform="rotate(-90 26 105)">@kayf/ui</text>
+  <text x="774" y="105" text-anchor="middle" font-family="'Courier New', monospace" font-size="10" fill="rgba(255,255,255,0.1)" transform="rotate(90 774 105)">@kayf/ui</text>
+</svg>

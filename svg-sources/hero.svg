@@ -1,0 +1,140 @@
+<svg width="800" height="140" viewBox="0 0 800 140" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="h-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#06060e"/>
+      <stop offset="50%" stop-color="#090714"/>
+      <stop offset="100%" stop-color="#06060e"/>
+    </linearGradient>
+    <!-- Left orb — indigo -->
+    <radialGradient id="h-orb-l" cx="18%" cy="50%" r="30%">
+      <stop offset="0%" stop-color="#6366f1" stop-opacity="0.25"/>
+      <stop offset="100%" stop-color="#6366f1" stop-opacity="0"/>
+    </radialGradient>
+    <!-- Right orb — cyan -->
+    <radialGradient id="h-orb-r" cx="82%" cy="50%" r="30%">
+      <stop offset="0%" stop-color="#06b6d4" stop-opacity="0.18"/>
+      <stop offset="100%" stop-color="#06b6d4" stop-opacity="0"/>
+    </radialGradient>
+    <!-- Center orb — pink subtle -->
+    <radialGradient id="h-orb-c" cx="50%" cy="60%" r="20%">
+      <stop offset="0%" stop-color="#f472b6" stop-opacity="0.08"/>
+      <stop offset="100%" stop-color="#f472b6" stop-opacity="0"/>
+    </radialGradient>
+    <!-- Top border gradient -->
+    <linearGradient id="h-border-t" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%"   stop-color="rgba(99,102,241,0)"/>
+      <stop offset="25%"  stop-color="rgba(99,102,241,0.6)"/>
+      <stop offset="75%"  stop-color="rgba(6,182,212,0.6)"/>
+      <stop offset="100%" stop-color="rgba(6,182,212,0)"/>
+    </linearGradient>
+    <!-- Bottom border -->
+    <linearGradient id="h-border-b" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%"   stop-color="rgba(255,255,255,0)"/>
+      <stop offset="50%"  stop-color="rgba(255,255,255,0.05)"/>
+      <stop offset="100%" stop-color="rgba(255,255,255,0)"/>
+    </linearGradient>
+    <!-- Title gradient -->
+    <linearGradient id="h-title" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%"   stop-color="#ffffff"/>
+      <stop offset="35%"  stop-color="#c7d2fe"/>
+      <stop offset="65%"  stop-color="#6366f1"/>
+      <stop offset="100%" stop-color="#06b6d4"/>
+    </linearGradient>
+    <!-- Milestone badge gradient -->
+    <linearGradient id="h-badge" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="rgba(99,102,241,0.2)"/>
+      <stop offset="100%" stop-color="rgba(6,182,212,0.15)"/>
+    </linearGradient>
+    <!-- 500 shimmer sweep -->
+    <linearGradient id="h-shimmer" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%"   stop-color="rgba(255,255,255,0)"/>
+      <stop offset="50%"  stop-color="rgba(255,255,255,0.25)"/>
+      <stop offset="100%" stop-color="rgba(255,255,255,0)"/>
+    </linearGradient>
+    <clipPath id="h-badge-clip">
+      <rect x="292" y="94" width="216" height="26" rx="13"/>
+    </clipPath>
+  </defs>
+
+  <!-- Background -->
+  <rect width="800" height="140" fill="url(#h-bg)"/>
+
+  <!-- Grid -->
+  <g stroke="rgba(255,255,255,0.018)" stroke-width="1">
+    <line x1="0" y1="35" x2="800" y2="35"/>
+    <line x1="0" y1="70" x2="800" y2="70"/>
+    <line x1="0" y1="105" x2="800" y2="105"/>
+    <line x1="80"  y1="0" x2="80"  y2="140"/>
+    <line x1="160" y1="0" x2="160" y2="140"/>
+    <line x1="240" y1="0" x2="240" y2="140"/>
+    <line x1="320" y1="0" x2="320" y2="140"/>
+    <line x1="400" y1="0" x2="400" y2="140"/>
+    <line x1="480" y1="0" x2="480" y2="140"/>
+    <line x1="560" y1="0" x2="560" y2="140"/>
+    <line x1="640" y1="0" x2="640" y2="140"/>
+    <line x1="720" y1="0" x2="720" y2="140"/>
+  </g>
+
+  <!-- Orbs -->
+  <rect width="800" height="140" fill="url(#h-orb-l)"/>
+  <rect width="800" height="140" fill="url(#h-orb-r)"/>
+  <rect width="800" height="140" fill="url(#h-orb-c)"/>
+
+  <!-- Corner accents -->
+  <path d="M 0 22 L 0 0 L 22 0"   stroke="rgba(99,102,241,0.45)" stroke-width="1.5" fill="none"/>
+  <path d="M 778 0 L 800 0 L 800 22" stroke="rgba(6,182,212,0.45)" stroke-width="1.5" fill="none"/>
+  <path d="M 0 118 L 0 140 L 22 140"  stroke="rgba(99,102,241,0.2)" stroke-width="1.5" fill="none"/>
+  <path d="M 778 140 L 800 140 L 800 118" stroke="rgba(6,182,212,0.2)" stroke-width="1.5" fill="none"/>
+
+  <!-- Top / bottom border lines -->
+  <rect x="0" y="0"   width="800" height="1" fill="url(#h-border-t)"/>
+  <rect x="0" y="139" width="800" height="1" fill="url(#h-border-b)"/>
+
+  <!-- Floating accent dots -->
+  <circle cx="48"  cy="35" r="1.5" fill="#6366f1" opacity="0.5">
+    <animate attributeName="opacity" values="0.5;0.15;0.5" dur="3.2s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="752" cy="105" r="1.5" fill="#06b6d4" opacity="0.5">
+    <animate attributeName="opacity" values="0.5;0.15;0.5" dur="2.8s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="140" cy="105" r="1" fill="#f472b6" opacity="0.4">
+    <animate attributeName="opacity" values="0.4;0.1;0.4" dur="4s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="660" cy="35" r="1" fill="#10b981" opacity="0.4">
+    <animate attributeName="opacity" values="0.4;0.1;0.4" dur="3.5s" repeatCount="indefinite"/>
+  </circle>
+
+  <!-- Main title -->
+  <text x="400" y="54" text-anchor="middle"
+    font-family="'Segoe UI', system-ui, -apple-system, sans-serif"
+    font-size="46" font-weight="800" letter-spacing="-2.5"
+    fill="url(#h-title)">@kayf/ui</text>
+
+  <!-- Subtitle -->
+  <text x="400" y="80" text-anchor="middle"
+    font-family="'Segoe UI', system-ui, sans-serif"
+    font-size="13" font-weight="400" letter-spacing="0.3"
+    fill="rgba(232,232,240,0.32)">Premium Dark Glassmorphism Web Components · Zero Dependencies</text>
+
+  <!-- Milestone badge: 500+ downloads -->
+  <rect x="292" y="94" width="216" height="26" rx="13"
+    fill="url(#h-badge)" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+  <!-- Shimmer sweep on badge -->
+  <rect x="240" y="94" width="80" height="26" rx="13"
+    fill="url(#h-shimmer)" clip-path="url(#h-badge-clip)">
+    <animate attributeName="x" values="240;510;240" dur="3s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.6 1;0.4 0 0.6 1"/>
+  </rect>
+  <!-- Pulse dot -->
+  <circle cx="309" cy="107" r="3.5" fill="#f59e0b">
+    <animate attributeName="opacity" values="1;0.4;1" dur="1.5s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="309" cy="107" r="6" fill="rgba(245,158,11,0.2)">
+    <animate attributeName="r" values="4;8;4" dur="1.5s" repeatCount="indefinite"/>
+    <animate attributeName="opacity" values="0.3;0;0.3" dur="1.5s" repeatCount="indefinite"/>
+  </circle>
+  <!-- Badge text -->
+  <text x="400" y="112" text-anchor="middle"
+    font-family="'Segoe UI', system-ui, sans-serif"
+    font-size="11" font-weight="600" letter-spacing="0.5"
+    fill="rgba(232,232,240,0.7)">✦ 500+ downloads · v0.3.0 · 12 components</text>
+</svg>

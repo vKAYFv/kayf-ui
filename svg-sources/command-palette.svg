@@ -1,0 +1,104 @@
+<svg width="800" height="200" viewBox="0 0 800 200" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="cp-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#050508"/>
+      <stop offset="100%" stop-color="#060510"/>
+    </linearGradient>
+    <linearGradient id="cp-palette-bg" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#0d0d16"/>
+      <stop offset="100%" stop-color="#0a0a12"/>
+    </linearGradient>
+    <linearGradient id="cp-top" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%"   stop-color="rgba(99,102,241,0)"/>
+      <stop offset="50%"  stop-color="rgba(99,102,241,0.4)"/>
+      <stop offset="100%" stop-color="rgba(99,102,241,0)"/>
+    </linearGradient>
+    <linearGradient id="cp-selected" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="rgba(99,102,241,0.18)"/>
+      <stop offset="100%" stop-color="rgba(99,102,241,0.05)"/>
+    </linearGradient>
+    <filter id="cp-glow">
+      <feGaussianBlur stdDeviation="3" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <clipPath id="cp-clip">
+      <rect x="150" y="8" width="500" height="184" rx="14"/>
+    </clipPath>
+  </defs>
+
+  <!-- Blurred dark background -->
+  <rect width="800" height="200" fill="url(#cp-bg)"/>
+  <g stroke="rgba(255,255,255,0.02)" stroke-width="1">
+    <line x1="0" y1="50" x2="800" y2="50"/><line x1="0" y1="100" x2="800" y2="100"/><line x1="0" y1="150" x2="800" y2="150"/>
+    <line x1="100" y1="0" x2="100" y2="200"/><line x1="200" y1="0" x2="200" y2="200"/>
+    <line x1="400" y1="0" x2="400" y2="200"/><line x1="600" y1="0" x2="600" y2="200"/><line x1="700" y1="0" x2="700" y2="200"/>
+  </g>
+
+  <!-- Overlay blur hint (vignette around palette) -->
+  <rect width="800" height="200" fill="rgba(0,0,0,0.5)"/>
+
+  <!-- Palette shadow -->
+  <rect x="154" y="14" width="500" height="184" rx="14" fill="rgba(0,0,0,0.6)"/>
+
+  <!-- Palette body -->
+  <rect x="150" y="8" width="500" height="184" rx="14"
+    fill="url(#cp-palette-bg)"
+    stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+  <!-- Top glow ring -->
+  <rect x="150" y="8" width="500" height="1" rx="1" fill="rgba(99,102,241,0.5)" filter="url(#cp-glow)"/>
+
+  <!-- Search bar -->
+  <rect x="150" y="8" width="500" height="44" rx="14" fill="rgba(255,255,255,0.02)"/>
+  <rect x="150" y="51" width="500" height="1" fill="rgba(255,255,255,0.06)"/>
+  <!-- Search icon -->
+  <text x="178" y="35" font-family="'Segoe UI',sans-serif" font-size="15" fill="rgba(255,255,255,0.25)">⌕</text>
+  <!-- Search input text — animated cursor -->
+  <text x="202" y="36" font-family="'Segoe UI',system-ui,sans-serif" font-size="14" fill="rgba(232,232,240,0.6)">Browse components</text>
+  <!-- Caret -->
+  <rect x="342" y="20" width="2" height="18" rx="1" fill="#6366f1">
+    <animate attributeName="opacity" values="1;1;0;0;1" dur="1s" repeatCount="indefinite" calcMode="linear" keyTimes="0;0.45;0.5;0.95;1"/>
+  </rect>
+  <!-- ESC badge -->
+  <rect x="608" y="17" width="32" height="20" rx="5" fill="rgba(255,255,255,0.06)" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+  <text x="624" y="31" text-anchor="middle" font-family="'Courier New',monospace" font-size="10" fill="rgba(255,255,255,0.3)">esc</text>
+
+  <!-- Group label -->
+  <text x="170" y="74" font-family="'Segoe UI',sans-serif" font-size="9" font-weight="600" letter-spacing="0.12em" fill="rgba(255,255,255,0.2)">COMPONENTS</text>
+
+  <!-- Row 1 — Selected (indigo highlight) -->
+  <rect x="150" y="78" width="500" height="34" fill="url(#cp-selected)"/>
+  <rect x="150" y="78" width="2.5" height="34" fill="#6366f1" filter="url(#cp-glow)"/>
+  <rect x="162" y="89" width="22" height="22" rx="7" fill="rgba(99,102,241,0.15)"/>
+  <text x="173" y="104" text-anchor="middle" font-family="'Segoe UI',sans-serif" font-size="12" fill="rgba(232,232,240,0.5)">◈</text>
+  <text x="196" y="101" font-family="'Segoe UI',sans-serif" font-size="13" fill="#e8e8f0">SpotlightCard</text>
+  <text x="196" y="114" font-family="'Segoe UI',sans-serif" font-size="11" fill="rgba(232,232,240,0.3)">Mouse-tracking radial spotlight</text>
+
+  <!-- Row 2 -->
+  <rect x="162" y="123" width="22" height="22" rx="7" fill="rgba(255,255,255,0.04)"/>
+  <text x="173" y="138" text-anchor="middle" font-family="'Segoe UI',sans-serif" font-size="12" fill="rgba(232,232,240,0.4)">◇</text>
+  <text x="196" y="135" font-family="'Segoe UI',sans-serif" font-size="13" fill="rgba(232,232,240,0.55)">BeamButton</text>
+  <text x="196" y="148" font-family="'Segoe UI',sans-serif" font-size="11" fill="rgba(232,232,240,0.25)">Animated light sweep on hover</text>
+
+  <!-- Row 3 — partially visible -->
+  <rect x="162" y="158" width="22" height="22" rx="7" fill="rgba(255,255,255,0.04)"/>
+  <text x="173" y="173" text-anchor="middle" font-family="'Segoe UI',sans-serif" font-size="12" fill="rgba(232,232,240,0.4)">◉</text>
+  <text x="196" y="170" font-family="'Segoe UI',sans-serif" font-size="13" fill="rgba(232,232,240,0.4)">AuroraCard</text>
+
+  <!-- Footer -->
+  <rect x="150" y="183" width="500" height="1" fill="rgba(255,255,255,0.05)"/>
+  <g font-family="'Segoe UI',sans-serif" font-size="10" fill="rgba(255,255,255,0.2)">
+    <rect x="162" y="187" width="22" height="14" rx="4" fill="rgba(255,255,255,0.06)" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+    <text x="173" y="198" text-anchor="middle">↵</text>
+    <text x="188" y="198">select</text>
+    <rect x="224" y="187" width="22" height="14" rx="4" fill="rgba(255,255,255,0.06)" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+    <text x="235" y="198" text-anchor="middle">↑↓</text>
+    <text x="250" y="198">navigate</text>
+    <rect x="295" y="187" width="26" height="14" rx="4" fill="rgba(255,255,255,0.06)" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+    <text x="308" y="198" text-anchor="middle">⌘K</text>
+    <text x="325" y="198">toggle</text>
+  </g>
+
+  <rect x="0" y="0" width="800" height="1" fill="url(#cp-top)"/>
+  <text x="26" y="105" text-anchor="middle" font-family="'Courier New',monospace" font-size="10" fill="rgba(255,255,255,0.08)" transform="rotate(-90 26 105)">@kayf/ui</text>
+  <text x="774" y="105" text-anchor="middle" font-family="'Courier New',monospace" font-size="10" fill="rgba(255,255,255,0.08)" transform="rotate(90 774 105)">@kayf/ui</text>
+</svg>
