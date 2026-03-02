@@ -1,6 +1,6 @@
 <div align="center">
 
-![hero](svg-sources/hero.svg)
+![hero](https://raw.githubusercontent.com/kayf-dev/kayf-ui/main/.github/assets/hero.png)
 
 <br/>
 
@@ -71,7 +71,9 @@ import '@kayf/ui'
 
 ### `<kayf-beam-button>`
 
-> A button with an animated light sweep on hover, plus ripple on click.
+![beam-button](https://raw.githubusercontent.com/kayf-dev/kayf-ui/main/.github/assets/beam-button.png)
+
+> A button with an animated light beam sweep on hover, plus ripple on click.
 
 ```html
 <kayf-beam-button color="cyan" size="md">Launch Mission</kayf-beam-button>
@@ -86,6 +88,8 @@ import '@kayf/ui'
 ---
 
 ### `<kayf-aurora-card>`
+
+![aurora-card](https://raw.githubusercontent.com/kayf-dev/kayf-ui/main/.github/assets/aurora-card.png)
 
 > Canvas-animated aurora blobs drifting behind a glassmorphism surface.
 
@@ -105,7 +109,9 @@ import '@kayf/ui'
 
 ### `<kayf-glitch-text>`
 
-> Text that randomly glitches — perfect for terminal UIs and game HUDs.
+![glitch-text](https://raw.githubusercontent.com/kayf-dev/kayf-ui/main/.github/assets/glitch-text.png)
+
+> Text that randomly glitches with RGB channel splitting — perfect for terminal UIs and game HUDs.
 
 ```html
 <kayf-glitch-text intensity="0.5" interval="3000">SYSTEM ONLINE</kayf-glitch-text>
@@ -121,7 +127,9 @@ import '@kayf/ui'
 
 ### `<kayf-hud-panel>`
 
-> A scanline-overlay panel with HUD corner accents — straight out of a sci-fi cockpit.
+![hud-panel](https://raw.githubusercontent.com/kayf-dev/kayf-ui/main/.github/assets/hud-panel.png)
+
+> A scanline-overlay panel with animated HUD corner accents — straight out of a sci-fi cockpit.
 
 ```html
 <kayf-hud-panel label="SYSTEM STATUS" color="cyan">
@@ -137,7 +145,7 @@ import '@kayf/ui'
 
 ---
 
-### `<kayf-particle-field>` ✦ *new in 0.2.0*
+### `<kayf-particle-field>` ✦ *v0.2.0*
 
 ![particle-field](https://raw.githubusercontent.com/kayf-dev/kayf-ui/main/.github/assets/particle-field.png)
 
@@ -157,11 +165,11 @@ import '@kayf/ui'
 | `color` | `string` | `#6366f1` | Particle color (hex) |
 | `count` | `number` | `100` | Number of particles |
 | `speed` | `number` | `0.4` | Base movement speed |
-| `connect-distance` | `number` | `100` | Max distance to draw lines (px) |
+| `connect-distance` | `number` | `100` | Max line distance (px) |
 
 ---
 
-### `<kayf-counter>` ✦ *new in 0.2.0*
+### `<kayf-counter>` ✦ *v0.2.0*
 
 ![counter](https://raw.githubusercontent.com/kayf-dev/kayf-ui/main/.github/assets/counter.png)
 
@@ -191,11 +199,11 @@ import '@kayf/ui'
 
 ---
 
-### `<kayf-magnetic-btn>` ✦ *new in 0.2.0*
+### `<kayf-magnetic-btn>` ✦ *v0.2.0*
 
 ![magnetic-btn](https://raw.githubusercontent.com/kayf-dev/kayf-ui/main/.github/assets/magnetic-btn.png)
 
-> A wrapper that makes any button magnetically attracted to the cursor. Physics-based lerp animation.
+> A wrapper that makes any element magnetically attracted to the cursor. Physics-based lerp animation.
 
 ```html
 <kayf-magnetic-btn strength="0.4">
@@ -207,6 +215,123 @@ import '@kayf/ui'
 |-----------|------|---------|-------------|
 | `strength` | `number` | `0.4` | Pull strength 0–1 |
 | `radius` | `number` | `1.5` | Effect radius (× element size) |
+
+---
+
+### `<kayf-holographic-card>` ✦ *v0.3.0*
+
+![holographic-card](https://raw.githubusercontent.com/kayf-dev/kayf-ui/main/.github/assets/holographic-card.png)
+
+> 3D perspective tilt card with rainbow holographic shine. Lerp-smoothed mouse tracking, conic-gradient rainbow that follows your cursor.
+
+```html
+<kayf-holographic-card tilt-max="15" shine-opacity="1" scale="1.03">
+  <div style="padding: 40px;">Your content here</div>
+</kayf-holographic-card>
+```
+
+| Attribute | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `tilt-max` | `number` | `15` | Max tilt angle in degrees |
+| `shine-opacity` | `number` | `1` | Rainbow shine intensity 0–1 |
+| `scale` | `number` | `1.03` | Scale on hover |
+
+---
+
+### `<kayf-neon-border>` ✦ *v0.3.0*
+
+![neon-border](https://raw.githubusercontent.com/kayf-dev/kayf-ui/main/.github/assets/neon-border.png)
+
+> Animated rotating neon border using CSS `@property` + `conic-gradient`. Wraps any content. A glowing dot travels continuously around the perimeter.
+
+```html
+<kayf-neon-border color="#6366f1" speed="3" thickness="2" glow="10" radius="12">
+  <div style="padding: 24px 40px;">Your content here</div>
+</kayf-neon-border>
+```
+
+| Attribute | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `color` | `string` | `#6366f1` | Neon color (hex) |
+| `speed` | `number` | `3` | Rotation speed in seconds |
+| `thickness` | `number` | `2` | Border thickness (px) |
+| `glow` | `number` | `10` | Glow blur radius (px) |
+| `radius` | `number` | `12` | Border radius (px) |
+
+---
+
+### `<kayf-typewriter>` ✦ *v0.3.0*
+
+![typewriter](https://raw.githubusercontent.com/kayf-dev/kayf-ui/main/.github/assets/typewriter.png)
+
+> Typewriter effect with organic character jitter, multi-line cycling, erase animation, and a blinking cursor.
+
+```html
+<kayf-typewriter
+  lines="Premium UI|Zero Dependencies|TypeScript First"
+  speed="60"
+  erase-speed="30"
+  pause="1800"
+  loop
+></kayf-typewriter>
+```
+
+| Attribute | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `lines` | `string` | — | Pipe-separated `\|` phrases to cycle |
+| `speed` | `number` | `60` | Typing speed (ms per char) |
+| `erase-speed` | `number` | `30` | Erase speed (ms per char) |
+| `pause` | `number` | `1800` | Pause after complete (ms) |
+| `delay` | `number` | `500` | Initial delay before start (ms) |
+| `loop` | `boolean` | `false` | Loop through lines continuously |
+
+---
+
+### `<kayf-command-palette>` ✦ *v0.3.0*
+
+![command-palette](https://raw.githubusercontent.com/kayf-dev/kayf-ui/main/.github/assets/command-palette.png)
+
+> Full-screen `⌘K` command palette with fuzzy search, grouped items, keyboard navigation, and shortcut display.
+
+```html
+<kayf-command-palette
+  placeholder="Search commands..."
+  hotkey="k"
+></kayf-command-palette>
+
+<script>
+  const palette = document.querySelector('kayf-command-palette')
+
+  palette.setItems([
+    { id: 'home',  group: 'Navigation', icon: '⌂', label: 'Go to Home',   shortcut: '⌘+1' },
+    { id: 'docs',  group: 'Navigation', icon: '◇', label: 'Documentation', shortcut: '⌘+D' },
+    { id: 'theme', group: 'Actions',    icon: '◕', label: 'Toggle Theme',
+      action: () => document.body.classList.toggle('dark') },
+  ])
+
+  palette.addEventListener('kayf-select', (e) => {
+    console.log('Selected:', e.detail)
+  })
+</script>
+```
+
+| Attribute | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `placeholder` | `string` | `Search commands...` | Input placeholder |
+| `hotkey` | `string` | `k` | Key for `⌘/Ctrl +` shortcut |
+
+| Method | Description |
+|--------|-------------|
+| `setItems(items[])` | Set the command list |
+| `open()` | Open programmatically |
+| `close()` | Close programmatically |
+| `toggle()` | Toggle open/close |
+
+| Event | Detail | Description |
+|-------|--------|-------------|
+| `kayf-select` | `CommandItem` | Fired when item is selected |
+| `kayf-open` | — | Fired on open |
+| `kayf-close` | — | Fired on close |
 
 ---
 
@@ -230,9 +355,9 @@ Or pass any hex value directly: `color="#ff6b35"`
 
 | Format | File | Size |
 |--------|------|------|
-| ESM | `dist/kayf-ui.esm.js` | ~18kb gzip |
-| CJS | `dist/kayf-ui.cjs.js` | ~19kb gzip |
-| UMD | `dist/kayf-ui.umd.js` | ~20kb gzip |
+| ESM | `dist/kayf-ui.esm.js` | ~22kb gzip |
+| CJS | `dist/kayf-ui.cjs.js` | ~23kb gzip |
+| UMD | `dist/kayf-ui.umd.js` | ~24kb gzip |
 | Types | `dist/index.d.ts` | included |
 
 ---
@@ -240,11 +365,18 @@ Or pass any hex value directly: `color="#ff6b35"`
 ## 🛠 TypeScript Usage
 
 ```ts
-import { KayfParticleField, KayfCounter, KayfMagneticBtn } from '@kayf/ui'
-import type { ColorVariant } from '@kayf/ui'
+import '@kayf/ui'
+import type { ColorVariant, CommandItem } from '@kayf/ui'
 
-const field = document.querySelector<KayfParticleField>('kayf-particle-field')
-field?.setAttribute('count', '200')
+// Typed element access
+const palette = document.querySelector<HTMLElement & {
+  setItems: (items: CommandItem[]) => void
+  open: () => void
+}>('kayf-command-palette')
+
+palette?.setItems([
+  { id: '1', label: 'Launch', icon: '◈', action: () => console.log('launched') }
+])
 ```
 
 ---
@@ -255,11 +387,21 @@ field?.setAttribute('count', '200')
 <summary><strong>React</strong></summary>
 
 ```tsx
+// global.d.ts — add JSX types for all components
 declare namespace JSX {
   interface IntrinsicElements {
-    'kayf-particle-field': React.HTMLAttributes<HTMLElement> & { color?: string; count?: number }
-    'kayf-counter': React.HTMLAttributes<HTMLElement> & { value?: number; label?: string }
-    'kayf-magnetic-btn': React.HTMLAttributes<HTMLElement> & { strength?: number }
+    'kayf-spotlight-card':   React.HTMLAttributes<HTMLElement> & { color?: string; radius?: number }
+    'kayf-beam-button':      React.HTMLAttributes<HTMLElement> & { color?: string; size?: string }
+    'kayf-aurora-card':      React.HTMLAttributes<HTMLElement> & { speed?: number; blur?: number }
+    'kayf-glitch-text':      React.HTMLAttributes<HTMLElement> & { intensity?: number; interval?: number }
+    'kayf-hud-panel':        React.HTMLAttributes<HTMLElement> & { label?: string; color?: string }
+    'kayf-particle-field':   React.HTMLAttributes<HTMLElement> & { color?: string; count?: number }
+    'kayf-counter':          React.HTMLAttributes<HTMLElement> & { value?: number; label?: string; suffix?: string }
+    'kayf-magnetic-btn':     React.HTMLAttributes<HTMLElement> & { strength?: number; radius?: number }
+    'kayf-holographic-card': React.HTMLAttributes<HTMLElement> & { 'tilt-max'?: number; 'shine-opacity'?: number }
+    'kayf-neon-border':      React.HTMLAttributes<HTMLElement> & { color?: string; speed?: number }
+    'kayf-typewriter':       React.HTMLAttributes<HTMLElement> & { lines?: string; speed?: number; loop?: boolean }
+    'kayf-command-palette':  React.HTMLAttributes<HTMLElement> & { placeholder?: string; hotkey?: string }
   }
 }
 ```
@@ -285,7 +427,9 @@ export default function Hero() {
 // vite.config.ts
 export default defineConfig({
   plugins: [vue({
-    template: { compilerOptions: { isCustomElement: tag => tag.startsWith('kayf-') } }
+    template: {
+      compilerOptions: { isCustomElement: tag => tag.startsWith('kayf-') }
+    }
   })]
 })
 ```
@@ -294,8 +438,11 @@ export default defineConfig({
 <script setup>
 import '@kayf/ui'
 </script>
+
 <template>
-  <kayf-particle-field color="#6366f1" :count="120" />
+  <kayf-holographic-card tilt-max="20">
+    <div class="card-content">Your content</div>
+  </kayf-holographic-card>
 </template>
 ```
 
@@ -307,9 +454,10 @@ import '@kayf/ui'
 ```html
 <script type="module" src="https://unpkg.com/@kayf/ui/dist/kayf-ui.esm.js"></script>
 
-<kayf-aurora-card>
-  <h1>No framework needed.</h1>
-</kayf-aurora-card>
+<kayf-command-palette placeholder="Search..."></kayf-command-palette>
+<kayf-neon-border color="#06b6d4" speed="2">
+  <button>Get Started</button>
+</kayf-neon-border>
 ```
 
 </details>
@@ -320,18 +468,22 @@ import '@kayf/ui'
 
 | Component | Status |
 |-----------|--------|
-| SpotlightCard | ✅ v0.1.0 |
-| BeamButton | ✅ v0.1.0 |
-| AuroraCard | ✅ v0.1.0 |
-| GlitchText | ✅ v0.1.0 |
-| HudPanel | ✅ v0.1.0 |
-| ParticleField | ✅ v0.2.0 |
-| CounterUp | ✅ v0.2.0 |
-| MagneticButton | ✅ v0.2.0 |
-| HolographicCard | 🔜 v0.3.0 |
-| NeonBorder | 🔜 v0.3.0 |
-| CommandPalette | 🔜 v0.3.0 |
-| 3D TiltCard | 🔜 v0.3.0 |
+| `kayf-spotlight-card` | ✅ v0.1.0 |
+| `kayf-beam-button` | ✅ v0.1.0 |
+| `kayf-aurora-card` | ✅ v0.1.0 |
+| `kayf-glitch-text` | ✅ v0.1.0 |
+| `kayf-hud-panel` | ✅ v0.1.0 |
+| `kayf-particle-field` | ✅ v0.2.0 |
+| `kayf-counter` | ✅ v0.2.0 |
+| `kayf-magnetic-btn` | ✅ v0.2.0 |
+| `kayf-holographic-card` | ✅ v0.3.0 |
+| `kayf-neon-border` | ✅ v0.3.0 |
+| `kayf-typewriter` | ✅ v0.3.0 |
+| `kayf-command-palette` | ✅ v0.3.0 |
+| `kayf-3d-tilt-card` | 🔜 v0.4.0 |
+| `kayf-liquid-button` | 🔜 v0.4.0 |
+| `kayf-noise-card` | 🔜 v0.4.0 |
+| `kayf-ripple-grid` | 🔜 v0.4.0 |
 
 ---
 
