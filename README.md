@@ -1,6 +1,6 @@
 <div align="center">
 
-![hero](https://raw.githubusercontent.com/kayf-dev/kayf-ui/main/.github/assets/hero.png)
+![hero](https://raw.githubusercontent.com/vKAYFv/kayf-ui/main/.github/assets/hero.png)
 
 <br/>
 
@@ -10,6 +10,8 @@
 [![bundle size](https://img.shields.io/bundlephobia/minzip/%40kayf%2Fui?style=flat-square&color=10b981&labelColor=0a0a0f&label=gzip)](https://bundlephobia.com/package/@kayf/ui)
 [![TypeScript](https://img.shields.io/badge/TypeScript-strict-3178c6?style=flat-square&labelColor=0a0a0f)](https://www.typescriptlang.org/)
 [![Storybook](https://img.shields.io/badge/Storybook-live-FF4785?style=flat-square&logo=storybook&logoColor=white&labelColor=0a0a0f)](https://69a564b0b16ce689ef423df8-pbjbpnksoj.chromatic.com/)
+
+**[→ Live Storybook](https://69a564b0b16ce689ef423df8-pbjbpnksoj.chromatic.com/)** · Interactive demos for all 12 components
 
 </div>
 
@@ -50,11 +52,11 @@ import '@kayf/ui'
 
 ## 🧩 Components
 
+> **See all components live → [Storybook](https://69a564b0b16ce689ef423df8-pbjbpnksoj.chromatic.com/)**
+
 ### `<kayf-spotlight-card>`
 
-![spotlight-card](https://raw.githubusercontent.com/kayf-dev/kayf-ui/main/.github/assets/spotlight-card.png)
-
-> A card that casts a radial spotlight following your cursor — revealing depth through light.
+A card with a radial spotlight that follows your cursor, revealing depth through light.
 
 ```html
 <kayf-spotlight-card color="indigo" radius="300">
@@ -71,9 +73,7 @@ import '@kayf/ui'
 
 ### `<kayf-beam-button>`
 
-![beam-button](https://raw.githubusercontent.com/kayf-dev/kayf-ui/main/.github/assets/beam-button.png)
-
-> A button with an animated light beam sweep on hover, plus ripple on click.
+A button with an animated light beam sweep on hover, plus ripple on click.
 
 ```html
 <kayf-beam-button color="cyan" size="md">Launch Mission</kayf-beam-button>
@@ -89,9 +89,7 @@ import '@kayf/ui'
 
 ### `<kayf-aurora-card>`
 
-![aurora-card](https://raw.githubusercontent.com/kayf-dev/kayf-ui/main/.github/assets/aurora-card.png)
-
-> Canvas-animated aurora blobs drifting behind a glassmorphism surface.
+Canvas-animated aurora blobs drifting behind a glassmorphism surface.
 
 ```html
 <kayf-aurora-card speed="0.5" blur="60" opacity="0.6">
@@ -109,9 +107,7 @@ import '@kayf/ui'
 
 ### `<kayf-glitch-text>`
 
-![glitch-text](https://raw.githubusercontent.com/kayf-dev/kayf-ui/main/.github/assets/glitch-text.png)
-
-> Text that randomly glitches with RGB channel splitting — perfect for terminal UIs and game HUDs.
+Text that randomly glitches with RGB channel splitting — perfect for terminals and game HUDs.
 
 ```html
 <kayf-glitch-text intensity="0.5" interval="3000">SYSTEM ONLINE</kayf-glitch-text>
@@ -127,13 +123,11 @@ import '@kayf/ui'
 
 ### `<kayf-hud-panel>`
 
-![hud-panel](https://raw.githubusercontent.com/kayf-dev/kayf-ui/main/.github/assets/hud-panel.png)
-
-> A scanline-overlay panel with animated HUD corner accents — straight out of a sci-fi cockpit.
+A sci-fi HUD panel with animated corner accents and scanline overlay.
 
 ```html
 <kayf-hud-panel label="SYSTEM STATUS" color="cyan">
-  <div>Your dashboard content here</div>
+  <div>Your dashboard content</div>
 </kayf-hud-panel>
 ```
 
@@ -147,9 +141,7 @@ import '@kayf/ui'
 
 ### `<kayf-particle-field>` ✦ *v0.2.0*
 
-![particle-field](https://raw.githubusercontent.com/kayf-dev/kayf-ui/main/.github/assets/particle-field.png)
-
-> An interactive canvas particle system — particles connect with lines and repel from the cursor.
+Interactive canvas particle system — particles connect with lines and repel from the cursor.
 
 ```html
 <kayf-particle-field
@@ -171,43 +163,32 @@ import '@kayf/ui'
 
 ### `<kayf-counter>` ✦ *v0.2.0*
 
-![counter](https://raw.githubusercontent.com/kayf-dev/kayf-ui/main/.github/assets/counter.png)
-
-> Animated number counter that triggers on scroll into view with easeOutExpo easing.
+Animated number counter triggered on scroll into view with easeOutExpo easing.
 
 ```html
-<kayf-counter
-  value="98742"
-  suffix="+"
-  label="Active Users"
-  color="#6366f1"
-  icon="◎"
-  duration="2000"
-></kayf-counter>
+<kayf-counter value="98742" suffix="+" label="Active Users" color="#6366f1" duration="2000"></kayf-counter>
 ```
 
 | Attribute | Type | Default | Description |
 |-----------|------|---------|-------------|
-| `value` | `number` | `0` | Target number to count to |
+| `value` | `number` | `0` | Target number |
 | `label` | `string` | `Metric` | Label below the number |
-| `suffix` | `string` | — | Appended text (e.g. `+`, `ms`, `%`) |
-| `prefix` | `string` | — | Prepended text (e.g. `$`) |
+| `suffix` | `string` | — | Appended text (`+`, `ms`, `%`) |
+| `prefix` | `string` | — | Prepended text (`$`) |
 | `decimals` | `number` | `0` | Decimal places |
 | `color` | `string` | `#6366f1` | Accent color (hex) |
-| `icon` | `string` | `◎` | Icon character above value |
+| `icon` | `string` | `◎` | Icon above value |
 | `duration` | `number` | `2000` | Animation duration (ms) |
 
 ---
 
 ### `<kayf-magnetic-btn>` ✦ *v0.2.0*
 
-![magnetic-btn](https://raw.githubusercontent.com/kayf-dev/kayf-ui/main/.github/assets/magnetic-btn.png)
-
-> A wrapper that makes any element magnetically attracted to the cursor. Physics-based lerp animation.
+Wraps any element with a magnetic cursor attraction effect. Physics-based lerp spring.
 
 ```html
 <kayf-magnetic-btn strength="0.4">
-  <button class="your-button">Get Started</button>
+  <button>Get Started</button>
 </kayf-magnetic-btn>
 ```
 
@@ -220,13 +201,11 @@ import '@kayf/ui'
 
 ### `<kayf-holographic-card>` ✦ *v0.3.0*
 
-![holographic-card](https://raw.githubusercontent.com/kayf-dev/kayf-ui/main/.github/assets/holographic-card.png)
-
-> 3D perspective tilt card with rainbow holographic shine. Lerp-smoothed mouse tracking, conic-gradient rainbow that follows your cursor.
+3D perspective tilt card with rainbow holographic shine. Lerp-smoothed mouse tracking.
 
 ```html
 <kayf-holographic-card tilt-max="15" shine-opacity="1" scale="1.03">
-  <div style="padding: 40px;">Your content here</div>
+  <div style="padding: 40px;">Your content</div>
 </kayf-holographic-card>
 ```
 
@@ -240,20 +219,18 @@ import '@kayf/ui'
 
 ### `<kayf-neon-border>` ✦ *v0.3.0*
 
-![neon-border](https://raw.githubusercontent.com/kayf-dev/kayf-ui/main/.github/assets/neon-border.png)
-
-> Animated rotating neon border using CSS `@property` + `conic-gradient`. Wraps any content. A glowing dot travels continuously around the perimeter.
+Animated rotating neon border using CSS `@property` + `conic-gradient`. Wraps any content.
 
 ```html
 <kayf-neon-border color="#6366f1" speed="3" thickness="2" glow="10" radius="12">
-  <div style="padding: 24px 40px;">Your content here</div>
+  <div style="padding: 24px 40px;">Your content</div>
 </kayf-neon-border>
 ```
 
 | Attribute | Type | Default | Description |
 |-----------|------|---------|-------------|
 | `color` | `string` | `#6366f1` | Neon color (hex) |
-| `speed` | `number` | `3` | Rotation speed in seconds |
+| `speed` | `number` | `3` | Rotation speed (seconds) |
 | `thickness` | `number` | `2` | Border thickness (px) |
 | `glow` | `number` | `10` | Glow blur radius (px) |
 | `radius` | `number` | `12` | Border radius (px) |
@@ -262,9 +239,7 @@ import '@kayf/ui'
 
 ### `<kayf-typewriter>` ✦ *v0.3.0*
 
-![typewriter](https://raw.githubusercontent.com/kayf-dev/kayf-ui/main/.github/assets/typewriter.png)
-
-> Typewriter effect with organic character jitter, multi-line cycling, erase animation, and a blinking cursor.
+Typewriter effect with organic character jitter, multi-line cycling, and erase animation.
 
 ```html
 <kayf-typewriter
@@ -278,60 +253,46 @@ import '@kayf/ui'
 
 | Attribute | Type | Default | Description |
 |-----------|------|---------|-------------|
-| `lines` | `string` | — | Pipe-separated `\|` phrases to cycle |
-| `speed` | `number` | `60` | Typing speed (ms per char) |
-| `erase-speed` | `number` | `30` | Erase speed (ms per char) |
+| `lines` | `string` | — | Pipe-separated `\|` phrases |
+| `speed` | `number` | `60` | Typing speed (ms/char) |
+| `erase-speed` | `number` | `30` | Erase speed (ms/char) |
 | `pause` | `number` | `1800` | Pause after complete (ms) |
-| `delay` | `number` | `500` | Initial delay before start (ms) |
-| `loop` | `boolean` | `false` | Loop through lines continuously |
+| `delay` | `number` | `500` | Initial delay (ms) |
+| `loop` | `boolean` | `false` | Loop continuously |
 
 ---
 
 ### `<kayf-command-palette>` ✦ *v0.3.0*
 
-![command-palette](https://raw.githubusercontent.com/kayf-dev/kayf-ui/main/.github/assets/command-palette.png)
-
-> Full-screen `⌘K` command palette with fuzzy search, grouped items, keyboard navigation, and shortcut display.
+Full-screen `⌘K` command palette with fuzzy search, grouped items, and keyboard navigation.
 
 ```html
-<kayf-command-palette
-  placeholder="Search commands..."
-  hotkey="k"
-></kayf-command-palette>
+<kayf-command-palette placeholder="Search commands..." hotkey="k"></kayf-command-palette>
 
 <script>
-  const palette = document.querySelector('kayf-command-palette')
-
-  palette.setItems([
-    { id: 'home',  group: 'Navigation', icon: '⌂', label: 'Go to Home',   shortcut: '⌘+1' },
-    { id: 'docs',  group: 'Navigation', icon: '◇', label: 'Documentation', shortcut: '⌘+D' },
-    { id: 'theme', group: 'Actions',    icon: '◕', label: 'Toggle Theme',
+  document.querySelector('kayf-command-palette').setItems([
+    { id: 'home', group: 'Navigation', icon: '⌂', label: 'Go to Home', shortcut: '⌘+1' },
+    { id: 'docs', group: 'Navigation', icon: '◇', label: 'Documentation' },
+    { id: 'theme', group: 'Actions',   icon: '◕', label: 'Toggle Theme',
       action: () => document.body.classList.toggle('dark') },
   ])
-
-  palette.addEventListener('kayf-select', (e) => {
-    console.log('Selected:', e.detail)
-  })
 </script>
 ```
 
 | Attribute | Type | Default | Description |
 |-----------|------|---------|-------------|
 | `placeholder` | `string` | `Search commands...` | Input placeholder |
-| `hotkey` | `string` | `k` | Key for `⌘/Ctrl +` shortcut |
+| `hotkey` | `string` | `k` | `⌘/Ctrl +` key |
 
 | Method | Description |
 |--------|-------------|
 | `setItems(items[])` | Set the command list |
-| `open()` | Open programmatically |
-| `close()` | Close programmatically |
-| `toggle()` | Toggle open/close |
+| `open()` / `close()` / `toggle()` | Control visibility |
 
 | Event | Detail | Description |
 |-------|--------|-------------|
-| `kayf-select` | `CommandItem` | Fired when item is selected |
-| `kayf-open` | — | Fired on open |
-| `kayf-close` | — | Fired on close |
+| `kayf-select` | `CommandItem` | Item selected |
+| `kayf-open` / `kayf-close` | — | Open/close fired |
 
 ---
 
@@ -347,7 +308,7 @@ type ColorVariant =
   | 'red'      // #ef4444
 ```
 
-Or pass any hex value directly: `color="#ff6b35"`
+Or pass any hex value: `color="#ff6b35"`
 
 ---
 
@@ -368,10 +329,8 @@ Or pass any hex value directly: `color="#ff6b35"`
 import '@kayf/ui'
 import type { ColorVariant, CommandItem } from '@kayf/ui'
 
-// Typed element access
 const palette = document.querySelector<HTMLElement & {
   setItems: (items: CommandItem[]) => void
-  open: () => void
 }>('kayf-command-palette')
 
 palette?.setItems([
@@ -387,20 +346,20 @@ palette?.setItems([
 <summary><strong>React</strong></summary>
 
 ```tsx
-// global.d.ts — add JSX types for all components
+// global.d.ts
 declare namespace JSX {
   interface IntrinsicElements {
     'kayf-spotlight-card':   React.HTMLAttributes<HTMLElement> & { color?: string; radius?: number }
-    'kayf-beam-button':      React.HTMLAttributes<HTMLElement> & { color?: string; size?: string }
-    'kayf-aurora-card':      React.HTMLAttributes<HTMLElement> & { speed?: number; blur?: number }
-    'kayf-glitch-text':      React.HTMLAttributes<HTMLElement> & { intensity?: number; interval?: number }
-    'kayf-hud-panel':        React.HTMLAttributes<HTMLElement> & { label?: string; color?: string }
-    'kayf-particle-field':   React.HTMLAttributes<HTMLElement> & { color?: string; count?: number }
-    'kayf-counter':          React.HTMLAttributes<HTMLElement> & { value?: number; label?: string; suffix?: string }
+    'kayf-beam-button':      React.HTMLAttributes<HTMLElement> & { color?: string; size?: string; disabled?: boolean }
+    'kayf-aurora-card':      React.HTMLAttributes<HTMLElement> & { speed?: number; blur?: number; opacity?: number }
+    'kayf-glitch-text':      React.HTMLAttributes<HTMLElement> & { intensity?: number; interval?: number; color?: string }
+    'kayf-hud-panel':        React.HTMLAttributes<HTMLElement> & { label?: string; color?: string; scanlines?: boolean }
+    'kayf-particle-field':   React.HTMLAttributes<HTMLElement> & { color?: string; count?: number; speed?: number }
+    'kayf-counter':          React.HTMLAttributes<HTMLElement> & { value?: number; label?: string; suffix?: string; color?: string }
     'kayf-magnetic-btn':     React.HTMLAttributes<HTMLElement> & { strength?: number; radius?: number }
-    'kayf-holographic-card': React.HTMLAttributes<HTMLElement> & { 'tilt-max'?: number; 'shine-opacity'?: number }
-    'kayf-neon-border':      React.HTMLAttributes<HTMLElement> & { color?: string; speed?: number }
-    'kayf-typewriter':       React.HTMLAttributes<HTMLElement> & { lines?: string; speed?: number; loop?: boolean }
+    'kayf-holographic-card': React.HTMLAttributes<HTMLElement> & { 'tilt-max'?: number; 'shine-opacity'?: number; scale?: number }
+    'kayf-neon-border':      React.HTMLAttributes<HTMLElement> & { color?: string; speed?: number; thickness?: number; glow?: number }
+    'kayf-typewriter':       React.HTMLAttributes<HTMLElement> & { lines?: string; speed?: number; loop?: boolean; pause?: number }
     'kayf-command-palette':  React.HTMLAttributes<HTMLElement> & { placeholder?: string; hotkey?: string }
   }
 }
@@ -412,7 +371,7 @@ import '@kayf/ui'
 export default function Hero() {
   return (
     <kayf-magnetic-btn strength={0.4}>
-      <button className="btn-primary">Launch App</button>
+      <button className="btn">Launch App</button>
     </kayf-magnetic-btn>
   )
 }
@@ -427,9 +386,7 @@ export default function Hero() {
 // vite.config.ts
 export default defineConfig({
   plugins: [vue({
-    template: {
-      compilerOptions: { isCustomElement: tag => tag.startsWith('kayf-') }
-    }
+    template: { compilerOptions: { isCustomElement: tag => tag.startsWith('kayf-') } }
   })]
 })
 ```
@@ -438,7 +395,6 @@ export default defineConfig({
 <script setup>
 import '@kayf/ui'
 </script>
-
 <template>
   <kayf-holographic-card tilt-max="20">
     <div class="card-content">Your content</div>
@@ -454,10 +410,11 @@ import '@kayf/ui'
 ```html
 <script type="module" src="https://unpkg.com/@kayf/ui/dist/kayf-ui.esm.js"></script>
 
-<kayf-command-palette placeholder="Search..."></kayf-command-palette>
 <kayf-neon-border color="#06b6d4" speed="2">
   <button>Get Started</button>
 </kayf-neon-border>
+
+<kayf-command-palette placeholder="Search..."></kayf-command-palette>
 ```
 
 </details>
@@ -480,10 +437,10 @@ import '@kayf/ui'
 | `kayf-neon-border` | ✅ v0.3.0 |
 | `kayf-typewriter` | ✅ v0.3.0 |
 | `kayf-command-palette` | ✅ v0.3.0 |
-| `kayf-3d-tilt-card` | 🔜 v0.4.0 |
 | `kayf-liquid-button` | 🔜 v0.4.0 |
 | `kayf-noise-card` | 🔜 v0.4.0 |
 | `kayf-ripple-grid` | 🔜 v0.4.0 |
+| `kayf-3d-tilt-card` | 🔜 v0.4.0 |
 
 ---
 
