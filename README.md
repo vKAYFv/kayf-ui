@@ -70,6 +70,8 @@ import '@kayf/ui'
 
 ### `<kayf-beam-button>`
 
+![beam-button preview](assets/beam-button.svg)
+
 > A button with an animated light sweep on hover, plus ripple on click.
 
 ```html
@@ -85,6 +87,8 @@ import '@kayf/ui'
 ---
 
 ### `<kayf-aurora-card>`
+
+![aurora-card preview](assets/aurora-card.svg)
 
 > Canvas-animated aurora blobs drifting behind a glassmorphism surface.
 
@@ -104,6 +108,8 @@ import '@kayf/ui'
 
 ### `<kayf-glitch-text>`
 
+![glitch-text preview](assets/glitch-text.svg)
+
 > Text that randomly glitches — perfect for terminal UIs and game HUDs.
 
 ```html
@@ -119,6 +125,8 @@ import '@kayf/ui'
 ---
 
 ### `<kayf-hud-panel>`
+
+![hud-panel preview](assets/hud-panel.svg)
 
 > A scanline-overlay panel with HUD corner accents — straight out of a sci-fi cockpit.
 
