@@ -1,6 +1,6 @@
 {
   "name": "@kayf/ui",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "description": "Premium dark glassmorphism Web Components. No React. No dependencies.",
   "type": "module",
   "main": "dist/kayf-ui.cjs.js",
