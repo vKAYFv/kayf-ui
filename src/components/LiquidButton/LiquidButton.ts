@@ -46,11 +46,6 @@ export class LiquidButton extends KayfElement {
         text-shadow: 0 0 20px ${this.color};
         transition: color 0.2s; z-index: 2; pointer-events: none;
       }
-      .bg {
-        position: absolute; inset: 0; border-radius: 8px;
-        background: rgba(255,255,255,0.04);
-        border: 1px solid rgba(255,255,255,0.1); z-index: 1;
-      }
     `;
   }
 
@@ -58,7 +53,6 @@ export class LiquidButton extends KayfElement {
     return `
       <div class="wrapper" id="wrapper">
         <canvas id="c"></canvas>
-        <div class="bg"></div>
         <div class="label">${this.label}</div>
       </div>
     `;
@@ -150,21 +144,40 @@ export class LiquidButton extends KayfElement {
     ctx.closePath();
 
     const [r, g, b] = this.parseColor(this.color);
-    const alpha = this.hovered ? 0.9 : 0.7;
+    const alpha = this.hovered ? 1 : 0.85;
 
+    // Solid fill — the blob IS the button shape
     const grd = ctx.createRadialGradient(cw / 2, ch / 2, 0, cw / 2, ch / 2, cw / 2);
-    grd.addColorStop(0,   `rgba(${r},${g},${b},${alpha * 0.6})`);
-    grd.addColorStop(0.5, `rgba(${r},${g},${b},${alpha * 0.3})`);
-    grd.addColorStop(1,   `rgba(${r},${g},${b},0.05)`);
+    grd.addColorStop(0,   `rgba(${r},${g},${b},${alpha * 0.35})`);
+    grd.addColorStop(0.5, `rgba(${r},${g},${b},${alpha * 0.18})`);
+    grd.addColorStop(1,   `rgba(${r},${g},${b},0)`);
     ctx.fillStyle = grd;
     ctx.fill();
 
+    // Glow stroke
     ctx.shadowColor = this.color;
-    ctx.shadowBlur  = this.hovered ? 20 : 10;
+    ctx.shadowBlur  = this.hovered ? 24 : 14;
     ctx.strokeStyle = `rgba(${r},${g},${b},${alpha})`;
-    ctx.lineWidth   = 1.5;
+    ctx.lineWidth   = this.hovered ? 2 : 1.5;
     ctx.stroke();
     ctx.shadowBlur  = 0;
+
+    // Inner highlight line on top edge
+    ctx.beginPath();
+    for (let i = 0; i < this.points.length; i++) {
+      const p    = this.points[i];
+      const next = this.points[(i + 1) % this.points.length];
+      const mx   = (p.x + next.x) / 2;
+      const my   = (p.y + next.y) / 2;
+      if (i === 0) ctx.moveTo(mx, my);
+      else ctx.quadraticCurveTo(p.x, p.y, mx, my);
+    }
+    ctx.closePath();
+    const highlight = ctx.createLinearGradient(0, 0, 0, ch);
+    highlight.addColorStop(0,   `rgba(255,255,255,0.12)`);
+    highlight.addColorStop(0.4, `rgba(255,255,255,0)`);
+    ctx.fillStyle = highlight;
+    ctx.fill();
   }
 
   private parseColor(hex: string): [number, number, number] {

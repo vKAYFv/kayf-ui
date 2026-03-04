@@ -6,10 +6,10 @@
 [![npm downloads](https://img.shields.io/npm/dm/%40kayf%2Fui?color=8b5cf6&labelColor=060810)](https://www.npmjs.com/package/@kayf/ui)
 [![Bundle Size](https://img.shields.io/bundlephobia/minzip/@kayf/ui?color=00ff88&labelColor=060810)](https://bundlephobia.com/package/@kayf/ui)
 [![License](https://img.shields.io/npm/l/%40kayf%2Fui?color=ffd700&labelColor=060810)](LICENSE)
-[![Storybook](https://img.shields.io/badge/Storybook-live-ff4785?labelColor=060810)](https://69a564b0b16ce689ef423df8-ftlzqeopyo.chromatic.com/)
+[![Storybook](https://img.shields.io/badge/Storybook-live-ff4785?labelColor=060810)](https://69a564b0b16ce689ef423df8-xoiwjakvnm.chromatic.com/)
 
 **Premium Dark Glassmorphism Web Components**  
-Native · No React · TypeScript · 12 Components
+Native · No React · TypeScript · 16 Components
 
 </div>
 
@@ -225,7 +225,7 @@ import '@kayf/ui';
 
 ## 📖 Documentation & Live Demos
 
-**🎮 [Interactive Storybook →](https://69a564b0b16ce689ef423df8-ftlzqeopyo.chromatic.com/)**
+**🎮 [Interactive Storybook →](https://69a564b0b16ce689ef423df8-xoiwjakvnm.chromatic.com/)**
 
 All components have live interactive stories with controls for every prop.
 
