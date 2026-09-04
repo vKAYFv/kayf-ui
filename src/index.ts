@@ -29,4 +29,12 @@ export { PrismButton } from './components/PrismButton/PrismButton'
 export { OrbitButton } from './components/OrbitButton/OrbitButton'
 export { HoldButton }  from './components/HoldButton/HoldButton'
 
-export const version = '0.6.0'
+// Product inputs and flows
+export { PhoneInput, phoneCountries } from './components/PhoneInput/PhoneInput'
+export type { PhoneCountry } from './components/PhoneInput/PhoneInput'
+export { LanguageSwitcher, defaultLanguages } from './components/LanguageSwitcher/LanguageSwitcher'
+export type { LanguageOption } from './components/LanguageSwitcher/LanguageSwitcher'
+export { AuthForm } from './components/AuthForm/AuthForm'
+export type { AuthMode, AuthSubmitDetail } from './components/AuthForm/AuthForm'
+
+export const version = '0.7.0'

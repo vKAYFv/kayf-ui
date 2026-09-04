@@ -7,6 +7,9 @@ const components = [
   { name: 'Hold Button', tag: 'kayf-hold-button', description: 'Deliberate hold-to-confirm interaction.', docs: 'components-holdbutton--docs', group: 'Actions' },
   { name: 'Beam Button', tag: 'kayf-beam-button', description: 'Versatile action with a focused light sweep.', docs: 'components-beambutton--docs', group: 'Actions' },
   { name: 'Magnetic Button', tag: 'kayf-magnetic-btn', description: 'Physics-based proximity wrapper.', docs: 'components-magneticbutton--docs', group: 'Actions' },
+  { name: 'Phone Input', tag: 'kayf-phone-input', description: 'Country-aware international phone field.', docs: 'components-phoneinput--docs', group: 'Inputs & flows' },
+  { name: 'Language Switcher', tag: 'kayf-language-switcher', description: 'Animated, keyboard-ready locale picker.', docs: 'components-languageswitcher--docs', group: 'Inputs & flows' },
+  { name: 'Auth Form', tag: 'kayf-auth-form', description: 'Sign-in and registration flow with validation.', docs: 'components-authform--docs', group: 'Inputs & flows' },
   { name: 'Spotlight Card', tag: 'kayf-spotlight-card', description: 'Pointer-aware glass surface.', docs: 'components-spotlightcard--docs', group: 'Surfaces' },
   { name: 'Aurora Card', tag: 'kayf-aurora-card', description: 'Fluid ambient canvas background.', docs: 'components-auroracard--docs', group: 'Surfaces' },
   { name: 'Holographic Card', tag: 'kayf-holographic-card', description: 'Restrained iridescent 3D material.', docs: 'components-holographiccard--docs', group: 'Surfaces' },
@@ -20,7 +23,7 @@ const components = [
   { name: 'Command Palette', tag: 'kayf-command-palette', description: 'Keyboard-first command navigation.', docs: 'components-commandpalette--docs', group: 'Motion & data' },
 ]
 
-const groups = ['Actions', 'Surfaces', 'Motion & data']
+const groups = ['Actions', 'Inputs & flows', 'Surfaces', 'Motion & data']
 
 const meta: Meta = {
   title: 'Welcome',
@@ -106,6 +109,17 @@ export const Introduction: Story = {
       .intro__button-cell > div { display: grid; justify-items: center; gap: 18px; }
       .intro__button-name { color: rgba(228,228,231,.34); font: 9px/1 ui-monospace, monospace; letter-spacing: .13em; text-transform: uppercase; }
 
+      .intro__product-lab { display: grid; grid-template-columns: minmax(0, .86fr) minmax(360px, 1.14fr); gap: 16px; padding: 18px; border: 1px solid rgba(255,255,255,.075); border-radius: 26px; background: radial-gradient(circle at 0 0, rgba(98,218,247,.07), transparent 35%), linear-gradient(145deg, #0d0d13, #09090d); }
+      .intro__product-stack { display: grid; align-content: center; gap: 26px; padding: clamp(18px, 5vw, 40px); border: 1px solid rgba(255,255,255,.055); border-radius: 19px; background: rgba(255,255,255,.016); }
+      .intro__product-copy span { color: #84e5fa; font: 650 9px/1 ui-monospace, monospace; letter-spacing: .14em; text-transform: uppercase; }
+      .intro__product-copy h3 { margin: 13px 0 9px; font-size: 25px; letter-spacing: -.04em; }
+      .intro__product-copy p { max-width: 400px; margin: 0; color: rgba(228,228,231,.43); font-size: 12px; line-height: 1.6; }
+      .intro__input-demo { display: grid; gap: 18px; }
+      .intro__language-row { display: flex; align-items: end; justify-content: space-between; gap: 12px; }
+      .intro__language-note { color: rgba(228,228,231,.32); font: 9px/1.5 ui-monospace, monospace; text-transform: uppercase; }
+      .intro__auth-demo { display: grid; place-items: center; padding: 14px; }
+      .intro__auth-demo kayf-auth-form { max-width: 390px; }
+
       .intro__principles { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
       .intro__principle { min-height: 190px; padding: 25px; border: 1px solid rgba(255,255,255,.065); border-radius: 17px; background: rgba(255,255,255,.018); }
       .intro__principle-index { display: block; margin-bottom: 44px; color: #9e94ff; font: 10px/1 ui-monospace, monospace; }
@@ -128,7 +142,7 @@ export const Introduction: Story = {
 
       @media (max-width: 820px) {
         .intro__section-head, .intro__quickstart { grid-template-columns: 1fr; }
-        .intro__button-lab, .intro__principles { grid-template-columns: 1fr; }
+        .intro__button-lab, .intro__product-lab, .intro__principles { grid-template-columns: 1fr; }
         .intro__button-cell { min-height: 130px; }
         .intro__catalog { grid-template-columns: repeat(2, minmax(0, 1fr)); }
         .intro__metrics { grid-template-columns: repeat(2, 1fr); }
@@ -146,6 +160,11 @@ export const Introduction: Story = {
         .intro__metric:last-child { border-bottom: 0; }
         .intro__section { padding: 72px 0; }
         .intro__button-lab { padding: 18px; }
+        .intro__product-lab { padding: 10px; }
+        .intro__product-stack { padding: 20px 14px; }
+        .intro__language-row { align-items: stretch; flex-direction: column; }
+        .intro__language-note { display: none; }
+        .intro__auth-demo { padding: 4px; }
         .intro__catalog { grid-template-columns: 1fr; }
         .intro__footer { align-items: flex-start; flex-direction: column; gap: 8px; }
       }
@@ -166,9 +185,9 @@ export const Introduction: Story = {
         </nav>
 
         <header class="intro__hero">
-          <p class="intro__eyebrow">Native interface system · v0.6.0</p>
+          <p class="intro__eyebrow">Native interface system · v0.7.0</p>
           <h1>Components that <span class="intro__gradient">earn their motion.</span></h1>
-          <p class="intro__lead">Sixteen expressive Web Components for dark interfaces—built with native browser APIs, typed in TypeScript, and designed to stay useful beyond the first impression.</p>
+          <p class="intro__lead">Nineteen expressive Web Components for dark interfaces—built with native browser APIs, typed in TypeScript, and designed to stay useful beyond the first impression.</p>
           <div class="intro__actions">
             <a class="intro__cta" href="/?path=/docs/components-prismbutton--docs" target="_top">Explore components →</a>
             <code class="intro__install">npm install @kayf/ui</code>
@@ -176,7 +195,7 @@ export const Introduction: Story = {
         </header>
 
         <section class="intro__metrics" aria-label="Library highlights">
-          <div class="intro__metric"><strong>16</strong><span>Components</span></div>
+          <div class="intro__metric"><strong>19</strong><span>Components</span></div>
           <div class="intro__metric"><strong>0</strong><span>Runtime dependencies</span></div>
           <div class="intro__metric"><strong>Native</strong><span>Web Components</span></div>
           <div class="intro__metric"><strong>Typed</strong><span>TypeScript API</span></div>
@@ -217,7 +236,24 @@ import <span class="string">'@kayf/ui'</span>
 
         <section class="intro__section">
           <div class="intro__section-head">
-            <p class="intro__section-label">03 · Principles</p>
+            <p class="intro__section-label">03 · Product inputs</p>
+            <div><h2>Useful before they become beautiful.</h2><p class="intro__section-copy">Country-aware contact data, locale selection, and account access now share the same luminous field language while keeping browser autofill and native semantics intact.</p></div>
+          </div>
+          <div class="intro__product-lab">
+            <div class="intro__product-stack">
+              <div class="intro__product-copy"><span>International onboarding</span><h3>Less friction in familiar flows.</h3><p>Paste a calling code to detect the country, change locale without leaving the keyboard, and hand validated auth data to your own service.</p></div>
+              <div class="intro__input-demo">
+                <kayf-phone-input country="UA" value="+380671234567" label="Phone number" hint="Country detected from calling code" color="cyan"></kayf-phone-input>
+                <div class="intro__language-row"><span class="intro__language-note">Interface<br/>preference</span><kayf-language-switcher value="en" color="violet"></kayf-language-switcher></div>
+              </div>
+            </div>
+            <div class="intro__auth-demo"><kayf-auth-form mode="signin" color="violet" heading="Welcome back" description="Continue to your interface workspace." action-label="Continue"></kayf-auth-form></div>
+          </div>
+        </section>
+
+        <section class="intro__section">
+          <div class="intro__section-head">
+            <p class="intro__section-label">04 · Principles</p>
             <div><h2>Visual character with product discipline.</h2><p class="intro__section-copy">Every effect has a job: clarify hierarchy, communicate state, or make spatial interaction easier to understand.</p></div>
           </div>
           <div class="intro__principles">
@@ -229,7 +265,7 @@ import <span class="string">'@kayf/ui'</span>
 
         <section class="intro__section">
           <div class="intro__section-head">
-            <p class="intro__section-label">04 · Catalog</p>
+            <p class="intro__section-label">05 · Catalog</p>
             <div><h2>Every component, documented.</h2><p class="intro__section-copy">Open a component to inspect its controls, states, API table, source examples, and accessibility checks.</p></div>
           </div>
           ${groups.map(group => html`

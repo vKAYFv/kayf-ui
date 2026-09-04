@@ -41,7 +41,7 @@
     <rect x=".5" y=".5" width="241" height="37" rx="18.5" stroke="#FFFFFF" stroke-opacity=".1"/>
     <circle cx="22" cy="19" r="4" fill="#62DAF7"/>
     <text x="38" y="24" fill="#B8B8C1" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="13">@kayf/ui</text>
-    <text x="168" y="24" fill="#777783" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12">v0.6.0</text>
+    <text x="168" y="24" fill="#777783" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12">v0.7.0</text>
   </g>
 
   <text x="600" y="226" text-anchor="middle" fill="url(#titleGradient)" font-family="Inter, ui-sans-serif, system-ui, sans-serif" font-size="104" font-weight="700" letter-spacing="-7">@kayf/ui</text>
@@ -49,24 +49,24 @@
 
   <g transform="translate(314 312)" font-family="Inter, ui-sans-serif, system-ui, sans-serif" font-size="13" font-weight="550">
     <rect width="164" height="38" rx="19" fill="#62DAF7" fill-opacity=".08" stroke="#62DAF7" stroke-opacity=".2"/>
-    <text x="82" y="24" text-anchor="middle" fill="#91E5F8">16 components</text>
+    <text x="82" y="24" text-anchor="middle" fill="#91E5F8">19 components</text>
     <rect x="178" width="194" height="38" rx="19" fill="#FFFFFF" fill-opacity=".035" stroke="#FFFFFF" stroke-opacity=".09"/>
     <text x="275" y="24" text-anchor="middle" fill="#C5C5CC">zero runtime deps</text>
     <rect x="386" width="186" height="38" rx="19" fill="#8B7CFF" fill-opacity=".09" stroke="#8B7CFF" stroke-opacity=".22"/>
     <text x="479" y="24" text-anchor="middle" fill="#B9B1FF">any framework</text>
   </g>
 
-  <g transform="translate(196 396)" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12" fill="#858590">
-    <text x="0" y="0">SpotlightCard</text>
-    <circle cx="137" cy="-4" r="2" fill="#45454E"/>
-    <text x="157" y="0">PrismButton</text>
-    <circle cx="277" cy="-4" r="2" fill="#45454E"/>
-    <text x="297" y="0">OrbitButton</text>
+  <g transform="translate(240 396)" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12" fill="#858590">
+    <text x="0" y="0">PhoneInput</text>
+    <circle cx="85" cy="-4" r="2" fill="#45454E"/>
+    <text x="105" y="0">LanguageSwitcher</text>
+    <circle cx="230" cy="-4" r="2" fill="#45454E"/>
+    <text x="250" y="0">AuthForm</text>
+    <circle cx="325" cy="-4" r="2" fill="#45454E"/>
+    <text x="345" y="0">PrismButton</text>
     <circle cx="445" cy="-4" r="2" fill="#45454E"/>
-    <text x="465" y="0">HoldButton</text>
-    <circle cx="561" cy="-4" r="2" fill="#45454E"/>
-    <text x="581" y="0">HolographicCard</text>
-    <circle cx="706" cy="-4" r="2" fill="#45454E"/>
-    <text x="726" y="0">TiltCard3D</text>
+    <text x="465" y="0">HolographicCard</text>
+    <circle cx="590" cy="-4" r="2" fill="#45454E"/>
+    <text x="610" y="0">TiltCard3D</text>
   </g>
 </svg>

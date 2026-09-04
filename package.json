@@ -1,6 +1,6 @@
 {
   "name": "@kayf/ui",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "description": "Modern, framework-agnostic Web Components for expressive dark interfaces.",
   "type": "module",
   "main": "dist/kayf-ui.cjs",

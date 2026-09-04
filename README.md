@@ -1,4 +1,4 @@
-![A dark @kayf/ui banner showing version 0.6.0 and 16 framework-agnostic Web Components](https://raw.githubusercontent.com/vKAYFv/kayf-ui/refs/heads/main/.github/assets/hero.svg)
+![A dark @kayf/ui banner showing version 0.7.0 and 19 framework-agnostic Web Components](https://raw.githubusercontent.com/vKAYFv/kayf-ui/refs/heads/main/.github/assets/hero.svg)
 
 <div align="center">
 
@@ -17,7 +17,7 @@ Expressive Web Components for dark interfaces. Native browser APIs, TypeScript, 
 ## Why @kayf/ui
 
 - **Framework-agnostic.** Use the same custom elements in plain HTML, React, Vue, Svelte, Astro, or any other client-side stack.
-- **Designed as a system.** Shared color, surface, radius, typography, and motion decisions keep all 16 components visually coherent.
+- **Designed as a system.** Shared color, surface, radius, typography, and motion decisions keep all 19 components visually coherent.
 - **Interaction-ready.** Keyboard focus, touch behavior, loading and disabled states, composed events, and reduced-motion fallbacks are built in.
 - **Easy to extend.** Attributes configure behavior, slots accept your content, and CSS Shadow Parts expose intentional styling hooks.
 
@@ -51,14 +51,75 @@ Use the components as regular HTML:
 For a script-tag setup, use the versioned UMD build:
 
 ```html
-<script src="https://unpkg.com/@kayf/ui@0.6.0/dist/kayf-ui.umd.js"></script>
+<script src="https://unpkg.com/@kayf/ui@0.7.0/dist/kayf-ui.umd.js"></script>
 ```
 
 > **SSR:** The package registers browser custom elements during import. In SSR frameworks, import `@kayf/ui` from a client-only entry or component.
 
-## New action system
+## Product inputs and flows
 
-Version 0.6 introduces three buttons with deliberately different jobs:
+Version 0.7 adds three functional components for familiar product tasks:
+
+| Component | What it handles |
+| --- | --- |
+| [`<kayf-phone-input>`][phone-docs] | Country selection, calling-code detection, live formatting, native telephone autofill, and E.164 output |
+| [`<kayf-language-switcher>`][language-docs] | Animated locale selection, compact mode, custom languages, and complete keyboard navigation |
+| [`<kayf-auth-form>`][auth-docs] | Sign-in and registration UI, browser autofill, inline validation, password strength, error and loading states |
+
+```html
+<kayf-phone-input
+  country="DE"
+  label="Phone number"
+  hint="Used only for delivery updates"
+  required
+></kayf-phone-input>
+
+<kayf-language-switcher
+  value="en"
+  label="Interface language"
+></kayf-language-switcher>
+
+<kayf-auth-form mode="signup" color="violet"></kayf-auth-form>
+```
+
+`PhoneInput` includes all 245 countries and territories with assigned geographical calling codes. It automatically detects regions from pasted international values when the calling code or regional prefix is unique. For example, entering `+380 67 123 45 67` selects Ukraine and exposes `+380671234567` as E.164.
+
+```ts
+const phone = document.querySelector('kayf-phone-input')
+
+phone?.addEventListener('kayf-change', event => {
+  const { e164, country, valid } = (event as CustomEvent).detail
+  console.log({ e164, country, valid })
+})
+```
+
+Supply custom language choices through the `languages` property:
+
+```ts
+import type { LanguageSwitcher } from '@kayf/ui'
+
+const switcher = document.querySelector<LanguageSwitcher>('kayf-language-switcher')!
+switcher.languages = [
+  { code: 'en', label: 'English', flag: '🇬🇧' },
+  { code: 'uk', label: 'Ukrainian', nativeLabel: 'Українська', flag: '🇺🇦' },
+]
+```
+
+`AuthForm` deliberately owns only presentation and client-side validation. Connect `kayf-submit` to your authentication service:
+
+```ts
+document.querySelector('kayf-auth-form')?.addEventListener('kayf-submit', event => {
+  const payload = (event as CustomEvent).detail
+  // Send payload to your own auth service.
+  console.log(payload.mode, payload.email)
+})
+```
+
+Passwords are included in the submit event but are never stored, logged, or sent by the component.
+
+## Action system
+
+Three buttons cover deliberately different jobs:
 
 | Component | Use it for | Character |
 | --- | --- | --- |
@@ -132,6 +193,14 @@ All public component events bubble and cross the Shadow DOM boundary with `compo
 | [`<kayf-hold-button>`][hold-docs] | Hold-to-confirm control for consequential actions |
 | [`<kayf-beam-button>`][beam-docs] | General-purpose solid, outline, or ghost action |
 | [`<kayf-magnetic-btn>`][magnetic-docs] | Proximity-based motion wrapper for slotted content |
+
+### Inputs and flows
+
+| Element | Purpose |
+| --- | --- |
+| [`<kayf-phone-input>`][phone-docs] | International phone field with calling-code detection and E.164 output |
+| [`<kayf-language-switcher>`][language-docs] | Animated keyboard-accessible locale picker |
+| [`<kayf-auth-form>`][auth-docs] | Sign-in and registration flow with validation and autofill |
 
 ### Surfaces
 
@@ -223,7 +292,10 @@ Public classes, shared types, and the package version are exported from the pack
 import {
   version,
   type CommandItem,
+  type AuthSubmitDetail,
   type HoldButton,
+  type LanguageSwitcher,
+  type PhoneInput,
   type PrismButton,
   type SpotlightCard,
 } from '@kayf/ui'
@@ -251,12 +323,17 @@ npm run build-storybook
 
 Storybook 10 requires Node.js 20.19 or newer for local development. The published components run in modern browsers and do not install runtime dependencies.
 
-## What changed in 0.6
+## What changed in 0.7
+
+- Expanded `PhoneInput` to all 245 countries and territories, with calling-code detection, regional formatting, and E.164 events.
+- Added `LanguageSwitcher` with custom language data, compact mode, and keyboard navigation.
+- Added `AuthForm` with sign-in/sign-up modes, native autofill, validation, strength feedback, and polished field interaction states.
+- Expanded `Welcome → Introduction`, Storybook Autodocs, the GitHub hero, and npm documentation to the complete 19-component catalog.
+
+### Previously in 0.6
 
 - Added `PrismButton`, `OrbitButton`, and `HoldButton` as a focused action family.
-- Rebuilt `Welcome → Introduction` around the complete 16-component catalog.
-- Added working Autodocs, API controls, descriptions, and examples for every component.
-- Refined the public exports, package metadata, GitHub hero, and npm documentation.
+- Rebuilt the Storybook introduction and component documentation.
 
 ## Migration notes
 
@@ -275,6 +352,9 @@ MIT © [KAYF](https://github.com/vKAYFv)
 [prism-docs]: https://main--69a564b0b16ce689ef423df8.chromatic.com/?path=/docs/components-prismbutton--docs
 [orbit-docs]: https://main--69a564b0b16ce689ef423df8.chromatic.com/?path=/docs/components-orbitbutton--docs
 [hold-docs]: https://main--69a564b0b16ce689ef423df8.chromatic.com/?path=/docs/components-holdbutton--docs
+[phone-docs]: https://main--69a564b0b16ce689ef423df8.chromatic.com/?path=/docs/components-phoneinput--docs
+[language-docs]: https://main--69a564b0b16ce689ef423df8.chromatic.com/?path=/docs/components-languageswitcher--docs
+[auth-docs]: https://main--69a564b0b16ce689ef423df8.chromatic.com/?path=/docs/components-authform--docs
 [beam-docs]: https://main--69a564b0b16ce689ef423df8.chromatic.com/?path=/docs/components-beambutton--docs
 [magnetic-docs]: https://main--69a564b0b16ce689ef423df8.chromatic.com/?path=/docs/components-magneticbutton--docs
 [spotlight-docs]: https://main--69a564b0b16ce689ef423df8.chromatic.com/?path=/docs/components-spotlightcard--docs
