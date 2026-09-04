@@ -4,6 +4,7 @@ import '../components/NoiseCard/NoiseCard';
 
 const meta: Meta = {
   title: 'Components/NoiseCard',
+  component: 'kayf-noise-card',
   tags: ['autodocs'],
   parameters: {
     docs: {

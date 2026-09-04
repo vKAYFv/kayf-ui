@@ -1,4 +1,4 @@
-![A dark @kayf/ui banner showing version 0.5.1 and 13 framework-agnostic Web Components](https://raw.githubusercontent.com/vKAYFv/kayf-ui/refs/heads/main/.github/assets/hero.svg)
+![A dark @kayf/ui banner showing version 0.6.0 and 16 framework-agnostic Web Components](https://raw.githubusercontent.com/vKAYFv/kayf-ui/refs/heads/main/.github/assets/hero.svg)
 
 <div align="center">
 
@@ -47,6 +47,9 @@ For a script-tag setup, load the UMD bundle from a CDN:
 | --- | --- |
 | `<kayf-spotlight-card>` | Glass card with a pointer-following highlight |
 | `<kayf-beam-button>` | Accessible action button with solid, outline, and ghost variants |
+| `<kayf-prism-button>` | High-emphasis CTA with a localized refraction edge |
+| `<kayf-orbit-button>` | Directional action with an orbital status mark |
+| `<kayf-hold-button>` | Hold-to-confirm control for consequential actions |
 | `<kayf-aurora-card>` | Ambient animated aurora surface |
 | `<kayf-particle-field>` | Interactive canvas particle field |
 | `<kayf-counter>` | Viewport-triggered metric card |
@@ -63,21 +66,29 @@ Explore every variant and control in the [interactive Storybook](https://main--6
 
 ## Examples
 
-### Button states
+### Action buttons
 
 ```html
-<kayf-beam-button color="violet" variant="solid" size="lg">
-  Continue
-</kayf-beam-button>
+<kayf-prism-button color="violet" size="lg">
+  Create release
+</kayf-prism-button>
 
-<kayf-beam-button color="cyan" variant="outline" loading>
-  Saving
-</kayf-beam-button>
+<kayf-orbit-button color="cyan">
+  Open preview
+</kayf-orbit-button>
+
+<kayf-hold-button color="red" duration="1200">
+  Delete build
+</kayf-hold-button>
 ```
 
 ```ts
-document.querySelector('kayf-beam-button')?.addEventListener('kayf-click', event => {
+document.querySelector('kayf-prism-button')?.addEventListener('kayf-click', event => {
   console.log('Button activated', event)
+})
+
+document.querySelector('kayf-hold-button')?.addEventListener('kayf-confirm', event => {
+  console.log('Hold completed', event)
 })
 ```
 
@@ -133,7 +144,7 @@ kayf-noise-card {
   --kayf-font-sans: "Geist", system-ui, sans-serif;
 }
 
-kayf-beam-button {
+kayf-prism-button {
   --kayf-surface: rgba(18, 18, 24, 0.72);
 }
 ```
@@ -165,6 +176,13 @@ npm run build-storybook
 ```
 
 Storybook 10 requires Node.js 20.19 or newer for local development. The published components themselves run in modern browsers and have no runtime package dependencies.
+
+## What’s new in 0.6
+
+- `PrismButton` adds a high-emphasis CTA with localized pointer refraction.
+- `OrbitButton` provides a directional action pattern for navigation and launch flows.
+- `HoldButton` adds pointer, touch, and keyboard hold-to-confirm behavior for consequential actions.
+- The Storybook introduction and component API documentation were rebuilt around the complete 16-component catalog.
 
 ## Migrating to 0.5
 

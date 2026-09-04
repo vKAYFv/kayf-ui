@@ -4,6 +4,7 @@ import type { CommandItem } from '../components/CommandPalette/CommandPalette';
 
 const meta: Meta = {
   title: 'Components/CommandPalette',
+  component: 'kayf-command-palette',
   tags: ['autodocs'],
   parameters: {
     layout: 'fullscreen',
@@ -12,6 +13,12 @@ const meta: Meta = {
         component: 'Full-screen command palette triggered by `Cmd+K` (or `Ctrl+K`). Supports grouped items, keyboard navigation, shortcuts display, and fuzzy search.',
       },
     },
+  },
+  argTypes: {
+    placeholder: { control: 'text', description: 'Search input placeholder' },
+    hotkey: { control: 'text', description: 'Key used with Cmd/Ctrl to toggle the palette' },
+    open: { control: 'boolean', description: 'Open state reflected as an attribute' },
+    items: { control: false, description: 'CommandItem[] assigned through the setItems() method', table: { category: 'Properties' } },
   },
 };
 export default meta;

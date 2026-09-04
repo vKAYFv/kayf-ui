@@ -160,6 +160,7 @@ const demoStyles = html`
 
 const meta: Meta = {
   title: 'Components/TiltCard3D',
+  component: 'kayf-3d-tilt-card',
   tags: ['autodocs'],
   parameters: {
     docs: {

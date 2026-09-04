@@ -3,6 +3,7 @@ import { html } from 'lit';
 
 const meta: Meta = {
   title: 'Components/Counter',
+  component: 'kayf-counter',
   tags: ['autodocs'],
   parameters: {
     docs: {
@@ -18,6 +19,7 @@ const meta: Meta = {
     prefix:   { control: 'text',                                                       description: 'Prefix (e.g. $)',        defaultValue: '' },
     decimals: { control: { type: 'range', min: 0, max: 3, step: 1 },                  description: 'Decimal places',         defaultValue: 0 },
     color:    { control: 'color',                                                      description: 'Accent color (hex)',     defaultValue: '#8b7cff' },
+    icon:     { control: 'text',                                                       description: 'Optional leading icon',  defaultValue: '◎' },
     duration: { control: { type: 'range', min: 500, max: 5000, step: 100 },           description: 'Animation duration (ms)',defaultValue: 2000 },
   },
 };

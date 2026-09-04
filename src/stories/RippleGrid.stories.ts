@@ -4,6 +4,7 @@ import '../components/RippleGrid/RippleGrid';
 
 const meta: Meta = {
   title: 'Components/RippleGrid',
+  component: 'kayf-ripple-grid',
   tags: ['autodocs'],
   parameters: {
     layout: 'fullscreen',

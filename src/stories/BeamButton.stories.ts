@@ -3,6 +3,7 @@ import { html } from 'lit';
 
 const meta: Meta = {
   title: 'Components/BeamButton',
+  component: 'kayf-beam-button',
   tags: ['autodocs'],
   parameters: {
     docs: {

@@ -1,9 +1,12 @@
 import { definePreview } from '@storybook/web-components-vite';
+import addonA11y from '@storybook/addon-a11y';
+import addonDocs from '@storybook/addon-docs';
 import '../src/index';
 import './preview.css';
 import kayfTheme from './kayf-theme';
 
 export default definePreview({
+  addons: [addonDocs(), addonA11y()],
   parameters: {
     layout: 'centered',
     backgrounds: {
@@ -25,7 +28,7 @@ export default definePreview({
     },
     options: {
       storySort: {
-        order: ['Overview', 'Components'],
+        order: ['Welcome', 'Components'],
       },
     },
   },

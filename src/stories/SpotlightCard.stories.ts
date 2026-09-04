@@ -3,6 +3,7 @@ import { html } from 'lit';
 
 const meta: Meta = {
   title: 'Components/SpotlightCard',
+  component: 'kayf-spotlight-card',
   tags: ['autodocs'],
   parameters: {
     docs: {

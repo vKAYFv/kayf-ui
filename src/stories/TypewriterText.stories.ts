@@ -3,6 +3,7 @@ import { html } from 'lit';
 
 const meta: Meta = {
   title: 'Components/TypewriterText',
+  component: 'kayf-typewriter',
   tags: ['autodocs'],
   parameters: {
     docs: {
@@ -17,6 +18,7 @@ const meta: Meta = {
     'erase-speed': { control: { type: 'range', min: 10, max: 100, step: 5 },      description: 'Erase speed (ms per char)',  defaultValue: 30 },
     pause:         { control: { type: 'range', min: 500, max: 5000, step: 100 },  description: 'Pause after complete (ms)', defaultValue: 1800 },
     delay:         { control: { type: 'range', min: 0, max: 2000, step: 100 },    description: 'Initial delay (ms)',        defaultValue: 500 },
+    cursor:        { control: 'text',                                              description: 'Cursor glyph',              defaultValue: '|' },
     loop:          { control: 'boolean',                                           description: 'Loop through lines',        defaultValue: true },
   },
 };

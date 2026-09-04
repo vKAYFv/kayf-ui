@@ -177,6 +177,7 @@ const demoStyles = html`
 
 const meta: Meta = {
   title: 'Components/HolographicCard',
+  component: 'kayf-holographic-card',
   tags: ['autodocs'],
   parameters: {
     docs: {

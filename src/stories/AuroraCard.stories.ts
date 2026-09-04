@@ -3,6 +3,7 @@ import { html } from 'lit';
 
 const meta: Meta = {
   title: 'Components/AuroraCard',
+  component: 'kayf-aurora-card',
   tags: ['autodocs'],
   parameters: {
     docs: {
@@ -15,6 +16,7 @@ const meta: Meta = {
     speed:   { control: 'select', options: ['slow', 'normal', 'fast'], description: 'Animation speed preset' },
     blur:    { control: 'select', options: ['sm', 'md', 'lg'], description: 'Aurora softness preset' },
     opacity: { control: { type: 'range', min: 0.1, max: 1, step: 0.05 }, description: 'Blob opacity from 0 to 1' },
+    colors:  { control: 'text', description: 'Comma-separated palette: cyan, violet, emerald, amber, red, white' },
     static:  { control: 'boolean', description: 'Render a still aurora frame' },
   },
 };

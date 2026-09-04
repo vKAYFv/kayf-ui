@@ -3,6 +3,7 @@ import { html } from 'lit';
 
 const meta: Meta = {
   title: 'Components/NeonBorder',
+  component: 'kayf-neon-border',
   tags: ['autodocs'],
   parameters: {
     docs: {

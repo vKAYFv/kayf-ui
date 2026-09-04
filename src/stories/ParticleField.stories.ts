@@ -3,6 +3,7 @@ import { html } from 'lit';
 
 const meta: Meta = {
   title: 'Components/ParticleField',
+  component: 'kayf-particle-field',
   tags: ['autodocs'],
   parameters: {
     layout: 'fullscreen',

@@ -3,6 +3,7 @@ import { html } from 'lit';
 
 const meta: Meta = {
   title: 'Components/MagneticButton',
+  component: 'kayf-magnetic-btn',
   tags: ['autodocs'],
   parameters: {
     docs: {

@@ -24,4 +24,9 @@ export { NoiseCard }     from './components/NoiseCard/NoiseCard'
 export { RippleGrid }    from './components/RippleGrid/RippleGrid'
 export { TiltCard3D }    from './components/TiltCard3D/TiltCard3D'
 
-export const version = '0.5.0'
+// Action components
+export { PrismButton } from './components/PrismButton/PrismButton'
+export { OrbitButton } from './components/OrbitButton/OrbitButton'
+export { HoldButton }  from './components/HoldButton/HoldButton'
+
+export const version = '0.6.0'
