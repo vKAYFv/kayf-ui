@@ -1,6 +1,162 @@
-import type { Meta, StoryObj } from '@storybook/web-components-vite';
-import { html } from 'lit';
-import '../components/TiltCard3D/TiltCard3D';
+import type { Meta, StoryObj } from '@storybook/web-components-vite'
+import { html } from 'lit'
+import '../components/TiltCard3D/TiltCard3D'
+
+const demoStyles = html`
+  <style>
+    .tilt-stage,
+    .tilt-stage *,
+    .tilt-stage *::before,
+    .tilt-stage *::after,
+    .tilt-grid,
+    .tilt-grid *,
+    .tilt-grid *::before,
+    .tilt-grid *::after { box-sizing: border-box; }
+
+    .tilt-stage {
+      position: relative;
+      display: grid;
+      width: min(100%, 820px);
+      min-height: 520px;
+      padding: clamp(32px, 8vw, 84px);
+      place-items: center;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 28px;
+      background:
+        radial-gradient(circle at 18% 12%, rgba(98,218,247,0.08), transparent 32%),
+        radial-gradient(circle at 86% 88%, rgba(139,124,255,0.1), transparent 34%),
+        linear-gradient(145deg, #0b0b10, #07070a 68%);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.035);
+      font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+    }
+
+    .tilt-stage::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0.16;
+      background-image: radial-gradient(rgba(255,255,255,0.2) 0.65px, transparent 0.65px);
+      background-size: 18px 18px;
+      mask-image: linear-gradient(to bottom, black, transparent 72%);
+    }
+
+    .depth-card {
+      width: min(360px, calc(100vw - 104px));
+      min-height: 248px;
+      padding: 28px;
+      border: 1px solid rgba(255,255,255,0.09);
+      border-radius: 16px;
+      color: #f4f4f7;
+      background:
+        radial-gradient(circle at 12% 0%, rgba(255,255,255,0.07), transparent 36%),
+        linear-gradient(150deg, rgba(22,22,30,0.98), rgba(10,10,15,0.99));
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.05);
+    }
+
+    .depth-topline,
+    .depth-footer,
+    .depth-stat {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .depth-kicker {
+      color: #8b7cff;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+
+    .depth-signal {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #51dfa4;
+      box-shadow: 0 0 14px rgba(81,223,164,0.5);
+    }
+
+    .depth-card h2 {
+      max-width: 290px;
+      margin: 38px 0 10px;
+      color: #f4f4f7;
+      font-size: clamp(25px, 5vw, 32px);
+      font-weight: 650;
+      line-height: 1.04;
+      letter-spacing: -0.045em;
+    }
+
+    .depth-card p {
+      max-width: 295px;
+      margin: 0;
+      color: rgba(228,228,231,0.54);
+      font-size: 13px;
+      line-height: 1.65;
+    }
+
+    .depth-footer {
+      gap: 20px;
+      margin-top: 32px;
+      padding-top: 18px;
+      border-top: 1px solid rgba(255,255,255,0.07);
+    }
+
+    .depth-stat { gap: 8px; }
+    .depth-stat strong { font-size: 12px; font-weight: 650; }
+    .depth-stat span { color: rgba(228,228,231,0.38); font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; }
+
+    .depth-action {
+      color: #c5bbff;
+      font-size: 12px;
+      font-weight: 600;
+      text-decoration: none;
+    }
+
+    .depth-action:focus-visible {
+      border-radius: 4px;
+      outline: 2px solid #8b7cff;
+      outline-offset: 4px;
+    }
+
+    .tilt-grid {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      width: min(100%, 880px);
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+      padding: 52px;
+    }
+
+    .mini-card {
+      min-height: 190px;
+      padding: 22px;
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 16px;
+      background: linear-gradient(150deg, rgba(20,20,28,0.98), rgba(9,9,13,0.99));
+      font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+    }
+
+    .mini-index { color: rgba(228,228,231,0.32); font: 10px/1 ui-monospace, monospace; letter-spacing: 0.1em; }
+    .mini-orb { width: 42px; height: 42px; margin: 28px 0 22px; border-radius: 50%; }
+    .mini-card h3 { margin: 0 0 7px; color: #f4f4f7; font-size: 16px; letter-spacing: -0.025em; }
+    .mini-card p { margin: 0; color: rgba(228,228,231,0.42); font-size: 12px; line-height: 1.55; }
+    .orb-cyan { background: radial-gradient(circle at 32% 28%, #d9f9ff, #62daf7 22%, #122b49 68%); box-shadow: 0 0 28px rgba(98,218,247,0.2); }
+    .orb-violet { background: radial-gradient(circle at 32% 28%, #f1edff, #8b7cff 22%, #291b50 68%); box-shadow: 0 0 28px rgba(139,124,255,0.22); }
+    .orb-green { background: radial-gradient(circle at 32% 28%, #e3fff4, #51dfa4 22%, #13372a 68%); box-shadow: 0 0 28px rgba(81,223,164,0.18); }
+
+    @media (max-width: 720px) {
+      .tilt-stage { min-height: 460px; padding: 44px 28px; }
+      .tilt-grid { grid-template-columns: 1fr; padding: 28px; }
+      .tilt-grid kayf-3d-tilt-card { width: 100%; }
+      .mini-card { min-height: 160px; }
+      .mini-orb { margin: 24px 0 18px; }
+    }
+  </style>
+`
 
 const meta: Meta = {
   title: 'Components/TiltCard3D',
@@ -8,243 +164,94 @@ const meta: Meta = {
   parameters: {
     docs: {
       description: {
-        component: 'Smooth 3D perspective tilt card with mouse-tracking shine overlay. Uses a requestAnimationFrame loop with lerp easing for fluid motion. Wraps any slotted content — applies tilt externally without touching the inner DOM. Fires a `kayf-tilt` event with current rotation values.',
+        component: 'A composable 3D surface with stable pointer tracking, restrained depth, keyboard focus feedback, touch-safe behavior, and reduced-motion support. Wrap any card content without changing its internal layout.',
       },
     },
   },
   argTypes: {
-    'max-tilt':  { control: { type: 'range', min: 5, max: 30, step: 1 },    description: 'Max tilt angle in degrees',   defaultValue: 15 },
-    scale:       { control: { type: 'range', min: 1.0, max: 1.15, step: 0.01 }, description: 'Scale on hover',          defaultValue: 1.05 },
-    perspective: { control: { type: 'range', min: 500, max: 2000, step: 100 }, description: 'CSS perspective in px',    defaultValue: 1000 },
-    glow:        { control: 'color',                                          description: 'Edge glow & shadow color',   defaultValue: '#ffffff' },
+    'max-tilt': { control: { type: 'range', min: 0, max: 20, step: 1 }, description: 'Maximum tilt in degrees', defaultValue: 9 },
+    scale: { control: { type: 'range', min: 1, max: 1.08, step: 0.005 }, description: 'Pointer-hover scale', defaultValue: 1.025 },
+    perspective: { control: { type: 'range', min: 600, max: 2000, step: 100 }, description: 'Perspective depth in pixels', defaultValue: 1200 },
+    glow: { control: 'color', description: 'Ambient glow and edge color', defaultValue: '#8b7cff' },
+    'no-shine': { control: 'boolean', description: 'Disable the pointer-following highlight', defaultValue: false },
   },
-};
-export default meta;
-type Story = StoryObj;
+}
+
+export default meta
+type Story = StoryObj
 
 export const Default: Story = {
-  args: { 'max-tilt': 15, scale: 1.05, perspective: 1000, glow: '#ffffff' },
+  args: { 'max-tilt': 9, scale: 1.025, perspective: 1200, glow: '#8b7cff', 'no-shine': false },
   render: (args) => html`
-    <div style="display:flex; align-items:center; justify-content:center; padding:80px 60px;">
+    ${demoStyles}
+    <section class="tilt-stage">
       <kayf-3d-tilt-card
         max-tilt=${args['max-tilt']}
         scale=${args.scale}
         perspective=${args.perspective}
         glow=${args.glow}
+        ?no-shine=${args['no-shine']}
       >
-        <div style="
-          width:300px; padding:28px;
-          background:rgba(255,255,255,0.04);
-          border:1px solid rgba(255,255,255,0.1);
-          border-radius:12px;
-          font-family:Inter,system-ui,sans-serif;
-        ">
-          <div style="font-size:11px; letter-spacing:0.12em; color:rgba(0,212,255,0.8); text-transform:uppercase; margin-bottom:12px;">Premium Card</div>
-          <h3 style="margin:0 0 10px; font-size:20px; font-weight:700; color:#f4f4f7; letter-spacing:-0.03em;">3D Tilt Effect</h3>
-          <p style="margin:0; font-size:13px; color:rgba(228,228,231,0.45); line-height:1.7;">
-            Hover over this card to see the smooth 3D tilt with shine overlay. Move to any corner for full effect.
-          </p>
-        </div>
+        <article class="depth-card">
+          <div class="depth-topline">
+            <span class="depth-kicker">Interaction layer</span>
+            <span class="depth-signal" aria-label="Ready"></span>
+          </div>
+          <h2>Depth, without the distraction.</h2>
+          <p>A quiet spatial response that keeps the content readable and the pointer in control.</p>
+          <footer class="depth-footer">
+            <div class="depth-stat"><strong>9°</strong><span>range</span></div>
+            <a class="depth-action" href="#tilt-details">Explore spec →</a>
+          </footer>
+        </article>
       </kayf-3d-tilt-card>
-    </div>
+    </section>
   `,
-};
+}
 
-export const Subtle: Story = {
+export const QuietSurface: Story = {
   parameters: {
-    docs: {
-      description: { story: 'Low tilt angle and scale — suitable for content cards where subtle depth is preferred over dramatic effect.' },
-    },
+    docs: { description: { story: 'A low-motion treatment for dashboards and content-heavy surfaces. The shine layer is disabled while elevation and focus feedback remain.' } },
   },
-  args: { 'max-tilt': 6, scale: 1.02, perspective: 1500, glow: '#8b7cff' },
+  args: { 'max-tilt': 4, scale: 1.01, perspective: 1600, glow: '#62daf7', 'no-shine': true },
   render: (args) => html`
-    <div style="display:flex; align-items:center; justify-content:center; padding:80px 60px;">
+    ${demoStyles}
+    <section class="tilt-stage">
       <kayf-3d-tilt-card
         max-tilt=${args['max-tilt']}
         scale=${args.scale}
         perspective=${args.perspective}
         glow=${args.glow}
+        ?no-shine=${args['no-shine']}
       >
-        <div style="
-          width:300px; padding:28px;
-          background:rgba(255,255,255,0.04);
-          border:1px solid rgba(255,255,255,0.08);
-          border-radius:12px;
-          font-family:Inter,system-ui,sans-serif;
-        ">
-          <h3 style="margin:0 0 8px; font-size:18px; font-weight:600; color:#f4f4f7;">Subtle Tilt</h3>
-          <p style="margin:0; font-size:13px; color:rgba(228,228,231,0.4); line-height:1.6;">Low angle, soft depth. Great for content cards.</p>
-        </div>
+        <article class="depth-card">
+          <div class="depth-topline"><span class="depth-kicker" style="color:#62daf7">System health</span><span class="depth-signal"></span></div>
+          <h2>All services operational.</h2>
+          <p>Low-amplitude motion gives status cards hierarchy without competing with the data.</p>
+          <footer class="depth-footer"><div class="depth-stat"><strong>99.99%</strong><span>uptime</span></div><span class="depth-action">Live</span></footer>
+        </article>
       </kayf-3d-tilt-card>
-    </div>
+    </section>
   `,
-};
+}
 
-export const Aggressive: Story = {
+export const Collection: Story = {
   parameters: {
-    docs: {
-      description: { story: 'Maximum tilt and scale — cinematic effect for hero cards, banners, or game items.' },
-    },
-  },
-  args: { 'max-tilt': 25, scale: 1.1, perspective: 800, glow: '#62daf7' },
-  render: (args) => html`
-    <div style="display:flex; align-items:center; justify-content:center; padding:80px 60px;">
-      <kayf-3d-tilt-card
-        max-tilt=${args['max-tilt']}
-        scale=${args.scale}
-        perspective=${args.perspective}
-        glow=${args.glow}
-      >
-        <div style="
-          width:300px; padding:28px;
-          background:linear-gradient(135deg, rgba(0,30,50,0.9), rgba(0,10,20,0.95));
-          border:1px solid rgba(0,212,255,0.25);
-          border-radius:12px;
-          font-family:Inter,system-ui,sans-serif;
-        ">
-          <div style="font-size:11px; letter-spacing:0.12em; color:rgba(0,212,255,0.7); text-transform:uppercase; margin-bottom:12px;">Aggressive</div>
-          <h3 style="margin:0 0 8px; font-size:20px; font-weight:700; color:#f4f4f7; letter-spacing:-0.03em;">Max Tilt · 25°</h3>
-          <p style="margin:0; font-size:13px; color:rgba(228,228,231,0.45); line-height:1.6;">High perspective warp with scale 1.1 on hover.</p>
-        </div>
-      </kayf-3d-tilt-card>
-    </div>
-  `,
-};
-
-export const GameCharacterCards: Story = {
-  parameters: {
-    docs: {
-      description: { story: 'Trading card style layout — each card has its own glow color matching the character rarity.' },
-    },
+    layout: 'fullscreen',
+    docs: { description: { story: 'The wrapper stays composable across repeated cards and responsive layouts.' } },
   },
   render: () => html`
-    <div style="display:flex; gap:28px; flex-wrap:wrap; justify-content:center; padding:80px 40px;">
-
-      <kayf-3d-tilt-card max-tilt="18" scale="1.06" glow="#f8c868">
-        <div style="
-          width:196px; padding:22px;
-          background:linear-gradient(160deg, rgba(22,18,6,0.95), rgba(12,9,2,0.98));
-          border:1px solid rgba(255,215,0,0.25);
-          border-radius:12px; text-align:center;
-          font-family:Inter,system-ui,sans-serif;
-        ">
-          <div style="font-size:44px; margin-bottom:12px; line-height:1;">⚔️</div>
-          <div style="font-size:15px; font-weight:700; color:#f8c868; letter-spacing:-0.01em;">Warrior</div>
-          <div style="font-size:11px; color:rgba(255,215,0,0.45); margin-top:3px; letter-spacing:0.06em; text-transform:uppercase;">Legendary</div>
-          <div style="margin-top:18px; display:grid; grid-template-columns:1fr 1fr 1fr; gap:8px;">
-            <div>
-              <div style="font-size:17px; font-weight:700; color:#ff6600;">95</div>
-              <div style="font-size:9px; color:rgba(228,228,231,0.3); text-transform:uppercase; letter-spacing:0.06em;">ATK</div>
-            </div>
-            <div>
-              <div style="font-size:17px; font-weight:700; color:#62daf7;">72</div>
-              <div style="font-size:9px; color:rgba(228,228,231,0.3); text-transform:uppercase; letter-spacing:0.06em;">DEF</div>
-            </div>
-            <div>
-              <div style="font-size:17px; font-weight:700; color:#51dfa4;">88</div>
-              <div style="font-size:9px; color:rgba(228,228,231,0.3); text-transform:uppercase; letter-spacing:0.06em;">SPD</div>
-            </div>
-          </div>
-        </div>
+    ${demoStyles}
+    <div class="tilt-grid">
+      <kayf-3d-tilt-card max-tilt="7" scale="1.02" glow="#62daf7">
+        <article class="mini-card"><span class="mini-index">01 / ORBIT</span><div class="mini-orb orb-cyan"></div><h3>Signal</h3><p>Responsive movement with a cool ambient edge.</p></article>
       </kayf-3d-tilt-card>
-
-      <kayf-3d-tilt-card max-tilt="18" scale="1.06" glow="#8b7cff">
-        <div style="
-          width:196px; padding:22px;
-          background:linear-gradient(160deg, rgba(16,10,28,0.95), rgba(8,5,18,0.98));
-          border:1px solid rgba(139,92,246,0.25);
-          border-radius:12px; text-align:center;
-          font-family:Inter,system-ui,sans-serif;
-        ">
-          <div style="font-size:44px; margin-bottom:12px; line-height:1;">🔮</div>
-          <div style="font-size:15px; font-weight:700; color:#8b7cff; letter-spacing:-0.01em;">Mage</div>
-          <div style="font-size:11px; color:rgba(139,92,246,0.45); margin-top:3px; letter-spacing:0.06em; text-transform:uppercase;">Epic</div>
-          <div style="margin-top:18px; display:grid; grid-template-columns:1fr 1fr 1fr; gap:8px;">
-            <div>
-              <div style="font-size:17px; font-weight:700; color:#ff6600;">112</div>
-              <div style="font-size:9px; color:rgba(228,228,231,0.3); text-transform:uppercase; letter-spacing:0.06em;">MGK</div>
-            </div>
-            <div>
-              <div style="font-size:17px; font-weight:700; color:#62daf7;">45</div>
-              <div style="font-size:9px; color:rgba(228,228,231,0.3); text-transform:uppercase; letter-spacing:0.06em;">DEF</div>
-            </div>
-            <div>
-              <div style="font-size:17px; font-weight:700; color:#51dfa4;">63</div>
-              <div style="font-size:9px; color:rgba(228,228,231,0.3); text-transform:uppercase; letter-spacing:0.06em;">SPD</div>
-            </div>
-          </div>
-        </div>
+      <kayf-3d-tilt-card max-tilt="7" scale="1.02" glow="#8b7cff">
+        <article class="mini-card"><span class="mini-index">02 / ORBIT</span><div class="mini-orb orb-violet"></div><h3>Vector</h3><p>Consistent depth across every surface in the group.</p></article>
       </kayf-3d-tilt-card>
-
-      <kayf-3d-tilt-card max-tilt="18" scale="1.06" glow="#51dfa4">
-        <div style="
-          width:196px; padding:22px;
-          background:linear-gradient(160deg, rgba(5,20,12,0.95), rgba(2,10,6,0.98));
-          border:1px solid rgba(0,255,136,0.25);
-          border-radius:12px; text-align:center;
-          font-family:Inter,system-ui,sans-serif;
-        ">
-          <div style="font-size:44px; margin-bottom:12px; line-height:1;">🏹</div>
-          <div style="font-size:15px; font-weight:700; color:#51dfa4; letter-spacing:-0.01em;">Ranger</div>
-          <div style="font-size:11px; color:rgba(0,255,136,0.45); margin-top:3px; letter-spacing:0.06em; text-transform:uppercase;">Rare</div>
-          <div style="margin-top:18px; display:grid; grid-template-columns:1fr 1fr 1fr; gap:8px;">
-            <div>
-              <div style="font-size:17px; font-weight:700; color:#ff6600;">78</div>
-              <div style="font-size:9px; color:rgba(228,228,231,0.3); text-transform:uppercase; letter-spacing:0.06em;">ATK</div>
-            </div>
-            <div>
-              <div style="font-size:17px; font-weight:700; color:#62daf7;">60</div>
-              <div style="font-size:9px; color:rgba(228,228,231,0.3); text-transform:uppercase; letter-spacing:0.06em;">DEF</div>
-            </div>
-            <div>
-              <div style="font-size:17px; font-weight:700; color:#51dfa4;">105</div>
-              <div style="font-size:9px; color:rgba(228,228,231,0.3); text-transform:uppercase; letter-spacing:0.06em;">SPD</div>
-            </div>
-          </div>
-        </div>
-      </kayf-3d-tilt-card>
-
-    </div>
-  `,
-};
-
-export const ImageCard: Story = {
-  parameters: {
-    docs: {
-      description: { story: 'Card with a visual header area and metadata tags — a common content card pattern.' },
-    },
-  },
-  render: () => html`
-    <div style="display:flex; align-items:center; justify-content:center; padding:80px 60px;">
-      <kayf-3d-tilt-card max-tilt="18" scale="1.05" glow="#62daf7">
-        <div style="
-          width:300px;
-          background:rgba(8,10,18,0.95);
-          border:1px solid rgba(0,212,255,0.15);
-          border-radius:12px; overflow:hidden;
-          font-family:Inter,system-ui,sans-serif;
-        ">
-          <div style="
-            height:156px;
-            background:linear-gradient(135deg, #081428 0%, #0d2244 50%, #060e1a 100%);
-            display:flex; align-items:center; justify-content:center;
-            font-size:56px; border-bottom:1px solid rgba(0,212,255,0.1);
-          ">🌌</div>
-          <div style="padding:18px;">
-            <div style="font-size:16px; font-weight:700; color:#f4f4f7; letter-spacing:-0.02em; margin-bottom:6px;">
-              Deep Space Module
-            </div>
-            <div style="font-size:13px; color:rgba(228,228,231,0.4); line-height:1.6; margin-bottom:14px;">
-              Explore the void beyond the edge of the known universe.
-            </div>
-            <div style="display:flex; gap:8px; flex-wrap:wrap;">
-              <span style="background:rgba(0,212,255,0.08); color:#62daf7; border:1px solid rgba(0,212,255,0.25); padding:3px 10px; border-radius:4px; font-size:11px; letter-spacing:0.04em;">Space</span>
-              <span style="background:rgba(139,92,246,0.08); color:#8b7cff; border:1px solid rgba(139,92,246,0.25); padding:3px 10px; border-radius:4px; font-size:11px; letter-spacing:0.04em;">Sci-Fi</span>
-              <span style="background:rgba(0,255,136,0.08); color:#51dfa4; border:1px solid rgba(0,255,136,0.25); padding:3px 10px; border-radius:4px; font-size:11px; letter-spacing:0.04em;">New</span>
-            </div>
-          </div>
-        </div>
+      <kayf-3d-tilt-card max-tilt="7" scale="1.02" glow="#51dfa4">
+        <article class="mini-card"><span class="mini-index">03 / ORBIT</span><div class="mini-orb orb-green"></div><h3>Pulse</h3><p>Touch-safe behavior with motion preferences respected.</p></article>
       </kayf-3d-tilt-card>
     </div>
   `,
-};
+}

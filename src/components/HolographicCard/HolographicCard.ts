@@ -1,171 +1,337 @@
-import { baseCSS } from '../../core/tokens';
+import { KayfElement } from '../../core/KayfElement'
+import { baseCSS } from '../../core/tokens'
 
-export class HolographicCard extends HTMLElement {
-  static get observedAttributes() {
-    return ['tilt-max', 'shine-opacity', 'scale'];
+const clamp = (value: number, min: number, max: number, fallback = min): number =>
+  Number.isFinite(value) ? Math.min(max, Math.max(min, value)) : fallback
+
+/** An iridescent surface with pointer-driven depth and a calm resting state. */
+export class HolographicCard extends KayfElement {
+  private scene?: HTMLElement
+  private card?: HTMLElement
+  private frame = 0
+  private targetRotateX = 0
+  private targetRotateY = 0
+  private currentRotateX = 0
+  private currentRotateY = 0
+  private targetScale = 1
+  private currentScale = 1
+  private reducedMotion = false
+  private onPointerEnter?: (event: PointerEvent) => void
+  private onPointerMove?: (event: PointerEvent) => void
+  private onPointerLeave?: () => void
+
+  static override get observedAttributes() {
+    return ['tilt-max', 'shine-opacity', 'scale']
   }
 
-  private inner!: HTMLElement;
-  private shine!: HTMLElement;
-  private raf = 0;
-  private targetX = 0;
-  private targetY = 0;
-  private currentX = 0;
-  private currentY = 0;
-  private isHovered = false;
+  private get maxTilt(): number {
+    return clamp(this.numAttr('tilt-max', 10), 0, 20, 10)
+  }
 
-  constructor() {
-    super();
-    this.attachShadow({ mode: 'open' });
-    this.shadowRoot!.innerHTML = `
-      <style>
-        ${baseCSS}
-        :host {
-          display: inline-block;
-          perspective: 1000px;
-        }
-        .card {
-          position: relative;
-          border-radius: var(--kayf-radius-md);
-          background: linear-gradient(145deg, rgba(24,24,33,0.86), rgba(11,11,15,0.94));
-          border: 1px solid var(--kayf-border);
-          transform-style: preserve-3d;
-          transition: box-shadow 0.3s ease;
-          will-change: transform;
-          overflow: hidden;
-        }
-        .card::before {
-          content: '';
-          position: absolute;
-          inset: 0;
-          background: linear-gradient(135deg,
-            rgba(255,255,255,0.03) 0%,
-            rgba(255,255,255,0.06) 50%,
-            rgba(255,255,255,0.02) 100%
+  private get shineOpacity(): number {
+    return clamp(this.numAttr('shine-opacity', 0.78), 0, 1, 0.78)
+  }
+
+  private get scaleValue(): number {
+    return clamp(this.numAttr('scale', 1.025), 1, 1.08, 1.025)
+  }
+
+  protected styles(): string {
+    return baseCSS + `
+      *, *::before, *::after { box-sizing: border-box; }
+
+      :host {
+        --holo-x: 50%;
+        --holo-y: 50%;
+        --holo-opacity: ${this.shineOpacity};
+        display: inline-block;
+        max-width: 100%;
+        vertical-align: top;
+        border-radius: var(--kayf-radius-lg);
+        outline: none;
+      }
+
+      .scene {
+        position: relative;
+        display: block;
+        max-width: 100%;
+        border-radius: inherit;
+        perspective: 1200px;
+        transform-style: preserve-3d;
+        isolation: isolate;
+      }
+
+      .ambient {
+        position: absolute;
+        z-index: -1;
+        inset: 16% 8% 2%;
+        border-radius: inherit;
+        pointer-events: none;
+        background:
+          linear-gradient(105deg, rgba(98,218,247,0.22), rgba(139,124,255,0.3) 48%, rgba(255,115,180,0.2));
+        filter: blur(38px);
+        opacity: 0.2;
+        transform: translateY(16px) scale(0.94);
+        transition: opacity 260ms ease, transform 360ms cubic-bezier(.2,.8,.2,1);
+      }
+
+      .card {
+        position: relative;
+        min-height: 188px;
+        overflow: hidden;
+        border: 1px solid rgba(255,255,255,0.105);
+        border-radius: inherit;
+        color: var(--kayf-text);
+        background:
+          radial-gradient(circle at 14% 0%, rgba(255,255,255,0.08), transparent 34%),
+          linear-gradient(145deg, rgba(24,24,33,0.97), rgba(9,9,14,0.985));
+        transform-style: preserve-3d;
+        transform-origin: center;
+        backface-visibility: hidden;
+        will-change: transform;
+        box-shadow:
+          inset 0 1px 0 rgba(255,255,255,0.06),
+          0 22px 54px rgba(0,0,0,0.28);
+        transition: border-color 240ms ease, box-shadow 260ms ease;
+      }
+
+      .foil,
+      .glare,
+      .grain,
+      .rim {
+        position: absolute;
+        inset: 0;
+        border-radius: inherit;
+        pointer-events: none;
+      }
+
+      .foil {
+        z-index: 1;
+        background:
+          radial-gradient(
+            circle at var(--holo-x) var(--holo-y),
+            rgba(255,255,255,0.5) 0,
+            rgba(255,255,255,0.1) 15%,
+            transparent 37%
+          ),
+          linear-gradient(
+            118deg,
+            transparent 8%,
+            rgba(98,218,247,0.2) 27%,
+            rgba(81,223,164,0.13) 38%,
+            rgba(248,200,104,0.18) 49%,
+            rgba(255,115,180,0.18) 59%,
+            rgba(139,124,255,0.24) 72%,
+            transparent 92%
           );
-          border-radius: inherit;
-          pointer-events: none;
-          z-index: 1;
-        }
-        /* Top shimmer line */
-        .card::after {
-          content: '';
-          position: absolute;
-          top: 0; left: 0; right: 0;
-          height: 1px;
-          background: linear-gradient(90deg,
-            transparent,
-            rgba(255,255,255,0.3),
-            transparent
-          );
-          pointer-events: none;
-          z-index: 2;
-        }
-        .shine {
-          position: absolute;
-          inset: -50%;
-          width: 200%;
-          height: 200%;
-          background: conic-gradient(
-            from 0deg,
-            rgba(255,0,128,0) 0deg,
-            rgba(255,0,128,0.15) 30deg,
-            rgba(255,128,0,0.15) 60deg,
-            rgba(255,255,0,0.12) 90deg,
-            rgba(0,255,128,0.15) 120deg,
-            rgba(0,128,255,0.15) 150deg,
-            rgba(128,0,255,0.15) 180deg,
-            rgba(255,0,128,0.12) 210deg,
-            rgba(255,0,128,0) 240deg,
-            transparent 360deg
-          );
-          opacity: 0;
-          mix-blend-mode: screen;
-          pointer-events: none;
-          transition: opacity 0.3s;
-          z-index: 3;
-          border-radius: 50%;
-        }
-        .slot-wrap {
-          position: relative;
-          z-index: 4;
-        }
-        ::slotted(*) {
-          display: block;
-        }
-      </style>
-      <div class="card" part="card">
-        <div class="shine"></div>
-        <div class="slot-wrap"><slot></slot></div>
+        background-size: 100% 100%, 220% 220%;
+        background-position: center, calc(100% - var(--holo-x)) calc(100% - var(--holo-y));
+        mix-blend-mode: screen;
+        opacity: calc(var(--holo-opacity) * 0.3);
+        transition: opacity 220ms ease;
+      }
+
+      .glare {
+        z-index: 2;
+        background: radial-gradient(
+          circle at var(--holo-x) var(--holo-y),
+          rgba(255,255,255,0.16),
+          transparent 24%
+        );
+        mix-blend-mode: screen;
+        opacity: 0.25;
+        transition: opacity 220ms ease;
+      }
+
+      .grain {
+        z-index: 3;
+        opacity: 0.13;
+        background:
+          repeating-linear-gradient(115deg, transparent 0 4px, rgba(255,255,255,0.025) 4px 5px),
+          repeating-linear-gradient(15deg, transparent 0 7px, rgba(98,218,247,0.018) 7px 8px);
+        mix-blend-mode: soft-light;
+      }
+
+      .rim {
+        z-index: 5;
+        border: 1px solid rgba(255,255,255,0.05);
+        box-shadow:
+          inset 0 1px 0 rgba(255,255,255,0.08),
+          inset 0 0 30px rgba(139,124,255,0.025);
+        transition: border-color 240ms ease, box-shadow 240ms ease;
+      }
+
+      .content {
+        position: relative;
+        z-index: 4;
+        min-height: inherit;
+        transform: translateZ(18px);
+      }
+
+      .scene.active .ambient,
+      :host(:focus-visible) .ambient,
+      :host(:focus-within) .ambient {
+        opacity: 0.62;
+        transform: translateY(12px) scale(1);
+      }
+
+      .scene.active .card,
+      :host(:focus-visible) .card,
+      :host(:focus-within) .card {
+        border-color: rgba(255,255,255,0.16);
+        box-shadow:
+          inset 0 1px 0 rgba(255,255,255,0.11),
+          0 30px 78px rgba(0,0,0,0.4),
+          0 0 46px rgba(139,124,255,0.1);
+      }
+
+      .scene.active .foil,
+      :host(:focus-visible) .foil,
+      :host(:focus-within) .foil { opacity: var(--holo-opacity); }
+
+      .scene.active .glare,
+      :host(:focus-visible) .glare,
+      :host(:focus-within) .glare { opacity: 0.78; }
+
+      .scene.active .rim,
+      :host(:focus-visible) .rim,
+      :host(:focus-within) .rim {
+        border-color: rgba(255,255,255,0.14);
+        box-shadow:
+          inset 0 1px 0 rgba(255,255,255,0.16),
+          inset 0 0 32px rgba(139,124,255,0.055);
+      }
+
+      ::slotted(*) {
+        display: block;
+        max-width: 100%;
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .card { transform: none !important; will-change: auto; }
+        .ambient { transform: translateY(12px); }
+      }
+    `
+  }
+
+  protected template(): string {
+    return `
+      <div class="scene" part="scene">
+        <div class="ambient" aria-hidden="true"></div>
+        <div class="card" part="card">
+          <div class="foil" part="foil" aria-hidden="true"></div>
+          <div class="glare" aria-hidden="true"></div>
+          <div class="grain" aria-hidden="true"></div>
+          <div class="content" part="content"><slot></slot></div>
+          <div class="rim" aria-hidden="true"></div>
+        </div>
       </div>
-    `;
-
-    this.inner = this.shadowRoot!.querySelector('.card')!;
-    this.shine = this.shadowRoot!.querySelector('.shine')!;
+    `
   }
 
-  connectedCallback() {
-    this.addEventListener('mousemove', this.onMove);
-    this.addEventListener('mouseenter', this.onEnter);
-    this.addEventListener('mouseleave', this.onLeave);
-  }
+  protected setup(): void {
+    this.cleanup()
+    this.targetRotateX = 0
+    this.targetRotateY = 0
+    this.currentRotateX = 0
+    this.currentRotateY = 0
+    this.targetScale = 1
+    this.currentScale = 1
+    this.scene = this.root.querySelector('.scene') as HTMLElement | null ?? undefined
+    this.card = this.root.querySelector('.card') as HTMLElement | null ?? undefined
+    if (!this.scene || !this.card) return
 
-  disconnectedCallback() {
-    this.removeEventListener('mousemove', this.onMove);
-    this.removeEventListener('mouseenter', this.onEnter);
-    this.removeEventListener('mouseleave', this.onLeave);
-    cancelAnimationFrame(this.raf);
-  }
+    this.reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
-  private onEnter = () => {
-    this.isHovered = true;
-    this.shine.style.opacity = String(parseFloat(this.getAttribute('shine-opacity') || '1'));
-    this.inner.style.boxShadow = '0 28px 64px rgba(0,0,0,0.38), 0 0 40px rgba(139,124,255,0.14)';
-    if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    if (!this.raf) this.loop();
-  };
-
-  private onLeave = () => {
-    this.isHovered = false;
-    this.targetX = 0;
-    this.targetY = 0;
-    this.shine.style.opacity = '0';
-    this.inner.style.boxShadow = '';
-  };
-
-  private onMove = (e: MouseEvent) => {
-    if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    const rect = this.getBoundingClientRect();
-    const cx = rect.left + rect.width / 2;
-    const cy = rect.top + rect.height / 2;
-    const max = parseFloat(this.getAttribute('tilt-max') || '10');
-    this.targetX = ((e.clientY - cy) / (rect.height / 2)) * max;
-    this.targetY = -((e.clientX - cx) / (rect.width / 2)) * max;
-
-    // Move shine based on cursor position
-    const px = ((e.clientX - rect.left) / rect.width) * 100;
-    const py = ((e.clientY - rect.top) / rect.height) * 100;
-    this.shine.style.transform = `translate(${px - 100}%, ${py - 100}%) rotate(${px * 1.2}deg)`;
-  };
-
-  private loop = () => {
-    this.currentX += (this.targetX - this.currentX) * 0.12;
-    this.currentY += (this.targetY - this.currentY) * 0.12;
-
-    const scale = this.isHovered ? parseFloat(this.getAttribute('scale') || '1.02') : 1;
-    this.inner.style.transform =
-      `rotateX(${this.currentX.toFixed(3)}deg) rotateY(${this.currentY.toFixed(3)}deg) scale(${scale})`;
-
-    const stillMoving = Math.abs(this.currentX) > 0.05 || Math.abs(this.currentY) > 0.05 || this.isHovered;
-    if (stillMoving) {
-      this.raf = requestAnimationFrame(this.loop);
-    } else {
-      this.inner.style.transform = '';
-      this.raf = 0;
+    this.onPointerEnter = (event: PointerEvent) => {
+      if (event.pointerType === 'touch') return
+      this.scene?.classList.add('active')
+      if (this.reducedMotion) return
+      this.targetScale = this.scaleValue
+      this.startAnimation()
     }
-  };
+
+    this.onPointerMove = (event: PointerEvent) => {
+      if (event.pointerType === 'touch' || !this.scene) return
+      const rect = this.scene.getBoundingClientRect()
+      if (!rect.width || !rect.height) return
+
+      const pointerX = clamp((event.clientX - rect.left) / rect.width, 0, 1)
+      const pointerY = clamp((event.clientY - rect.top) / rect.height, 0, 1)
+      const normalizedX = pointerX * 2 - 1
+      const normalizedY = pointerY * 2 - 1
+
+      this.scene.style.setProperty('--holo-x', `${(pointerX * 100).toFixed(2)}%`)
+      this.scene.style.setProperty('--holo-y', `${(pointerY * 100).toFixed(2)}%`)
+
+      if (!this.reducedMotion) {
+        this.targetRotateX = -normalizedY * this.maxTilt
+        this.targetRotateY = normalizedX * this.maxTilt
+        this.startAnimation()
+      }
+    }
+
+    this.onPointerLeave = () => {
+      this.scene?.classList.remove('active')
+      this.scene?.style.setProperty('--holo-x', '50%')
+      this.scene?.style.setProperty('--holo-y', '50%')
+      this.targetRotateX = 0
+      this.targetRotateY = 0
+      this.targetScale = 1
+      if (!this.reducedMotion) this.startAnimation()
+    }
+
+    this.scene.addEventListener('pointerenter', this.onPointerEnter)
+    this.scene.addEventListener('pointermove', this.onPointerMove)
+    this.scene.addEventListener('pointerleave', this.onPointerLeave)
+    this.scene.addEventListener('pointercancel', this.onPointerLeave)
+  }
+
+  protected cleanup(): void {
+    cancelAnimationFrame(this.frame)
+    this.frame = 0
+    if (this.scene && this.onPointerEnter) this.scene.removeEventListener('pointerenter', this.onPointerEnter)
+    if (this.scene && this.onPointerMove) this.scene.removeEventListener('pointermove', this.onPointerMove)
+    if (this.scene && this.onPointerLeave) {
+      this.scene.removeEventListener('pointerleave', this.onPointerLeave)
+      this.scene.removeEventListener('pointercancel', this.onPointerLeave)
+    }
+  }
+
+  private startAnimation(): void {
+    if (!this.frame) this.frame = requestAnimationFrame(this.tick)
+  }
+
+  private tick = (): void => {
+    if (!this.card) {
+      this.frame = 0
+      return
+    }
+
+    const easing = 0.13
+    this.currentRotateX += (this.targetRotateX - this.currentRotateX) * easing
+    this.currentRotateY += (this.targetRotateY - this.currentRotateY) * easing
+    this.currentScale += (this.targetScale - this.currentScale) * easing
+
+    this.card.style.transform = `rotateX(${this.currentRotateX.toFixed(3)}deg) rotateY(${this.currentRotateY.toFixed(3)}deg) scale(${this.currentScale.toFixed(4)})`
+
+    const isMoving =
+      Math.abs(this.targetRotateX - this.currentRotateX) > 0.015 ||
+      Math.abs(this.targetRotateY - this.currentRotateY) > 0.015 ||
+      Math.abs(this.targetScale - this.currentScale) > 0.0002
+
+    if (isMoving) {
+      this.frame = requestAnimationFrame(this.tick)
+    } else {
+      this.currentRotateX = this.targetRotateX
+      this.currentRotateY = this.targetRotateY
+      this.currentScale = this.targetScale
+      this.card.style.transform = `rotateX(${this.currentRotateX.toFixed(3)}deg) rotateY(${this.currentRotateY.toFixed(3)}deg) scale(${this.currentScale.toFixed(4)})`
+      this.frame = 0
+    }
+  }
 }
 
 if (!customElements.get('kayf-holographic-card')) {
-  customElements.define('kayf-holographic-card', HolographicCard);
+  customElements.define('kayf-holographic-card', HolographicCard)
 }
