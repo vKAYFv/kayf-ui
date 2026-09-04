@@ -29,9 +29,9 @@ type Variant = 'solid' | 'outline' | 'ghost'
 type Size    = 'sm' | 'md' | 'lg'
 
 const sizes: Record<Size, { padding: string; fontSize: string; height: string; radius: string }> = {
-  sm: { padding: '0 14px', fontSize: '12px', height: '32px', radius: '8px'  },
-  md: { padding: '0 22px', fontSize: '14px', height: '40px', radius: '10px' },
-  lg: { padding: '0 32px', fontSize: '15px', height: '50px', radius: '12px' },
+  sm: { padding: '0 14px', fontSize: '12px', height: '34px', radius: '10px' },
+  md: { padding: '0 20px', fontSize: '14px', height: '42px', radius: '12px' },
+  lg: { padding: '0 26px', fontSize: '15px', height: '50px', radius: '14px' },
 }
 
 export class BeamButton extends KayfElement {
@@ -51,38 +51,37 @@ export class BeamButton extends KayfElement {
 
     const vs: Record<Variant, string> = {
       solid: `
-        background: ${color};
-        color: #050508;
-        border: 1px solid transparent;
+        background: linear-gradient(180deg, color-mix(in srgb, ${color} 92%, white), ${color});
+        color: #09090b;
+        border: 1px solid color-mix(in srgb, ${color} 78%, white);
         font-weight: 700;
-        box-shadow: 0 0 20px ${color}44, inset 0 1px 0 rgba(255,255,255,0.2);
+        box-shadow: 0 8px 24px ${color}28, inset 0 1px 0 rgba(255,255,255,0.35);
       `,
       outline: `
-        background: ${color}12;
-        color: ${color};
-        border: 1px solid ${color}44;
+        background: color-mix(in srgb, ${color} 9%, var(--kayf-surface));
+        color: color-mix(in srgb, ${color} 88%, white);
+        border: 1px solid color-mix(in srgb, ${color} 38%, transparent);
         font-weight: 600;
-        box-shadow: inset 0 1px 0 rgba(255,255,255,0.05);
+        box-shadow: inset 0 1px 0 rgba(255,255,255,0.07);
       `,
       ghost: `
-        background: rgba(255,255,255,0.04);
-        color: rgba(232,232,240,0.7);
-        border: 1px solid rgba(255,255,255,0.08);
-        font-weight: 500;
+        background: rgba(255,255,255,0.035);
+        color: var(--kayf-muted);
+        border: 1px solid var(--kayf-border);
+        font-weight: 600;
       `,
     }
 
     const vh: Record<Variant, string> = {
       solid: `
-        background: ${color}dd;
-        box-shadow: 0 0 30px ${color}66, 0 4px 20px ${color}33, inset 0 1px 0 rgba(255,255,255,0.3);
-        transform: translateY(-2px);
+        box-shadow: 0 12px 30px ${color}38, inset 0 1px 0 rgba(255,255,255,0.4);
+        transform: translateY(-1px);
       `,
       outline: `
-        background: ${color}1e;
-        border-color: ${color}88;
-        box-shadow: 0 0 20px ${color}22;
-        transform: translateY(-2px);
+        background: color-mix(in srgb, ${color} 14%, var(--kayf-surface));
+        border-color: color-mix(in srgb, ${color} 58%, transparent);
+        box-shadow: 0 10px 28px ${color}1f;
+        transform: translateY(-1px);
       `,
       ghost: `
         background: rgba(255,255,255,0.07);
@@ -95,7 +94,7 @@ export class BeamButton extends KayfElement {
     return baseCSS + `
       *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
       :host { display: inline-block; }
-      :host([disabled]), :host([loading]) { pointer-events: none; opacity: 0.45; }
+      :host([disabled]), :host([loading]) { opacity: 0.5; }
 
       .btn {
         position: relative;
@@ -108,10 +107,10 @@ export class BeamButton extends KayfElement {
         border-radius: ${sz.radius};
         font-family: var(--kayf-font-sans);
         font-size: ${sz.fontSize};
-        letter-spacing: 0.04em;
+        letter-spacing: -0.01em;
         cursor: pointer;
         overflow: hidden;
-        transition: background 0.25s, border-color 0.25s, box-shadow 0.25s, transform 0.2s, color 0.25s;
+        transition: background 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease, color 0.2s ease;
         white-space: nowrap;
         user-select: none;
         outline: none;
@@ -119,7 +118,8 @@ export class BeamButton extends KayfElement {
       }
       .btn:hover { ${vh[this.variant]} }
       .btn:active { transform: translateY(0) scale(0.98) !important; transition-duration: 0.1s; }
-      .btn:focus-visible { outline: 2px solid ${color}88; outline-offset: 3px; }
+      .btn:focus-visible { outline: 2px solid ${color}; outline-offset: 3px; }
+      .btn:disabled { cursor: not-allowed; }
 
       /* Beam sweep */
       .beam {
@@ -156,8 +156,11 @@ export class BeamButton extends KayfElement {
       :host([loading]) .label   { opacity: 0.6; }
       @keyframes spin { to { transform: rotate(360deg); } }
 
-      /* Icon slots */
-      .icon-wrap { display: inline-flex; align-items: center; width: 16px; height: 16px; flex-shrink: 0; }
+      ::slotted([slot='icon-left']), ::slotted([slot='icon-right']) {
+        width: 16px;
+        height: 16px;
+        flex: none;
+      }
     `
   }
 
@@ -166,16 +169,19 @@ export class BeamButton extends KayfElement {
       <button class="btn" part="button" type="button">
         <span class="beam"></span>
         <span class="spinner"></span>
-        <span class="icon-wrap"><slot name="icon-left"></slot></span>
+        <slot name="icon-left"></slot>
         <span class="label"><slot></slot></span>
-        <span class="icon-wrap"><slot name="icon-right"></slot></span>
+        <slot name="icon-right"></slot>
       </button>
     `
   }
 
   protected setup(): void {
-    const btn = this.root.querySelector('.btn') as HTMLElement
+    const btn = this.root.querySelector('.btn') as HTMLButtonElement
     if (!btn) return
+
+    btn.disabled = this.isDisabled || this.isLoading
+    btn.setAttribute('aria-busy', String(this.isLoading))
 
     const onPointerDown = (e: PointerEvent) => {
       const rect   = btn.getBoundingClientRect()

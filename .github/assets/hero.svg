@@ -1,0 +1,72 @@
+<svg width="1200" height="480" viewBox="0 0 1200 480" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title description">
+  <title id="title">@kayf/ui</title>
+  <desc id="description">Modern framework-agnostic Web Components for expressive dark interfaces.</desc>
+  <defs>
+    <linearGradient id="frame" x1="84" y1="22" x2="1116" y2="458" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#62DAF7" stop-opacity=".5"/>
+      <stop offset=".5" stop-color="#FFFFFF" stop-opacity=".08"/>
+      <stop offset="1" stop-color="#8B7CFF" stop-opacity=".55"/>
+    </linearGradient>
+    <linearGradient id="titleGradient" x1="372" y1="154" x2="829" y2="265" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F4F4F7"/>
+      <stop offset=".52" stop-color="#62DAF7"/>
+      <stop offset="1" stop-color="#9E94FF"/>
+    </linearGradient>
+    <radialGradient id="cyanGlow" cx="0" cy="0" r="1" gradientTransform="translate(170 70) rotate(35) scale(510 330)" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#62DAF7" stop-opacity=".16"/>
+      <stop offset="1" stop-color="#62DAF7" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="violetGlow" cx="0" cy="0" r="1" gradientTransform="translate(1050 16) rotate(145) scale(520 360)" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#8B7CFF" stop-opacity=".2"/>
+      <stop offset="1" stop-color="#8B7CFF" stop-opacity="0"/>
+    </radialGradient>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M40 0H0V40" stroke="#FFFFFF" stroke-opacity=".025"/>
+    </pattern>
+    <filter id="softShadow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="18"/>
+    </filter>
+  </defs>
+
+  <rect width="1200" height="480" rx="28" fill="#07070A"/>
+  <rect width="1200" height="480" rx="28" fill="url(#cyanGlow)"/>
+  <rect width="1200" height="480" rx="28" fill="url(#violetGlow)"/>
+  <rect width="1200" height="480" rx="28" fill="url(#grid)"/>
+  <rect x="1" y="1" width="1198" height="478" rx="27" stroke="url(#frame)" stroke-opacity=".8"/>
+
+  <circle cx="600" cy="208" r="124" fill="#8B7CFF" fill-opacity=".08" filter="url(#softShadow)"/>
+
+  <g transform="translate(479 54)">
+    <rect width="242" height="38" rx="19" fill="#FFFFFF" fill-opacity=".035"/>
+    <rect x=".5" y=".5" width="241" height="37" rx="18.5" stroke="#FFFFFF" stroke-opacity=".1"/>
+    <circle cx="22" cy="19" r="4" fill="#62DAF7"/>
+    <text x="38" y="24" fill="#B8B8C1" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="13">@kayf/ui</text>
+    <text x="168" y="24" fill="#777783" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12">v0.5.0</text>
+  </g>
+
+  <text x="600" y="226" text-anchor="middle" fill="url(#titleGradient)" font-family="Inter, ui-sans-serif, system-ui, sans-serif" font-size="104" font-weight="700" letter-spacing="-7">@kayf/ui</text>
+  <text x="600" y="276" text-anchor="middle" fill="#A1A1AA" font-family="Inter, ui-sans-serif, system-ui, sans-serif" font-size="18" font-weight="500" letter-spacing="4">MODERN WEB COMPONENTS</text>
+
+  <g transform="translate(314 312)" font-family="Inter, ui-sans-serif, system-ui, sans-serif" font-size="13" font-weight="550">
+    <rect width="164" height="38" rx="19" fill="#62DAF7" fill-opacity=".08" stroke="#62DAF7" stroke-opacity=".2"/>
+    <text x="82" y="24" text-anchor="middle" fill="#91E5F8">13 components</text>
+    <rect x="178" width="194" height="38" rx="19" fill="#FFFFFF" fill-opacity=".035" stroke="#FFFFFF" stroke-opacity=".09"/>
+    <text x="275" y="24" text-anchor="middle" fill="#C5C5CC">zero runtime deps</text>
+    <rect x="386" width="186" height="38" rx="19" fill="#8B7CFF" fill-opacity=".09" stroke="#8B7CFF" stroke-opacity=".22"/>
+    <text x="479" y="24" text-anchor="middle" fill="#B9B1FF">any framework</text>
+  </g>
+
+  <g transform="translate(196 396)" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12" fill="#858590">
+    <text x="0" y="0">SpotlightCard</text>
+    <circle cx="137" cy="-4" r="2" fill="#45454E"/>
+    <text x="157" y="0">BeamButton</text>
+    <circle cx="277" cy="-4" r="2" fill="#45454E"/>
+    <text x="297" y="0">CommandPalette</text>
+    <circle cx="445" cy="-4" r="2" fill="#45454E"/>
+    <text x="465" y="0">NoiseCard</text>
+    <circle cx="561" cy="-4" r="2" fill="#45454E"/>
+    <text x="581" y="0">RippleGrid</text>
+    <circle cx="685" cy="-4" r="2" fill="#45454E"/>
+    <text x="705" y="0">AuroraCard</text>
+  </g>
+</svg>

@@ -28,7 +28,7 @@ export class RippleGrid extends KayfElement {
     return ['color', 'grid-size', 'auto-ripple', 'width', 'height'];
   }
 
-  private get color()      { return this.attr('color', '#00d4ff'); }
+  private get color()      { return this.attr('color', '#62daf7'); }
   private get gridSize()   { return this.numAttr('grid-size', 30); }
   private get autoRipple() { return this.boolAttr('auto-ripple'); }
   private get cWidth()     { return this.numAttr('width', 400); }
@@ -46,12 +46,21 @@ export class RippleGrid extends KayfElement {
   protected styles(): string {
     return `
       :host { display: inline-block; }
-      canvas { display: block; cursor: crosshair; border-radius: 8px; }
+      canvas {
+        display: block;
+        max-width: 100%;
+        cursor: crosshair;
+        border: 1px solid rgba(255,255,255,0.08);
+        border-radius: 16px;
+        box-shadow: 0 18px 48px rgba(0,0,0,0.24);
+        outline: none;
+      }
+      canvas:focus-visible { outline: 2px solid ${this.color}; outline-offset: 3px; }
     `;
   }
 
   protected template(): string {
-    return `<canvas id="c" width="${this.cWidth}" height="${this.cHeight}"></canvas>`;
+    return `<canvas id="c" width="${this.cWidth}" height="${this.cHeight}" tabindex="0" role="button" aria-label="Interactive ripple grid"></canvas>`;
   }
 
   protected setup(): void {
@@ -62,7 +71,7 @@ export class RippleGrid extends KayfElement {
     this.buildGrid();
     this.addListeners();
 
-    if (this.autoRipple) {
+    if (this.autoRipple && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
       this.autoTimer = window.setInterval(() => {
         this.addRipple(Math.random() * this.cWidth, Math.random() * this.cHeight);
       }, 800);
@@ -104,6 +113,12 @@ export class RippleGrid extends KayfElement {
       const scaleY = this.cHeight / rect.height;
       this.addRipple((e.clientX - rect.left) * scaleX, (e.clientY - rect.top) * scaleY, true);
     });
+
+    this.canvas.addEventListener('keydown', (event: KeyboardEvent) => {
+      if (event.key !== 'Enter' && event.key !== ' ') return;
+      event.preventDefault();
+      this.addRipple(this.cWidth / 2, this.cHeight / 2);
+    });
   }
 
   private addRipple(x: number, y: number, small = false): void {
@@ -118,11 +133,10 @@ export class RippleGrid extends KayfElement {
 
     if (this.ripples.length > 8) this.ripples.shift();
 
-    this.dispatchEvent(new CustomEvent('kayf-ripple', { detail: { x, y }, bubbles: true }));
+    this.dispatchEvent(new CustomEvent('kayf-ripple', { detail: { x, y }, bubbles: true, composed: true }));
   }
 
   private tick(): void {
-    this.rafId = requestAnimationFrame(() => this.tick());
     if (!this.ctx || !this.canvas) return;
 
     const ctx = this.ctx;
@@ -178,7 +192,13 @@ export class RippleGrid extends KayfElement {
       ctx.lineWidth   = 1;
       ctx.stroke();
     });
+
+    if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      this.rafId = requestAnimationFrame(() => this.tick());
+    }
   }
 }
 
-customElements.define('kayf-ripple-grid', RippleGrid);
+if (!customElements.get('kayf-ripple-grid')) {
+  customElements.define('kayf-ripple-grid', RippleGrid);
+}

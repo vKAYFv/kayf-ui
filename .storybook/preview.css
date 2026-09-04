@@ -1,0 +1,29 @@
+:root {
+  color-scheme: dark;
+  font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  min-height: 100vh;
+  color: #f4f4f7;
+  background:
+    radial-gradient(circle at 15% 15%, rgba(100, 216, 244, 0.08), transparent 28rem),
+    radial-gradient(circle at 85% 0%, rgba(139, 124, 255, 0.1), transparent 32rem),
+    #07070a;
+}
+
+.sb-show-main.sb-main-centered #storybook-root {
+  width: min(100%, 1120px);
+  padding: clamp(24px, 5vw, 72px);
+}
+
+.sb-show-main.sb-main-fullscreen #storybook-root {
+  min-height: 100vh;
+}
+
+::selection {
+  color: #09090b;
+  background: #8b7cff;
+}

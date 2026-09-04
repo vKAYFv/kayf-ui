@@ -1,19 +1,10 @@
-import type { StorybookConfig } from '@storybook/web-components-vite';
+import { defineMain } from '@storybook/web-components-vite/node';
 
-const config: StorybookConfig = {
+export default defineMain({
   stories: ['../src/stories/**/*.stories.@(js|ts|mdx)'],
-  addons: [
-    '@storybook/addon-essentials',
-    '@storybook/addon-a11y',
-    '@storybook/addon-backgrounds',
-  ],
-  framework: {
-    name: '@storybook/web-components-vite',
-    options: {},
-  },
+  addons: ['@storybook/addon-docs', '@storybook/addon-a11y'],
+  framework: '@storybook/web-components-vite',
   docs: {
     autodocs: 'tag',
   },
-};
-
-export default config;
+});

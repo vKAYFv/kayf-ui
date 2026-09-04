@@ -1,58 +1,75 @@
 export const tokens = {
   colors: {
-    cyan:    '#00d4ff',
-    violet:  '#7c3aed',
-    emerald: '#10b981',
-    amber:   '#f59e0b',
-    red:     '#ef4444',
-    white:   '#e8e8f0',
+    cyan: '#62daf7',
+    violet: '#8b7cff',
+    emerald: '#51dfa4',
+    amber: '#f8c868',
+    red: '#ff7383',
+    white: '#f4f4f7',
   },
   glow: {
-    cyan:    'rgba(0, 212, 255, 0.2)',
-    violet:  'rgba(124, 58, 237, 0.2)',
-    emerald: 'rgba(16, 185, 129, 0.2)',
-    amber:   'rgba(245, 158, 11, 0.2)',
-    red:     'rgba(239, 68, 68, 0.2)',
-    white:   'rgba(232, 232, 240, 0.2)',
+    cyan: 'rgba(98, 218, 247, 0.18)',
+    violet: 'rgba(139, 124, 255, 0.18)',
+    emerald: 'rgba(81, 223, 164, 0.18)',
+    amber: 'rgba(248, 200, 104, 0.18)',
+    red: 'rgba(255, 115, 131, 0.18)',
+    white: 'rgba(244, 244, 247, 0.16)',
   },
   spotlight: {
-    cyan:    'rgba(0, 212, 255, 0.12)',
-    violet:  'rgba(124, 58, 237, 0.12)',
-    emerald: 'rgba(16, 185, 129, 0.12)',
-    amber:   'rgba(245, 158, 11, 0.12)',
-    red:     'rgba(239, 68, 68, 0.12)',
-    white:   'rgba(232, 232, 240, 0.12)',
+    cyan: 'rgba(98, 218, 247, 0.12)',
+    violet: 'rgba(139, 124, 255, 0.12)',
+    emerald: 'rgba(81, 223, 164, 0.12)',
+    amber: 'rgba(248, 200, 104, 0.12)',
+    red: 'rgba(255, 115, 131, 0.12)',
+    white: 'rgba(244, 244, 247, 0.1)',
   },
 } as const
 
-// ColorVariant выводится из colors — все три объекта теперь имеют одинаковые ключи
 export type ColorVariant = keyof typeof tokens.colors
 
+/** Shared design tokens injected into every Kayf component shadow root. */
 export const baseCSS = `
   :host {
-    --kayf-cyan:    #00d4ff;
-    --kayf-violet:  #7c3aed;
-    --kayf-emerald: #10b981;
-    --kayf-amber:   #f59e0b;
-    --kayf-red:     #ef4444;
-    --kayf-bg:      #050508;
-    --kayf-surface: rgba(255, 255, 255, 0.03);
-    --kayf-border:  rgba(255, 255, 255, 0.07);
-    --kayf-text:    #e8e8f0;
-    --kayf-muted:   rgba(232, 232, 240, 0.4);
-    --kayf-font-sans: 'Syne', system-ui, sans-serif;
-    --kayf-font-mono: 'JetBrains Mono', monospace;
+    color-scheme: dark;
+    --kayf-cyan: #62daf7;
+    --kayf-violet: #8b7cff;
+    --kayf-emerald: #51dfa4;
+    --kayf-amber: #f8c868;
+    --kayf-red: #ff7383;
+    --kayf-bg: #07070a;
+    --kayf-surface: rgba(17, 17, 24, 0.82);
+    --kayf-surface-elevated: rgba(24, 24, 33, 0.9);
+    --kayf-border: rgba(255, 255, 255, 0.08);
+    --kayf-border-strong: rgba(255, 255, 255, 0.14);
+    --kayf-text: #f4f4f7;
+    --kayf-muted: rgba(228, 228, 231, 0.58);
+    --kayf-subtle: rgba(228, 228, 231, 0.36);
+    --kayf-radius-sm: 10px;
+    --kayf-radius-md: 16px;
+    --kayf-radius-lg: 22px;
+    --kayf-shadow: 0 24px 64px rgba(0, 0, 0, 0.34);
+    --kayf-font-sans: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    --kayf-font-mono: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      scroll-behavior: auto !important;
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
   }
 `
 
-export function getColor(v: ColorVariant | string): string {
-  return tokens.colors[v as ColorVariant] ?? v
+export function getColor(value: ColorVariant | string): string {
+  return tokens.colors[value as ColorVariant] ?? value
 }
 
-export function getGlow(v: ColorVariant | string): string {
-  return tokens.glow[v as ColorVariant] ?? 'rgba(255,255,255,0.1)'
+export function getGlow(value: ColorVariant | string): string {
+  return tokens.glow[value as ColorVariant] ?? 'rgba(244, 244, 247, 0.12)'
 }
 
-export function getSpotlight(v: ColorVariant | string): string {
-  return tokens.spotlight[v as ColorVariant] ?? 'rgba(255,255,255,0.08)'
+export function getSpotlight(value: ColorVariant | string): string {
+  return tokens.spotlight[value as ColorVariant] ?? 'rgba(244, 244, 247, 0.08)'
 }

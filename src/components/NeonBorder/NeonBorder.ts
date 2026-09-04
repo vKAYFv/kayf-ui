@@ -1,3 +1,5 @@
+import { baseCSS } from '../../core/tokens';
+
 export class NeonBorder extends HTMLElement {
   static get observedAttributes() {
     return ['color', 'speed', 'thickness', 'glow', 'radius'];
@@ -12,11 +14,11 @@ export class NeonBorder extends HTMLElement {
   attributeChangedCallback() { this.render(); }
 
   private render() {
-    const color = this.getAttribute('color') || '#6366f1';
-    const speed = parseFloat(this.getAttribute('speed') || '3');
-    const thickness = parseInt(this.getAttribute('thickness') || '2');
-    const glow = parseInt(this.getAttribute('glow') || '10');
-    const radius = parseInt(this.getAttribute('radius') || '12');
+    const color = this.getAttribute('color') || '#8b7cff';
+    const speed = Math.max(0.1, parseFloat(this.getAttribute('speed') || '4'));
+    const thickness = Math.max(1, parseInt(this.getAttribute('thickness') || '1', 10));
+    const glow = Math.max(0, parseInt(this.getAttribute('glow') || '10', 10));
+    const radius = Math.max(thickness, parseInt(this.getAttribute('radius') || '16', 10));
 
     // Parse hex to rgb for glow
     const hex = color.replace('#', '');
@@ -26,6 +28,7 @@ export class NeonBorder extends HTMLElement {
 
     this.shadowRoot!.innerHTML = `
       <style>
+        ${baseCSS}
         @keyframes neon-rotate {
           from { --neon-angle: 0deg; }
           to   { --neon-angle: 360deg; }
@@ -50,27 +53,31 @@ export class NeonBorder extends HTMLElement {
           background: conic-gradient(
             from var(--neon-angle),
             transparent 0deg,
-            transparent 60deg,
-            ${color} 120deg,
-            ${color}cc 160deg,
-            ${color} 200deg,
-            transparent 260deg,
+            transparent 80deg,
+            ${color}99 132deg,
+            ${color} 168deg,
+            ${color}99 204deg,
+            transparent 256deg,
             transparent 360deg
           );
           box-shadow:
-            0 0 ${glow}px rgba(${r},${g},${b},0.4),
-            0 0 ${glow * 2}px rgba(${r},${g},${b},0.15),
+            0 0 ${glow}px rgba(${r},${g},${b},0.28),
+            0 0 ${glow * 2}px rgba(${r},${g},${b},0.1),
             inset 0 0 ${glow}px rgba(${r},${g},${b},0.05);
         }
 
         .inner {
           border-radius: ${radius - thickness}px;
-          background: #050508;
+          background: var(--kayf-bg);
           overflow: hidden;
         }
 
         ::slotted(*) {
           display: block;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+          :host { animation: none; }
         }
       </style>
       <div class="border-wrap" part="border">
@@ -82,4 +89,6 @@ export class NeonBorder extends HTMLElement {
   }
 }
 
-customElements.define('kayf-neon-border', NeonBorder);
+if (!customElements.get('kayf-neon-border')) {
+  customElements.define('kayf-neon-border', NeonBorder);
+}

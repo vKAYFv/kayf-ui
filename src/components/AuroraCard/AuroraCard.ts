@@ -22,12 +22,12 @@ import { baseCSS } from '../../core/tokens'
  */
 
 const COLOR_MAP: Record<string, number[]> = {
-  cyan:    [0,   212, 255],
-  violet:  [124, 58,  237],
-  emerald: [16,  185, 129],
-  amber:   [245, 158, 11 ],
-  red:     [239, 68,  68 ],
-  white:   [232, 232, 240],
+  cyan:    [98,  218, 247],
+  violet:  [139, 124, 255],
+  emerald: [81,  223, 164],
+  amber:   [248, 200, 104],
+  red:     [255, 115, 131],
+  white:   [244, 244, 247],
 }
 
 const SPEED_MAP: Record<string, number> = {
@@ -60,7 +60,7 @@ export class AuroraCard extends KayfElement {
   // Переименованы чтобы не конфликтовать с HTMLElement.blur()
   get speedValue(): number  { return SPEED_MAP[this.attr('speed', 'normal')] ?? 0.0003 }
   get blurSize(): number    { return BLUR_MAP[this.attr('blur', 'md')] ?? 120 }
-  get opacityValue(): number { return this.numAttr('opacity', 0.6) }
+  get opacityValue(): number { return Math.min(1, Math.max(0, this.numAttr('opacity', 0.52))) }
   get isStatic(): boolean   { return this.boolAttr('static') }
 
   get colorList(): number[][] {
@@ -76,15 +76,17 @@ export class AuroraCard extends KayfElement {
       :host {
         display: block;
         position: relative;
-        border-radius: 20px;
+        border-radius: var(--kayf-radius-lg);
         overflow: hidden;
       }
 
       .wrap {
         position: relative;
-        border-radius: 20px;
+        border-radius: inherit;
         overflow: hidden;
-        border: 1px solid rgba(255,255,255,0.07);
+        border: 1px solid var(--kayf-border);
+        background: var(--kayf-bg);
+        box-shadow: inset 0 1px 0 rgba(255,255,255,0.05), var(--kayf-shadow);
       }
 
       canvas {
@@ -92,34 +94,35 @@ export class AuroraCard extends KayfElement {
         inset: 0;
         width: 100%;
         height: 100%;
-        border-radius: 20px;
+        border-radius: inherit;
       }
 
       .content {
         position: relative;
         z-index: 1;
-        background: rgba(5, 5, 8, 0.55);
-        backdrop-filter: blur(12px);
-        -webkit-backdrop-filter: blur(12px);
-        border-radius: 19px;
-        min-height: 200px;
-        padding: 40px;
+        background: linear-gradient(135deg, rgba(7,7,10,0.5), rgba(7,7,10,0.72));
+        backdrop-filter: blur(18px) saturate(120%);
+        -webkit-backdrop-filter: blur(18px) saturate(120%);
+        border-radius: inherit;
+        min-height: 220px;
+        padding: clamp(28px, 6vw, 48px);
       }
 
       ::slotted(h1), ::slotted(h2), ::slotted(h3) {
         font-family: var(--kayf-font-sans);
-        font-weight: 800;
-        color: #fff;
+        font-weight: 680;
+        color: var(--kayf-text);
         margin-bottom: 12px;
-        line-height: 1.1;
+        line-height: 1.08;
+        letter-spacing: -0.035em;
       }
 
       ::slotted(p) {
-        font-family: var(--kayf-font-mono);
-        font-size: 13px;
-        color: rgba(232,232,240,0.5);
-        line-height: 1.7;
-        font-weight: 300;
+        font-family: var(--kayf-font-sans);
+        font-size: 14px;
+        color: var(--kayf-muted);
+        line-height: 1.65;
+        font-weight: 400;
       }
     `
   }
@@ -127,8 +130,8 @@ export class AuroraCard extends KayfElement {
   protected template(): string {
     return `
       <div class="wrap">
-        <canvas part="canvas"></canvas>
-        <div class="content">
+        <canvas part="canvas" aria-hidden="true"></canvas>
+        <div class="content" part="content">
           <slot></slot>
         </div>
       </div>
@@ -153,7 +156,7 @@ export class AuroraCard extends KayfElement {
     this._resizeOb = new ResizeObserver(() => this._resize())
     this._resizeOb.observe(this)
 
-    if (this.isStatic) {
+    if (this.isStatic || matchMedia('(prefers-reduced-motion: reduce)').matches) {
       this._drawFrame(0)
     } else {
       this._startLoop()
@@ -177,9 +180,10 @@ export class AuroraCard extends KayfElement {
   }
 
   private _resize(): void {
-    this._canvas.width  = this.offsetWidth  || 600
-    this._canvas.height = this.offsetHeight || 300
-    if (this.isStatic) this._drawFrame(0)
+    const ratio = Math.min(window.devicePixelRatio || 1, 2)
+    this._canvas.width  = (this.offsetWidth  || 600) * ratio
+    this._canvas.height = (this.offsetHeight || 300) * ratio
+    if (this.isStatic || matchMedia('(prefers-reduced-motion: reduce)').matches) this._drawFrame(0)
   }
 
   private _startLoop(): void {

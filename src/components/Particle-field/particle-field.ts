@@ -17,7 +17,7 @@ export class KayfParticleField extends HTMLElement {
   constructor() {
     super();
     this.attachShadow({ mode: 'open' });
-    this.shadowRoot!.innerHTML = `<style>:host{display:block;width:100%;height:100%}canvas{display:block;width:100%;height:100%}</style><canvas></canvas>`;
+    this.shadowRoot!.innerHTML = `<style>:host{display:block;width:100%;height:100%;overflow:hidden;border-radius:16px;background:#09090d}canvas{display:block;width:100%;height:100%}</style><canvas aria-hidden="true"></canvas>`;
     this.canvas = this.shadowRoot!.querySelector('canvas')!;
     this.ctx = this.canvas.getContext('2d')!;
     this.ro = new ResizeObserver(() => this.resize());
@@ -69,7 +69,7 @@ export class KayfParticleField extends HTMLElement {
   private tick = () => {
     const { ctx, canvas, mouse, particles } = this;
     const { width: w, height: h } = canvas;
-    const color = this.getAttribute('color') || '#6366f1';
+    const color = this.getAttribute('color') || '#8b7cff';
     const speed = parseFloat(this.getAttribute('speed') || '0.4');
     const dist = parseInt(this.getAttribute('connect-distance') || '100');
 
@@ -79,7 +79,7 @@ export class KayfParticleField extends HTMLElement {
       if (mouse.x !== null && mouse.y !== null) {
         const dx = p.x - mouse.x, dy = p.y - mouse.y;
         const d = Math.hypot(dx, dy);
-        if (d < mouse.radius) {
+        if (d > 0 && d < mouse.radius) {
           const f = (mouse.radius - d) / mouse.radius;
           p.vx += (dx / d) * f * 0.3;
           p.vy += (dy / d) * f * 0.3;
@@ -110,8 +110,12 @@ export class KayfParticleField extends HTMLElement {
         }
       }
     }
-    this.raf = requestAnimationFrame(this.tick);
+    if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      this.raf = requestAnimationFrame(this.tick);
+    }
   };
 }
 
-customElements.define('kayf-particle-field', KayfParticleField);
+if (!customElements.get('kayf-particle-field')) {
+  customElements.define('kayf-particle-field', KayfParticleField);
+}

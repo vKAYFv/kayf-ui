@@ -1,4 +1,5 @@
 import { KayfElement } from '../../core/KayfElement';
+import { baseCSS } from '../../core/tokens';
 
 export class TiltCard3D extends KayfElement {
   private inner: HTMLElement | null = null;
@@ -14,10 +15,10 @@ export class TiltCard3D extends KayfElement {
     return ['max-tilt', 'scale', 'perspective', 'glow', 'no-shine'];
   }
 
-  private get maxTilt()   { return this.numAttr('max-tilt', 15); }
-  private get scaleVal()  { return this.numAttr('scale', 1.05); }
+  private get maxTilt()   { return this.numAttr('max-tilt', 10); }
+  private get scaleVal()  { return this.numAttr('scale', 1.03); }
   private get persp()     { return this.numAttr('perspective', 1000); }
-  private get glowColor() { return this.attr('glow', '#ffffff'); }
+  private get glowColor() { return this.attr('glow', '#8b7cff'); }
 
   private get rgb(): [number, number, number] {
     const hex = this.glowColor.replace('#', '');
@@ -30,7 +31,7 @@ export class TiltCard3D extends KayfElement {
 
   protected styles(): string {
     const [r, g, b] = this.rgb;
-    return `
+    return baseCSS + `
       :host { display: inline-block; }
       .wrapper {
         display: inline-block;
@@ -40,15 +41,15 @@ export class TiltCard3D extends KayfElement {
       .inner {
         position: relative;
         transform-style: preserve-3d;
-        border-radius: 12px;
+        border-radius: var(--kayf-radius-md);
         overflow: hidden;
         transition: box-shadow 0.3s;
         will-change: transform;
       }
       .inner.hovered {
         box-shadow:
-          0 30px 60px rgba(0,0,0,0.5),
-          0 0 40px rgba(${r},${g},${b},0.15),
+          0 28px 64px rgba(0,0,0,0.38),
+          0 0 40px rgba(${r},${g},${b},0.12),
           inset 0 1px 0 rgba(255,255,255,0.1);
       }
       .shine {
@@ -89,6 +90,7 @@ export class TiltCard3D extends KayfElement {
   protected setup(): void {
     this.inner = this.root.querySelector('#inner');
     this.shine = this.root.querySelector('#shine');
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     this.addListeners();
     cancelAnimationFrame(this.rafId);
     this.tick();
@@ -121,6 +123,7 @@ export class TiltCard3D extends KayfElement {
       this.dispatchEvent(new CustomEvent('kayf-tilt', {
         detail:  { rotateX: this.targetRx, rotateY: this.targetRy },
         bubbles: true,
+        composed: true,
       }));
     });
 
@@ -145,4 +148,6 @@ export class TiltCard3D extends KayfElement {
   }
 }
 
-customElements.define('kayf-3d-tilt-card', TiltCard3D);
+if (!customElements.get('kayf-3d-tilt-card')) {
+  customElements.define('kayf-3d-tilt-card', TiltCard3D);
+}

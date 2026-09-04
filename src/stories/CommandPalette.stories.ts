@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/web-components';
+import type { Meta, StoryObj } from '@storybook/web-components-vite';
 import { html } from 'lit';
 import type { CommandItem } from '../components/CommandPalette/CommandPalette';
 
@@ -37,15 +37,15 @@ export const Default: Story = {
   render: () => html`
     <div style="
       min-height: 100vh;
-      background: #050508;
+      background: #07070a;
       display: flex;
       align-items: center;
       justify-content: center;
       flex-direction: column;
       gap: 20px;
-      font-family: 'Segoe UI', system-ui, sans-serif;
+      font-family: Inter,system-ui,sans-serif;
     ">
-      <p style="color:rgba(232,232,240,0.4); font-size:14px;">Press <kbd style="background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.12); padding:3px 8px; border-radius:6px; font-family:monospace; color:#e8e8f0;">⌘K</kbd> to open</p>
+      <p style="color:rgba(228,228,231,0.4); font-size:14px;">Press <kbd style="background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.12); padding:3px 8px; border-radius:6px; font-family:monospace; color:#f4f4f7;">⌘K</kbd> to open</p>
       <button
         onclick="document.querySelector('kayf-command-palette').open()"
         style="
@@ -53,7 +53,7 @@ export const Default: Story = {
           background: rgba(99,102,241,0.15);
           border: 1px solid rgba(99,102,241,0.3);
           border-radius: 100px;
-          color: #6366f1;
+          color: #8b7cff;
           font-family: inherit;
           font-size: 14px;
           cursor: pointer;
@@ -86,13 +86,13 @@ export const Default: Story = {
 
 export const WithActions: Story = {
   render: () => html`
-    <div style="min-height:100vh; background:#050508; display:flex; align-items:center; justify-content:center; flex-direction:column; gap:16px; font-family:'Segoe UI',sans-serif;">
-      <div id="action-log" style="color:rgba(232,232,240,0.4); font-size:13px; font-family:'Courier New',monospace; min-height:20px;">
+    <div style="min-height:100vh; background:#07070a; display:flex; align-items:center; justify-content:center; flex-direction:column; gap:16px; font-family:Inter,system-ui,sans-serif;">
+      <div id="action-log" style="color:rgba(228,228,231,0.4); font-size:13px; font-family:'Courier New',monospace; min-height:20px;">
         Waiting for selection...
       </div>
       <button
         onclick="document.getElementById('cp-actions').open()"
-        style="padding:12px 28px; background:rgba(6,182,212,0.15); border:1px solid rgba(6,182,212,0.3); border-radius:100px; color:#06b6d4; font-family:inherit; font-size:14px; cursor:pointer;"
+        style="padding:12px 28px; background:rgba(6,182,212,0.15); border:1px solid rgba(6,182,212,0.3); border-radius:100px; color:#62daf7; font-family:inherit; font-size:14px; cursor:pointer;"
       >Open (with actions)</button>
 
       <kayf-command-palette id="cp-actions" placeholder="Run a command..."></kayf-command-palette>

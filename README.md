@@ -1,258 +1,179 @@
-![@kayf/ui](https://raw.githubusercontent.com/vKAYFv/kayf-ui/refs/heads/main/.github/assets/hero.png)
+![A dark @kayf/ui banner showing version 0.5.0 and 13 framework-agnostic Web Components](https://raw.githubusercontent.com/vKAYFv/kayf-ui/refs/heads/main/.github/assets/hero.svg)
 
 <div align="center">
 
-[![npm version](https://img.shields.io/npm/v/%40kayf%2Fui?color=00d4ff&labelColor=060810&label=version)](https://www.npmjs.com/package/@kayf/ui)
-[![npm downloads](https://img.shields.io/npm/dm/%40kayf%2Fui?color=8b5cf6&labelColor=060810)](https://www.npmjs.com/package/@kayf/ui)
-[![Bundle Size](https://img.shields.io/bundlephobia/minzip/@kayf/ui?color=00ff88&labelColor=060810)](https://bundlephobia.com/package/@kayf/ui)
-[![License](https://img.shields.io/npm/l/%40kayf%2Fui?color=ffd700&labelColor=060810)](LICENSE)
-[![Storybook](https://img.shields.io/badge/Storybook-live-ff4785?labelColor=060810)](https://69a564b0b16ce689ef423df8-xoiwjakvnm.chromatic.com/)
+[![npm version](https://img.shields.io/npm/v/%40kayf%2Fui?color=62daf7&labelColor=07070a&label=version)](https://www.npmjs.com/package/@kayf/ui)
+[![npm downloads](https://img.shields.io/npm/dm/%40kayf%2Fui?color=8b7cff&labelColor=07070a)](https://www.npmjs.com/package/@kayf/ui)
+[![Bundle Size](https://img.shields.io/bundlephobia/minzip/@kayf/ui?color=51dfa4&labelColor=07070a)](https://bundlephobia.com/package/@kayf/ui)
+[![License](https://img.shields.io/npm/l/%40kayf%2Fui?color=f8c868&labelColor=07070a)](LICENSE)
+[![Storybook](https://img.shields.io/badge/Storybook-live-ff4785?labelColor=07070a)](https://69a564b0b16ce689ef423df8-xoiwjakvnm.chromatic.com/)
 
-**Premium Dark Glassmorphism Web Components**  
-Native · No React · TypeScript · 16 Components
+Modern, expressive Web Components for dark interfaces. Native browser APIs, TypeScript, Shadow DOM, and no runtime dependencies.
+
+[Storybook](https://69a564b0b16ce689ef423df8-xoiwjakvnm.chromatic.com/) · [npm](https://www.npmjs.com/package/@kayf/ui) · [Issues](https://github.com/vKAYFv/kayf-ui/issues)
 
 </div>
 
----
-
-## ✨ What is @kayf/ui?
-
-`@kayf/ui` is a premium Web Components library built for developers who demand **exceptional UI** without framework lock-in. Inspired by game interfaces and modern dashboards, every component is crafted with:
-
-- 🌑 **Dark glassmorphism aesthetic** — backdrop-blur, noise textures, glow effects
-- ⚡ **Native Web Components** — no React, no Vue, works everywhere  
-- 🎮 **Game-ready** — perfect for dashboards, Electron apps, game UIs
-- 🔷 **TypeScript** — full type safety and intellisense
-- 🎭 **Zero dependencies** — only native browser APIs
-
-## 🚀 Install
+## Install
 
 ```bash
 npm install @kayf/ui
 ```
 
-## 📦 Usage
+Import the package once to register every custom element:
 
-```html
-<!-- CDN (UMD) -->
-<script src="https://unpkg.com/@kayf/ui/dist/kayf-ui.umd.js"></script>
+```ts
+import '@kayf/ui'
 ```
 
-```js
-// ESM
-import '@kayf/ui';
-
-// Individual components
-import '@kayf/ui/components/spotlight-card';
-```
+Then use the components in HTML:
 
 ```html
-<kayf-spotlight-card>
-  <h2>Hello World</h2>
+<kayf-spotlight-card color="violet" glow="medium">
+  <h2>Built for the browser</h2>
+  <p>Framework-agnostic, typed, and easy to compose.</p>
 </kayf-spotlight-card>
 ```
 
----
-
-## 🧩 Components
-
-### v0.1.0 — Core
-| Component | Description |
-|-----------|-------------|
-| `<kayf-spotlight-card>` | Mouse-tracking spotlight glow effect |
-| `<kayf-beam-button>` | Hover beam sweep with ripple animation |
-| `<kayf-aurora-card>` | Canvas 2D animated aurora background |
-
-### v0.2.0 — Expansion
-| Component | Description |
-|-----------|-------------|
-| `<kayf-glitch-text>` | Cyberpunk glitch text animation |
-| `<kayf-hud-panel>` | HUD-style interface panel with scan lines |
-| `<kayf-particle-field>` | Interactive canvas particle system |
-| `<kayf-counter-up>` | Animated number counter with easing |
-| `<kayf-magnetic-button>` | Cursor-attracted magnetic button |
-
-### v0.3.0 — Premium
-| Component | Description |
-|-----------|-------------|
-| `<kayf-holographic-card>` | 3D tilt with rainbow holographic shine |
-| `<kayf-neon-border>` | Animated rotating neon border |
-| `<kayf-typewriter-text>` | Organic multi-line typewriter effect |
-| `<kayf-command-palette>` | Full-screen ⌘K command search interface |
-
-### v0.4.0 — New ✨
-| Component | Description |
-|-----------|-------------|
-| `<kayf-liquid-button>` | Physics-based liquid blob button with mouse interaction |
-| `<kayf-noise-card>` | Premium noise texture card with glow variants |
-| `<kayf-ripple-grid>` | Interactive dot grid with click/hover ripple waves |
-| `<kayf-3d-tilt-card>` | Smooth 3D perspective tilt with shine overlay |
-
----
-
-## 🎨 Component Showcase
-
-### `<kayf-liquid-button>` — Physics Blob Button
+For a script-tag setup, load the UMD bundle from a CDN:
 
 ```html
-<kayf-liquid-button label="Launch" color="#00d4ff" size="md"></kayf-liquid-button>
-<kayf-liquid-button label="Danger" color="#ff3366" size="lg"></kayf-liquid-button>
-<kayf-liquid-button label="Go" color="#00ff88" size="sm" disabled></kayf-liquid-button>
+<script src="https://unpkg.com/@kayf/ui/dist/kayf-ui.umd.js"></script>
 ```
 
-**Attributes:**
-| Attribute | Type | Default | Description |
-|-----------|------|---------|-------------|
-| `label` | `string` | `'Click me'` | Button text |
-| `color` | `string` | `'#00d4ff'` | Blob/glow color |
-| `size` | `'sm' \| 'md' \| 'lg'` | `'md'` | Button size |
-| `disabled` | `boolean` | `false` | Disabled state |
+## Components
 
-**Events:** `kayf-click`
+| Element | Purpose |
+| --- | --- |
+| `<kayf-spotlight-card>` | Glass card with a pointer-following highlight |
+| `<kayf-beam-button>` | Accessible action button with solid, outline, and ghost variants |
+| `<kayf-aurora-card>` | Ambient animated aurora surface |
+| `<kayf-particle-field>` | Interactive canvas particle field |
+| `<kayf-counter>` | Viewport-triggered metric card |
+| `<kayf-magnetic-btn>` | Motion wrapper attracted to the cursor |
+| `<kayf-holographic-card>` | 3D card with an iridescent shine |
+| `<kayf-neon-border>` | Animated conic-gradient border |
+| `<kayf-typewriter>` | Multi-line typewriter text |
+| `<kayf-command-palette>` | Keyboard-first command menu |
+| `<kayf-noise-card>` | Glass surface with lightweight grain |
+| `<kayf-ripple-grid>` | Clickable dot grid with ripple waves |
+| `<kayf-3d-tilt-card>` | Perspective tilt wrapper for slotted content |
 
----
+Explore every variant and control in the [interactive Storybook](https://69a564b0b16ce689ef423df8-xoiwjakvnm.chromatic.com/).
 
-### `<kayf-noise-card>` — Textured Glass Card
+## Examples
+
+### Button states
 
 ```html
-<kayf-noise-card variant="elevated" glow="cyan" padding="24px">
-  <h3>Card Title</h3>
-  <p>Content with noise texture.</p>
-</kayf-noise-card>
+<kayf-beam-button color="violet" variant="solid" size="lg">
+  Continue
+</kayf-beam-button>
+
+<kayf-beam-button color="cyan" variant="outline" loading>
+  Saving
+</kayf-beam-button>
 ```
 
-**Attributes:**
-| Attribute | Type | Default | Description |
-|-----------|------|---------|-------------|
-| `variant` | `'default' \| 'elevated' \| 'flat' \| 'glass'` | `'default'` | Visual style |
-| `glow` | `string` | `'blue'` | Glow accent color |
-| `noise-opacity` | `number` | `0.04` | Noise intensity (0–0.15) |
-| `padding` | `string` | `'24px'` | Inner padding |
+```ts
+document.querySelector('kayf-beam-button')?.addEventListener('kayf-click', event => {
+  console.log('Button activated', event)
+})
+```
 
----
-
-### `<kayf-ripple-grid>` — Interactive Dot Matrix
+### Command palette
 
 ```html
-<kayf-ripple-grid
-  color="#00d4ff"
-  grid-size="30"
-  width="500"
-  height="300"
-  auto-ripple
-></kayf-ripple-grid>
+<kayf-command-palette id="commands" placeholder="Search actions…"></kayf-command-palette>
 ```
 
-**Attributes:**
-| Attribute | Type | Default | Description |
-|-----------|------|---------|-------------|
-| `color` | `string` | `'#00d4ff'` | Dot/ripple color |
-| `grid-size` | `number` | `30` | Dot spacing in px |
-| `width` | `number` | `400` | Canvas width |
-| `height` | `number` | `300` | Canvas height |
-| `auto-ripple` | `boolean` | `false` | Auto-fire ripples |
+```ts
+import type { CommandItem, CommandPalette } from '@kayf/ui'
 
-**Events:** `kayf-ripple` → `{ x, y }`
+const palette = document.querySelector<CommandPalette>('#commands')!
+const commands: CommandItem[] = [
+  { id: 'home', label: 'Go home', group: 'Navigation', shortcut: 'G+H' },
+  { id: 'theme', label: 'Change theme', group: 'Preferences' },
+]
 
----
-
-### `<kayf-3d-tilt-card>` — Perspective Tilt
-
-```html
-<kayf-3d-tilt-card max-tilt="15" scale="1.05" glow="#00d4ff">
-  <div class="my-card-content">...</div>
-</kayf-3d-tilt-card>
+palette.setItems(commands)
+palette.open()
 ```
 
-**Attributes:**
-| Attribute | Type | Default | Description |
-|-----------|------|---------|-------------|
-| `max-tilt` | `number` | `15` | Max tilt degrees |
-| `scale` | `number` | `1.05` | Scale on hover |
-| `perspective` | `number` | `1000` | CSS perspective px |
-| `glow` | `string` | `'#ffffff'` | Edge glow color |
-| `no-shine` | `boolean` | `false` | Disable shine effect |
+The default shortcut is <kbd>⌘ K</kbd> on macOS or <kbd>Ctrl K</kbd> elsewhere. Listen for `kayf-select`, `kayf-open`, and `kayf-close` to integrate it with your app.
 
-**Events:** `kayf-tilt` → `{ rotateX, rotateY }`
+### Frameworks
 
----
+The package registers standard custom elements, so the same markup works in React, Vue, Svelte, Astro, or plain HTML.
 
-## 🔧 Framework Integration
-
-### React
 ```tsx
-import '@kayf/ui';
-import { useRef } from 'react';
+import '@kayf/ui'
 
-export function App() {
+export function FeatureCard() {
   return (
-    <kayf-3d-tilt-card max-tilt="15" glow="#00d4ff">
-      <div className="card-content">...</div>
-    </kayf-3d-tilt-card>
-  );
+    <kayf-noise-card variant="glass" glow="violet" padding="28px">
+      <h3>One component, any stack.</h3>
+    </kayf-noise-card>
+  )
 }
 ```
 
-### Vue 3
-```vue
-<template>
-  <kayf-ripple-grid
-    color="#8b5cf6"
-    :width="500"
-    :height="300"
-    auto-ripple
-  />
-</template>
+## Design and accessibility
 
-<script setup>
-import '@kayf/ui';
-</script>
+- Shared dark-surface, border, radius, typography, and accent tokens keep the collection visually consistent.
+- Motion-heavy components respect `prefers-reduced-motion`.
+- Interactive components expose keyboard focus and composed custom events where appropriate.
+- Shadow parts are available on primary surfaces such as cards, buttons, overlays, and content wrappers.
+
+You can override the shared CSS custom properties on a component:
+
+```css
+kayf-noise-card {
+  --kayf-radius-md: 24px;
+  --kayf-font-sans: "Geist", system-ui, sans-serif;
+}
+
+kayf-beam-button {
+  --kayf-surface: rgba(18, 18, 24, 0.72);
+}
 ```
 
-### Vanilla JS
-```html
-<kayf-liquid-button label="Submit" color="#00ff88" size="lg"></kayf-liquid-button>
+## TypeScript
 
-<script type="module">
-  import '@kayf/ui';
-  
-  document.querySelector('kayf-liquid-button')
-    .addEventListener('kayf-click', () => console.log('Clicked!'));
-</script>
-```
-
----
-
-## 📖 Documentation & Live Demos
-
-**🎮 [Interactive Storybook →](https://69a564b0b16ce689ef423df8-xoiwjakvnm.chromatic.com/)**
-
-All components have live interactive stories with controls for every prop.
-
----
-
-## 🛠 TypeScript
+Public component classes and `CommandItem` are exported from the package root:
 
 ```ts
-import type { LiquidButton, NoiseCard, RippleGrid, TiltCard3D } from '@kayf/ui';
+import type { RippleGrid, SpotlightCard } from '@kayf/ui'
 
-const btn = document.querySelector<LiquidButton>('kayf-liquid-button')!;
-btn.setAttribute('color', '#ff3366');
-
-const grid = document.querySelector<RippleGrid>('kayf-ripple-grid')!;
-grid.addEventListener('kayf-ripple', (e: CustomEvent<{ x: number; y: number }>) => {
-  console.log('Ripple at', e.detail);
-});
+const grid = document.querySelector<RippleGrid>('kayf-ripple-grid')
+const card = document.querySelector<SpotlightCard>('kayf-spotlight-card')
 ```
 
----
+## Development
 
-## 📄 License
+```bash
+npm install
+npm run storybook
+```
+
+Useful checks:
+
+```bash
+npm run type-check
+npm run build
+npm run build-storybook
+```
+
+Storybook 10 requires Node.js 20.19 or newer for local development. The published components themselves run in modern browsers and have no runtime package dependencies.
+
+## Migrating to 0.5
+
+`LiquidButton`, `HudPanel`, and `GlitchText` were removed from the public package because they no longer match the direction of the library. Remove imports and usages of:
+
+- `LiquidButton` / `<kayf-liquid-button>`
+- `HudPanel` / `<kayf-hud-panel>`
+- `GlitchText` / `<kayf-glitch-text>`
+
+## License
 
 MIT © [KAYF](https://github.com/vKAYFv)
-
----
-
-<div align="center">
-  <sub>Built with ❤️ for developers who care about UI quality</sub>
-</div>

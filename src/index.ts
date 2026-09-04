@@ -6,8 +6,6 @@ export type { ColorVariant } from './core/tokens'
 export { SpotlightCard }  from './components/SpotlightCard/SpotlightCard'
 export { BeamButton }     from './components/BeamButton/BeamButton'
 export { AuroraCard }     from './components/AuroraCard/AuroraCard'
-export { GlitchText }     from './components/GlitchText/GlitchText'
-export { HudPanel }       from './components/HudPanel/HudPanel'
 
 // v0.2.0
 export { KayfParticleField } from './components/Particle-field/particle-field'
@@ -22,9 +20,8 @@ export { CommandPalette }  from './components/CommandPalette/CommandPalette'
 export type { CommandItem } from './components/CommandPalette/CommandPalette'
 
 // v0.4.0
-export { LiquidButton }  from './components/LiquidButton/LiquidButton'
 export { NoiseCard }     from './components/NoiseCard/NoiseCard'
 export { RippleGrid }    from './components/RippleGrid/RippleGrid'
 export { TiltCard3D }    from './components/TiltCard3D/TiltCard3D'
 
-export const version = '0.4.0'
+export const version = '0.5.0'

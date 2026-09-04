@@ -20,6 +20,7 @@ export class KayfMagneticBtn extends HTMLElement {
   }
 
   connectedCallback() {
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     this.addEventListener('mousemove', this.onMove);
     this.addEventListener('mouseleave', this.onLeave);
   }
@@ -59,4 +60,6 @@ export class KayfMagneticBtn extends HTMLElement {
   };
 }
 
-customElements.define('kayf-magnetic-btn', KayfMagneticBtn);
+if (!customElements.get('kayf-magnetic-btn')) {
+  customElements.define('kayf-magnetic-btn', KayfMagneticBtn);
+}

@@ -1,115 +1,113 @@
+import { baseCSS } from '../../core/tokens'
+
+/** Multi-line typewriter text with optional looping and reduced-motion support. */
 export class TypewriterText extends HTMLElement {
   static get observedAttributes() {
-    return ['speed', 'delay', 'cursor', 'loop', 'erase-speed', 'pause'];
+    return ['lines', 'speed', 'delay', 'cursor', 'loop', 'erase-speed', 'pause']
   }
 
-  private _lines: string[] = [];
-  private _lineIdx = 0;
-  private _charIdx = 0;
-  private _erasing = false;
-  private _timer = 0;
-  private _display!: HTMLElement;
-  private _cursor!: HTMLElement;
+  private lines: string[] = []
+  private lineIndex = 0
+  private characterIndex = 0
+  private erasing = false
+  private timer = 0
+  private display: HTMLElement
+  private cursor: HTMLElement
 
   constructor() {
-    super();
-    this.attachShadow({ mode: 'open' });
+    super()
+    this.attachShadow({ mode: 'open' })
     this.shadowRoot!.innerHTML = `
       <style>
+        ${baseCSS}
         :host { display: inline; }
-
-        .wrap {
-          display: inline;
-          font: inherit;
-          color: inherit;
-        }
-
-        .text {
-          display: inline;
-        }
-
+        .wrap { display: inline; color: inherit; font: inherit; }
+        .text { display: inline; }
         .cursor {
-          display: inline-block;
-          width: 2px;
-          height: 1.1em;
-          vertical-align: text-bottom;
-          margin-left: 2px;
-          background: currentColor;
-          animation: blink 1s step-end infinite;
-          border-radius: 1px;
+          display: inline;
+          margin-left: 0.08em;
+          color: currentColor;
+          animation: blink 900ms steps(1, end) infinite;
         }
-
-        @keyframes blink {
-          0%, 100% { opacity: 1; }
-          50%       { opacity: 0; }
-        }
+        @keyframes blink { 50% { opacity: 0; } }
+        @media (prefers-reduced-motion: reduce) { .cursor { display: none; } }
       </style>
-      <span class="wrap"><span class="text"></span><span class="cursor"></span></span>
-    `;
-    this._display = this.shadowRoot!.querySelector('.text')!;
-    this._cursor  = this.shadowRoot!.querySelector('.cursor')!;
+      <span class="wrap"><span class="text" aria-live="polite"></span><span class="cursor" aria-hidden="true"></span></span>
+    `
+    this.display = this.shadowRoot!.querySelector('.text')!
+    this.cursor = this.shadowRoot!.querySelector('.cursor')!
   }
 
-  connectedCallback() {
-    // Collect lines from slot text + data-lines attr
-    const attr = this.getAttribute('lines');
-    if (attr) {
-      this._lines = attr.split('|').map(s => s.trim()).filter(Boolean);
-    } else {
-      this._lines = [this.textContent?.trim() || ''];
+  connectedCallback(): void {
+    this.restart()
+  }
+
+  disconnectedCallback(): void {
+    clearTimeout(this.timer)
+  }
+
+  attributeChangedCallback(): void {
+    if (this.isConnected) this.restart()
+  }
+
+  private get speed() { return Math.max(0, Number.parseInt(this.getAttribute('speed') || '60', 10)) }
+  private get eraseSpeed() { return Math.max(0, Number.parseInt(this.getAttribute('erase-speed') || '30', 10)) }
+  private get pause() { return Math.max(0, Number.parseInt(this.getAttribute('pause') || '1800', 10)) }
+  private get shouldLoop() { return this.hasAttribute('loop') }
+
+  private restart(): void {
+    clearTimeout(this.timer)
+    const configuredLines = this.getAttribute('lines')
+    this.lines = configuredLines
+      ? configuredLines.split('|').map(line => line.trim()).filter(Boolean)
+      : [this.textContent?.trim() || '']
+    this.lineIndex = 0
+    this.characterIndex = 0
+    this.erasing = false
+    this.display.textContent = ''
+    this.cursor.textContent = this.getAttribute('cursor') || '|'
+
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      this.display.textContent = this.lines[0] || ''
+      return
     }
 
-    const delay = parseInt(this.getAttribute('delay') || '500');
-    this._timer = window.setTimeout(() => this.tick(), delay);
+    const delay = Math.max(0, Number.parseInt(this.getAttribute('delay') || '500', 10))
+    this.timer = window.setTimeout(() => this.tick(), delay)
   }
 
-  disconnectedCallback() {
-    clearTimeout(this._timer);
-  }
-
-  private get speed()      { return parseInt(this.getAttribute('speed') || '60'); }
-  private get eraseSpeed() { return parseInt(this.getAttribute('erase-speed') || '30'); }
-  private get pause()      { return parseInt(this.getAttribute('pause') || '1800'); }
-  private get shouldLoop() { return this.hasAttribute('loop'); }
-  private get cursorChar() { return this.getAttribute('cursor') || '|'; }
-
-  private tick() {
-    const line = this._lines[this._lineIdx] || '';
-
-    if (!this._erasing) {
-      // Typing forward
-      this._charIdx++;
-      this._display.textContent = line.slice(0, this._charIdx);
-
-      if (this._charIdx >= line.length) {
-        // Finished typing — pause then erase (if loop) or stop
-        if (this.shouldLoop || this._lineIdx < this._lines.length - 1) {
-          this._timer = window.setTimeout(() => {
-            this._erasing = true;
-            this.tick();
-          }, this.pause);
+  private tick(): void {
+    const line = this.lines[this.lineIndex] || ''
+    if (!this.erasing) {
+      this.characterIndex += 1
+      this.display.textContent = line.slice(0, this.characterIndex)
+      if (this.characterIndex >= line.length) {
+        if (this.shouldLoop || this.lineIndex < this.lines.length - 1) {
+          this.timer = window.setTimeout(() => {
+            this.erasing = true
+            this.tick()
+          }, this.pause)
         }
-        return;
+        return
       }
     } else {
-      // Erasing
-      this._charIdx--;
-      this._display.textContent = line.slice(0, this._charIdx);
-
-      if (this._charIdx <= 0) {
-        this._erasing = false;
-        this._lineIdx = (this._lineIdx + 1) % this._lines.length;
-        if (!this.shouldLoop && this._lineIdx === 0) return;
-        this._timer = window.setTimeout(() => this.tick(), 300);
-        return;
+      this.characterIndex -= 1
+      this.display.textContent = line.slice(0, this.characterIndex)
+      if (this.characterIndex <= 0) {
+        this.erasing = false
+        this.lineIndex = (this.lineIndex + 1) % this.lines.length
+        if (!this.shouldLoop && this.lineIndex === 0) return
+        this.timer = window.setTimeout(() => this.tick(), 280)
+        return
       }
     }
 
-    const ms = this._erasing ? this.eraseSpeed : this.speed;
-    // Small jitter for organic feel
-    const jitter = Math.random() * (ms * 0.3);
-    this._timer = window.setTimeout(() => this.tick(), ms + jitter);
+    const interval = this.erasing ? this.eraseSpeed : this.speed
+    const jitter = Math.random() * interval * 0.25
+    this.timer = window.setTimeout(() => this.tick(), interval + jitter)
   }
 }
 
-customElements.define('kayf-typewriter', TypewriterText);
+if (!customElements.get('kayf-typewriter')) {
+  customElements.define('kayf-typewriter', TypewriterText)
+}

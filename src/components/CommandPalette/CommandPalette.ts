@@ -1,384 +1,443 @@
+import { baseCSS } from '../../core/tokens'
+
 export interface CommandItem {
-  id: string;
-  label: string;
-  description?: string;
-  icon?: string;
-  group?: string;
-  shortcut?: string;
-  action?: () => void;
+  id: string
+  label: string
+  description?: string
+  icon?: string
+  group?: string
+  shortcut?: string
+  action?: () => void
 }
 
+/** Accessible, keyboard-first command menu for app navigation and actions. */
 export class CommandPalette extends HTMLElement {
   static get observedAttributes() {
-    return ['placeholder', 'hotkey', 'open'];
+    return ['placeholder', 'hotkey', 'open']
   }
 
-  private _items: CommandItem[] = [];
-  private _filtered: CommandItem[] = [];
-  private _selectedIdx = 0;
-  private _overlay!: HTMLElement;
-  private _input!: HTMLInputElement;
-  private _list!: HTMLElement;
-  private _isOpen = false;
+  private items: CommandItem[] = []
+  private filtered: CommandItem[] = []
+  private selectedIndex = 0
+  private overlay: HTMLElement
+  private input: HTMLInputElement
+  private list: HTMLElement
+  private isOpen = false
+  private previousFocus?: HTMLElement
 
   constructor() {
-    super();
-    this.attachShadow({ mode: 'open' });
+    super()
+    this.attachShadow({ mode: 'open' })
     this.shadowRoot!.innerHTML = `
       <style>
+        ${baseCSS}
+        *, *::before, *::after { box-sizing: border-box; }
         :host { display: contents; }
 
         .overlay {
           position: fixed;
           inset: 0;
-          background: rgba(0,0,0,0.7);
-          backdrop-filter: blur(8px);
-          -webkit-backdrop-filter: blur(8px);
           z-index: 9999;
-          display: flex;
-          align-items: flex-start;
-          justify-content: center;
-          padding-top: 15vh;
+          display: grid;
+          place-items: start center;
+          padding: max(11vh, 64px) 20px 40px;
+          overflow-y: auto;
+          background: rgba(4,4,7,0.68);
+          backdrop-filter: blur(16px) saturate(110%);
+          -webkit-backdrop-filter: blur(16px) saturate(110%);
           opacity: 0;
+          visibility: hidden;
           pointer-events: none;
-          transition: opacity 0.15s ease;
+          transition: opacity 160ms ease, visibility 0s linear 160ms;
         }
+
         .overlay.open {
           opacity: 1;
-          pointer-events: all;
+          visibility: visible;
+          pointer-events: auto;
+          transition-delay: 0s;
         }
 
         .palette {
-          width: min(640px, 90vw);
-          background: #0d0d14;
-          border: 1px solid rgba(255,255,255,0.1);
-          border-radius: 16px;
+          width: min(680px, 100%);
           overflow: hidden;
-          box-shadow:
-            0 0 0 1px rgba(99,102,241,0.2),
-            0 40px 80px rgba(0,0,0,0.7),
-            0 0 60px rgba(99,102,241,0.08);
-          transform: translateY(-8px) scale(0.98);
-          transition: transform 0.15s ease;
+          border: 1px solid var(--kayf-border-strong);
+          border-radius: 20px;
+          color: var(--kayf-text);
+          background: rgba(14,14,19,0.96);
+          box-shadow: 0 40px 100px rgba(0,0,0,0.58), 0 0 0 1px rgba(139,124,255,0.08);
+          transform: translateY(-10px) scale(0.985);
+          transition: transform 180ms cubic-bezier(.2,.8,.2,1);
         }
-        .overlay.open .palette {
-          transform: translateY(0) scale(1);
-        }
+
+        .overlay.open .palette { transform: translateY(0) scale(1); }
 
         .search-row {
           display: flex;
           align-items: center;
           gap: 12px;
-          padding: 16px 20px;
-          border-bottom: 1px solid rgba(255,255,255,0.06);
+          padding: 18px 20px;
+          border-bottom: 1px solid var(--kayf-border);
+          background: rgba(255,255,255,0.018);
         }
 
         .search-icon {
-          color: rgba(255,255,255,0.3);
-          font-size: 16px;
-          flex-shrink: 0;
+          flex: none;
+          width: 20px;
+          color: var(--kayf-subtle);
+          font: 18px/1 var(--kayf-font-sans);
         }
 
         input {
+          min-width: 0;
           flex: 1;
-          background: none;
-          border: none;
-          outline: none;
-          font-family: 'Segoe UI', system-ui, sans-serif;
-          font-size: 16px;
-          color: #e8e8f0;
-          caret-color: #6366f1;
+          border: 0;
+          outline: 0;
+          color: var(--kayf-text);
+          background: transparent;
+          caret-color: var(--kayf-violet);
+          font: 500 16px/1.4 var(--kayf-font-sans);
+          letter-spacing: -0.01em;
         }
-        input::placeholder { color: rgba(232,232,240,0.25); }
+
+        input::placeholder { color: var(--kayf-subtle); }
 
         .kbd {
           display: inline-flex;
+          min-width: 24px;
+          min-height: 22px;
+          padding: 3px 7px;
           align-items: center;
-          gap: 3px;
-          padding: 3px 8px;
-          background: rgba(255,255,255,0.06);
-          border: 1px solid rgba(255,255,255,0.1);
-          border-radius: 6px;
-          font-family: 'Courier New', monospace;
-          font-size: 11px;
-          color: rgba(255,255,255,0.35);
-          flex-shrink: 0;
+          justify-content: center;
+          border: 1px solid var(--kayf-border-strong);
+          border-radius: 7px;
+          color: var(--kayf-subtle);
+          background: rgba(255,255,255,0.045);
+          box-shadow: inset 0 -1px 0 rgba(255,255,255,0.035);
+          font: 500 10px/1 var(--kayf-font-mono);
         }
 
         .list {
-          max-height: 360px;
+          max-height: min(420px, 54vh);
           overflow-y: auto;
-          padding: 8px 0;
+          padding: 8px;
           scrollbar-width: thin;
-          scrollbar-color: rgba(255,255,255,0.1) transparent;
+          scrollbar-color: rgba(255,255,255,0.12) transparent;
         }
 
         .group-label {
-          padding: 8px 20px 4px;
-          font-size: 10px;
-          font-weight: 600;
+          padding: 12px 10px 7px;
+          color: var(--kayf-subtle);
+          font: 650 10px/1.2 var(--kayf-font-sans);
           letter-spacing: 0.1em;
           text-transform: uppercase;
-          color: rgba(255,255,255,0.2);
-          font-family: 'Segoe UI', system-ui, sans-serif;
         }
 
         .item {
+          position: relative;
           display: flex;
+          min-height: 54px;
+          padding: 8px 10px;
           align-items: center;
           gap: 12px;
-          padding: 10px 20px;
+          border: 1px solid transparent;
+          border-radius: 11px;
           cursor: pointer;
-          border-radius: 0;
-          transition: background 0.1s;
-          position: relative;
+          transition: background 100ms ease, border-color 100ms ease;
         }
+
         .item:hover, .item.selected {
-          background: rgba(99,102,241,0.12);
-        }
-        .item.selected::before {
-          content: '';
-          position: absolute;
-          left: 0; top: 0; bottom: 0;
-          width: 2px;
-          background: #6366f1;
-          border-radius: 0 2px 2px 0;
-          box-shadow: 0 0 8px #6366f1;
+          border-color: rgba(139,124,255,0.18);
+          background: rgba(139,124,255,0.1);
         }
 
         .item-icon {
-          font-size: 16px;
-          width: 28px;
-          height: 28px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          background: rgba(255,255,255,0.05);
-          border-radius: 8px;
-          flex-shrink: 0;
-          color: rgba(255,255,255,0.6);
+          display: grid;
+          width: 34px;
+          height: 34px;
+          flex: none;
+          place-items: center;
+          border: 1px solid var(--kayf-border);
+          border-radius: 9px;
+          color: var(--kayf-muted);
+          background: rgba(255,255,255,0.035);
+          font: 15px/1 var(--kayf-font-sans);
         }
 
-        .item-content {
-          flex: 1;
-          min-width: 0;
+        .item.selected .item-icon {
+          border-color: rgba(139,124,255,0.28);
+          color: #b9b1ff;
+          background: rgba(139,124,255,0.12);
         }
+
+        .item-content { min-width: 0; flex: 1; }
         .item-label {
-          font-family: 'Segoe UI', system-ui, sans-serif;
-          font-size: 14px;
-          color: #e8e8f0;
-          white-space: nowrap;
+          display: block;
           overflow: hidden;
+          color: var(--kayf-text);
+          font: 550 14px/1.35 var(--kayf-font-sans);
           text-overflow: ellipsis;
+          white-space: nowrap;
         }
-        .item-desc {
-          font-family: 'Segoe UI', system-ui, sans-serif;
-          font-size: 12px;
-          color: rgba(232,232,240,0.35);
-          margin-top: 1px;
+        .item-description {
+          display: block;
+          margin-top: 2px;
+          overflow: hidden;
+          color: var(--kayf-muted);
+          font: 400 12px/1.35 var(--kayf-font-sans);
+          text-overflow: ellipsis;
+          white-space: nowrap;
         }
 
-        .item-shortcut {
-          display: flex;
-          gap: 4px;
-          flex-shrink: 0;
-        }
-        .item-shortcut .kbd {
-          font-size: 10px;
-          padding: 2px 6px;
-        }
+        .shortcut { display: flex; flex: none; gap: 4px; }
 
         .empty {
-          padding: 40px 20px;
+          padding: 48px 20px;
+          color: var(--kayf-muted);
           text-align: center;
-          font-family: 'Segoe UI', system-ui, sans-serif;
-          font-size: 14px;
-          color: rgba(232,232,240,0.2);
+          font: 500 14px/1.5 var(--kayf-font-sans);
         }
 
         .footer {
-          padding: 8px 20px;
-          border-top: 1px solid rgba(255,255,255,0.05);
           display: flex;
+          min-height: 44px;
+          padding: 9px 16px;
+          align-items: center;
           gap: 16px;
-          align-items: center;
+          border-top: 1px solid var(--kayf-border);
+          color: var(--kayf-subtle);
+          background: rgba(255,255,255,0.018);
+          font: 500 11px/1.3 var(--kayf-font-sans);
         }
-        .footer-hint {
-          display: flex;
-          align-items: center;
-          gap: 6px;
-          font-family: 'Segoe UI', system-ui, sans-serif;
-          font-size: 11px;
-          color: rgba(255,255,255,0.2);
+
+        .hint { display: inline-flex; align-items: center; gap: 6px; }
+
+        @media (max-width: 520px) {
+          .footer { display: none; }
+          .shortcut { display: none; }
         }
       </style>
 
-      <div class="overlay" part="overlay">
-        <div class="palette" part="palette">
+      <div class="overlay" part="overlay" aria-hidden="true">
+        <section class="palette" part="palette" role="dialog" aria-modal="true" aria-label="Command menu">
           <div class="search-row">
-            <span class="search-icon">⌕</span>
-            <input type="text" spellcheck="false" autocomplete="off"/>
+            <span class="search-icon" aria-hidden="true">⌕</span>
+            <input type="text" role="combobox" aria-autocomplete="list" aria-controls="command-list" aria-expanded="false" spellcheck="false" autocomplete="off">
             <span class="kbd">esc</span>
           </div>
-          <div class="list" part="list"></div>
-          <div class="footer">
-            <span class="footer-hint"><span class="kbd">↑↓</span> navigate</span>
-            <span class="footer-hint"><span class="kbd">↵</span> select</span>
-            <span class="footer-hint"><span class="kbd">esc</span> close</span>
-          </div>
-        </div>
+          <div class="list" id="command-list" part="list" role="listbox"></div>
+          <footer class="footer" aria-hidden="true">
+            <span class="hint"><span class="kbd">↑↓</span> navigate</span>
+            <span class="hint"><span class="kbd">↵</span> select</span>
+            <span class="hint"><span class="kbd">esc</span> close</span>
+          </footer>
+        </section>
       </div>
-    `;
+    `
 
-    this._overlay = this.shadowRoot!.querySelector('.overlay')!;
-    this._input   = this.shadowRoot!.querySelector('input')!;
-    this._list    = this.shadowRoot!.querySelector('.list')!;
+    this.overlay = this.shadowRoot!.querySelector('.overlay')!
+    this.input = this.shadowRoot!.querySelector('input')!
+    this.list = this.shadowRoot!.querySelector('.list')!
   }
 
-  connectedCallback() {
-    // Global hotkey
-    const hotkey = this.getAttribute('hotkey') || 'k';
-    document.addEventListener('keydown', this._onGlobalKey);
-    this._input.addEventListener('input', () => this._filter(this._input.value));
-    this._input.addEventListener('keydown', this._onInputKey);
-    this._overlay.addEventListener('click', (e) => {
-      if (e.target === this._overlay) this.close();
-    });
-
-    // Set placeholder
-    this._input.placeholder = this.getAttribute('placeholder') || 'Search commands...';
+  connectedCallback(): void {
+    document.addEventListener('keydown', this.onGlobalKey)
+    this.input.addEventListener('input', this.onInput)
+    this.input.addEventListener('keydown', this.onInputKey)
+    this.overlay.addEventListener('click', this.onOverlayClick)
+    this.list.addEventListener('click', this.onListClick)
+    this.list.addEventListener('pointermove', this.onListPointerMove)
+    this.input.placeholder = this.getAttribute('placeholder') || 'Search commands…'
+    if (this.hasAttribute('open')) this.open()
   }
 
-  disconnectedCallback() {
-    document.removeEventListener('keydown', this._onGlobalKey);
+  disconnectedCallback(): void {
+    document.removeEventListener('keydown', this.onGlobalKey)
+    this.input.removeEventListener('input', this.onInput)
+    this.input.removeEventListener('keydown', this.onInputKey)
+    this.overlay.removeEventListener('click', this.onOverlayClick)
+    this.list.removeEventListener('click', this.onListClick)
+    this.list.removeEventListener('pointermove', this.onListPointerMove)
   }
 
-  /** Set items programmatically */
-  setItems(items: CommandItem[]) {
-    this._items = items;
-    this._filter('');
-  }
-
-  open() {
-    this._isOpen = true;
-    this._overlay.classList.add('open');
-    this._input.value = '';
-    this._filter('');
-    requestAnimationFrame(() => this._input.focus());
-    this.dispatchEvent(new CustomEvent('kayf-open', { bubbles: true }));
-  }
-
-  close() {
-    this._isOpen = false;
-    this._overlay.classList.remove('open');
-    this.dispatchEvent(new CustomEvent('kayf-close', { bubbles: true }));
-  }
-
-  toggle() {
-    this._isOpen ? this.close() : this.open();
-  }
-
-  private _onGlobalKey = (e: KeyboardEvent) => {
-    const hotkey = this.getAttribute('hotkey') || 'k';
-    if ((e.metaKey || e.ctrlKey) && e.key === hotkey) {
-      e.preventDefault();
-      this.toggle();
+  attributeChangedCallback(name: string): void {
+    if (!this.isConnected) return
+    if (name === 'placeholder') this.input.placeholder = this.getAttribute('placeholder') || 'Search commands…'
+    if (name === 'open' && this.hasAttribute('open') !== this.isOpen) {
+      this.hasAttribute('open') ? this.open() : this.close()
     }
-    if (e.key === 'Escape' && this._isOpen) this.close();
-  };
-
-  private _onInputKey = (e: KeyboardEvent) => {
-    if (e.key === 'ArrowDown') {
-      e.preventDefault();
-      this._selectedIdx = Math.min(this._selectedIdx + 1, this._filtered.length - 1);
-      this._renderList();
-    } else if (e.key === 'ArrowUp') {
-      e.preventDefault();
-      this._selectedIdx = Math.max(this._selectedIdx - 1, 0);
-      this._renderList();
-    } else if (e.key === 'Enter') {
-      const item = this._filtered[this._selectedIdx];
-      if (item) this._execute(item);
-    }
-  };
-
-  private _filter(query: string) {
-    const q = query.toLowerCase().trim();
-    this._filtered = q
-      ? this._items.filter(i =>
-          i.label.toLowerCase().includes(q) ||
-          i.description?.toLowerCase().includes(q) ||
-          i.group?.toLowerCase().includes(q)
-        )
-      : [...this._items];
-    this._selectedIdx = 0;
-    this._renderList();
   }
 
-  private _renderList() {
-    if (this._filtered.length === 0) {
-      this._list.innerHTML = `<div class="empty">No results found</div>`;
-      return;
+  setItems(items: CommandItem[]): void {
+    this.items = [...items]
+    this.filter('')
+  }
+
+  open(): void {
+    if (this.isOpen) return
+    this.isOpen = true
+    this.previousFocus = document.activeElement instanceof HTMLElement ? document.activeElement : undefined
+    if (!this.hasAttribute('open')) this.setAttribute('open', '')
+    this.overlay.classList.add('open')
+    this.overlay.setAttribute('aria-hidden', 'false')
+    this.input.setAttribute('aria-expanded', 'true')
+    this.input.value = ''
+    this.filter('')
+    requestAnimationFrame(() => this.input.focus())
+    this.dispatchEvent(new CustomEvent('kayf-open', { bubbles: true, composed: true }))
+  }
+
+  close(): void {
+    if (!this.isOpen) return
+    this.isOpen = false
+    if (this.hasAttribute('open')) this.removeAttribute('open')
+    this.previousFocus?.focus()
+    this.overlay.classList.remove('open')
+    this.overlay.setAttribute('aria-hidden', 'true')
+    this.input.setAttribute('aria-expanded', 'false')
+    this.dispatchEvent(new CustomEvent('kayf-close', { bubbles: true, composed: true }))
+  }
+
+  toggle(): void {
+    this.isOpen ? this.close() : this.open()
+  }
+
+  private onGlobalKey = (event: KeyboardEvent) => {
+    const hotkey = (this.getAttribute('hotkey') || 'k').toLowerCase()
+    if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === hotkey) {
+      event.preventDefault()
+      this.toggle()
+    }
+    if (event.key === 'Escape' && this.isOpen) this.close()
+  }
+
+  private onInput = () => this.filter(this.input.value)
+
+  private onInputKey = (event: KeyboardEvent) => {
+    if (event.key === 'ArrowDown' && this.filtered.length) {
+      event.preventDefault()
+      this.selectedIndex = (this.selectedIndex + 1) % this.filtered.length
+      this.renderList()
+    } else if (event.key === 'ArrowUp' && this.filtered.length) {
+      event.preventDefault()
+      this.selectedIndex = (this.selectedIndex - 1 + this.filtered.length) % this.filtered.length
+      this.renderList()
+    } else if (event.key === 'Enter') {
+      const item = this.filtered[this.selectedIndex]
+      if (item) this.execute(item)
+    }
+  }
+
+  private onOverlayClick = (event: MouseEvent) => {
+    if (event.target === this.overlay) this.close()
+  }
+
+  private onListClick = (event: MouseEvent) => {
+    const element = (event.target as Element).closest<HTMLElement>('.item')
+    const index = Number(element?.dataset.index)
+    if (Number.isInteger(index) && this.filtered[index]) this.execute(this.filtered[index])
+  }
+
+  private onListPointerMove = (event: PointerEvent) => {
+    const element = (event.target as Element).closest<HTMLElement>('.item')
+    const index = Number(element?.dataset.index)
+    if (!Number.isInteger(index) || index === this.selectedIndex || !this.filtered[index]) return
+    this.selectedIndex = index
+    this.renderList()
+  }
+
+  private filter(query: string): void {
+    const normalized = query.toLocaleLowerCase().trim()
+    this.filtered = normalized
+      ? this.items.filter(item => [item.label, item.description, item.group]
+          .some(value => value?.toLocaleLowerCase().includes(normalized)))
+      : [...this.items]
+    this.selectedIndex = 0
+    this.renderList()
+  }
+
+  private renderList(): void {
+    this.list.replaceChildren()
+    if (!this.filtered.length) {
+      const empty = document.createElement('div')
+      empty.className = 'empty'
+      empty.textContent = 'No matching commands'
+      this.list.append(empty)
+      this.input.removeAttribute('aria-activedescendant')
+      return
     }
 
-    // Group items
-    const groups = new Map<string, CommandItem[]>();
-    for (const item of this._filtered) {
-      const g = item.group || '';
-      if (!groups.has(g)) groups.set(g, []);
-      groups.get(g)!.push(item);
-    }
+    const fragment = document.createDocumentFragment()
+    let previousGroup: string | undefined
 
-    let html = '';
-    let absIdx = 0;
-    for (const [group, items] of groups) {
-      if (group) html += `<div class="group-label">${group}</div>`;
-      for (const item of items) {
-        const selected = absIdx === this._selectedIdx ? 'selected' : '';
-        const shortcut = item.shortcut
-          ? `<div class="item-shortcut">${item.shortcut.split('+').map(k => `<span class="kbd">${k}</span>`).join('')}</div>`
-          : '';
-        html += `
-          <div class="item ${selected}" data-id="${item.id}" data-idx="${absIdx}">
-            <div class="item-icon">${item.icon || '◈'}</div>
-            <div class="item-content">
-              <div class="item-label">${item.label}</div>
-              ${item.description ? `<div class="item-desc">${item.description}</div>` : ''}
-            </div>
-            ${shortcut}
-          </div>`;
-        absIdx++;
+    this.filtered.forEach((item, index) => {
+      const group = item.group || ''
+      if (group && group !== previousGroup) {
+        const heading = document.createElement('div')
+        heading.className = 'group-label'
+        heading.textContent = group
+        fragment.append(heading)
       }
-    }
+      previousGroup = group
 
-    this._list.innerHTML = html;
+      const row = document.createElement('div')
+      row.className = `item${index === this.selectedIndex ? ' selected' : ''}`
+      row.id = `kayf-command-${index}`
+      row.dataset.index = String(index)
+      row.setAttribute('role', 'option')
+      row.setAttribute('aria-selected', String(index === this.selectedIndex))
 
-    // Scroll selected into view
-    const sel = this._list.querySelector('.selected') as HTMLElement;
-    sel?.scrollIntoView({ block: 'nearest' });
+      const icon = document.createElement('span')
+      icon.className = 'item-icon'
+      icon.setAttribute('aria-hidden', 'true')
+      icon.textContent = item.icon || '↗'
 
-    // Click handlers
-    this._list.querySelectorAll('.item').forEach(el => {
-      el.addEventListener('click', () => {
-        const id = (el as HTMLElement).dataset.id!;
-        const item = this._filtered.find(i => i.id === id);
-        if (item) this._execute(item);
-      });
-      el.addEventListener('mouseenter', () => {
-        this._selectedIdx = parseInt((el as HTMLElement).dataset.idx!);
-        this._renderList();
-      });
-    });
+      const content = document.createElement('span')
+      content.className = 'item-content'
+      const label = document.createElement('span')
+      label.className = 'item-label'
+      label.textContent = item.label
+      content.append(label)
+      if (item.description) {
+        const description = document.createElement('span')
+        description.className = 'item-description'
+        description.textContent = item.description
+        content.append(description)
+      }
+
+      row.append(icon, content)
+      if (item.shortcut) {
+        const shortcut = document.createElement('span')
+        shortcut.className = 'shortcut'
+        shortcut.setAttribute('aria-hidden', 'true')
+        for (const key of item.shortcut.split('+')) {
+          const keycap = document.createElement('span')
+          keycap.className = 'kbd'
+          keycap.textContent = key
+          shortcut.append(keycap)
+        }
+        row.append(shortcut)
+      }
+      fragment.append(row)
+    })
+
+    this.list.append(fragment)
+    const selected = this.list.querySelector<HTMLElement>('.selected')
+    selected?.scrollIntoView({ block: 'nearest' })
+    if (selected) this.input.setAttribute('aria-activedescendant', selected.id)
   }
 
-  private _execute(item: CommandItem) {
-    this.close();
-    item.action?.();
+  private execute(item: CommandItem): void {
+    this.close()
+    item.action?.()
     this.dispatchEvent(new CustomEvent('kayf-select', {
       detail: item,
-      bubbles: true
-    }));
+      bubbles: true,
+      composed: true,
+    }))
   }
 }
 
-customElements.define('kayf-command-palette', CommandPalette);
+if (!customElements.get('kayf-command-palette')) {
+  customElements.define('kayf-command-palette', CommandPalette)
+}

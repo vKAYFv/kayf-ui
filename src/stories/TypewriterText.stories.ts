@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/web-components';
+import type { Meta, StoryObj } from '@storybook/web-components-vite';
 import { html } from 'lit';
 
 const meta: Meta = {
@@ -33,7 +33,7 @@ export const Default: Story = {
     loop: true,
   },
   render: (args) => html`
-    <div style="font-family:'Segoe UI',system-ui,sans-serif; font-size:28px; font-weight:700; color:#e8e8f0; letter-spacing:-0.03em;">
+    <div style="font-family:Inter,system-ui,sans-serif; font-size:28px; font-weight:700; color:#f4f4f7; letter-spacing:-0.03em;">
       <kayf-typewriter
         lines=${args.lines}
         speed=${args.speed}
@@ -49,10 +49,10 @@ export const Default: Story = {
 export const HeroHeadline: Story = {
   render: () => html`
     <div style="text-align:center; padding:40px;">
-      <p style="font-family:'Courier New',monospace; font-size:11px; color:#6366f1; letter-spacing:0.2em; text-transform:uppercase; margin:0 0 16px;">@kayf/ui</p>
-      <h1 style="font-family:'Segoe UI',sans-serif; font-size:42px; font-weight:800; color:#e8e8f0; letter-spacing:-0.04em; margin:0; line-height:1.1;">
+      <p style="font-family:'Courier New',monospace; font-size:11px; color:#8b7cff; letter-spacing:0.2em; text-transform:uppercase; margin:0 0 16px;">@kayf/ui</p>
+      <h1 style="font-family:Inter,system-ui,sans-serif; font-size:42px; font-weight:800; color:#f4f4f7; letter-spacing:-0.04em; margin:0; line-height:1.1;">
         Build interfaces<br>that feel
-        <span style="background:linear-gradient(135deg,#6366f1,#06b6d4); -webkit-background-clip:text; -webkit-text-fill-color:transparent;">
+        <span style="background:linear-gradient(135deg,#8b7cff,#62daf7); -webkit-background-clip:text; -webkit-text-fill-color:transparent;">
           <kayf-typewriter
             lines="alive.|premium.|different.|unforgettable."
             speed="80"
@@ -68,7 +68,7 @@ export const HeroHeadline: Story = {
 
 export const Terminal: Story = {
   render: () => html`
-    <div style="font-family:'Courier New',monospace; font-size:14px; color:#10b981; background:#050508; padding:24px 28px; border-radius:12px; border:1px solid rgba(255,255,255,0.06); min-width:400px;">
+    <div style="font-family:'Courier New',monospace; font-size:14px; color:#51dfa4; background:#07070a; padding:24px 28px; border-radius:12px; border:1px solid rgba(255,255,255,0.06); min-width:400px;">
       <div style="color:rgba(255,255,255,0.3); margin-bottom:12px; font-size:11px;">$ kayf-ui --status</div>
       <kayf-typewriter
         lines="Initializing components...|Loading design tokens...|Shadow DOM ready.|All systems operational."
@@ -84,7 +84,7 @@ export const Terminal: Story = {
 export const SingleLine: Story = {
   args: { loop: false, speed: 70 },
   render: (args) => html`
-    <div style="font-family:'Segoe UI',sans-serif; font-size:20px; color:#e8e8f0;">
+    <div style="font-family:Inter,system-ui,sans-serif; font-size:20px; color:#f4f4f7;">
       <kayf-typewriter
         speed=${args.speed}
         delay="300"

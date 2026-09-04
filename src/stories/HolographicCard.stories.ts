@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/web-components';
+import type { Meta, StoryObj } from '@storybook/web-components-vite';
 import { html } from 'lit';
 
 const meta: Meta = {
@@ -31,8 +31,8 @@ export const Default: Story = {
     >
       <div style="padding:40px 48px; text-align:center;">
         <div style="font-size:32px; margin-bottom:12px;">◈</div>
-        <h3 style="margin:0 0 8px; font-family:'Segoe UI',sans-serif; font-size:20px; color:#e8e8f0; letter-spacing:-0.03em;">Holographic</h3>
-        <p style="margin:0; font-family:'Segoe UI',sans-serif; font-size:13px; color:rgba(232,232,240,0.4);">Hover to see the effect</p>
+        <h3 style="margin:0 0 8px; font-family:Inter,system-ui,sans-serif; font-size:20px; color:#f4f4f7; letter-spacing:-0.03em;">Holographic</h3>
+        <p style="margin:0; font-family:Inter,system-ui,sans-serif; font-size:13px; color:rgba(228,228,231,0.4);">Hover to see the effect</p>
       </div>
     </kayf-holographic-card>
   `,
@@ -41,21 +41,21 @@ export const Default: Story = {
 export const GameCard: Story = {
   render: () => html`
     <kayf-holographic-card tilt-max="20" shine-opacity="1" scale="1.05">
-      <div style="padding:24px; width:240px; font-family:'Segoe UI',sans-serif;">
+      <div style="padding:24px; width:240px; font-family:Inter,system-ui,sans-serif;">
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
-          <span style="font-size:11px; letter-spacing:0.1em; color:#6366f1; text-transform:uppercase;">Legendary</span>
+          <span style="font-size:11px; letter-spacing:0.1em; color:#8b7cff; text-transform:uppercase;">Legendary</span>
           <span style="font-size:18px;">⚔</span>
         </div>
-        <div style="font-size:22px; font-weight:700; color:#e8e8f0; letter-spacing:-0.03em; margin-bottom:4px;">Shadow Blade</div>
-        <div style="font-size:12px; color:rgba(232,232,240,0.4); margin-bottom:20px;">Mythical Weapon · +847 ATK</div>
+        <div style="font-size:22px; font-weight:700; color:#f4f4f7; letter-spacing:-0.03em; margin-bottom:4px;">Shadow Blade</div>
+        <div style="font-size:12px; color:rgba(228,228,231,0.4); margin-bottom:20px;">Mythical Weapon · +847 ATK</div>
         <div style="display:flex; gap:8px;">
           <div style="flex:1; background:rgba(99,102,241,0.1); border:1px solid rgba(99,102,241,0.2); border-radius:8px; padding:8px; text-align:center;">
-            <div style="font-size:16px; font-weight:700; color:#6366f1;">847</div>
-            <div style="font-size:10px; color:rgba(232,232,240,0.3); text-transform:uppercase; letter-spacing:0.05em;">ATK</div>
+            <div style="font-size:16px; font-weight:700; color:#8b7cff;">847</div>
+            <div style="font-size:10px; color:rgba(228,228,231,0.3); text-transform:uppercase; letter-spacing:0.05em;">ATK</div>
           </div>
           <div style="flex:1; background:rgba(6,182,212,0.1); border:1px solid rgba(6,182,212,0.2); border-radius:8px; padding:8px; text-align:center;">
-            <div style="font-size:16px; font-weight:700; color:#06b6d4;">320</div>
-            <div style="font-size:10px; color:rgba(232,232,240,0.3); text-transform:uppercase; letter-spacing:0.05em;">SPD</div>
+            <div style="font-size:16px; font-weight:700; color:#62daf7;">320</div>
+            <div style="font-size:10px; color:rgba(228,228,231,0.3); text-transform:uppercase; letter-spacing:0.05em;">SPD</div>
           </div>
         </div>
       </div>
@@ -71,9 +71,9 @@ export const Subtle: Story = {
       shine-opacity=${args['shine-opacity']}
       scale=${args['scale']}
     >
-      <div style="padding:32px 40px; text-align:center; font-family:'Segoe UI',sans-serif;">
-        <h3 style="margin:0 0 8px; font-size:18px; color:#e8e8f0;">Subtle Mode</h3>
-        <p style="margin:0; font-size:13px; color:rgba(232,232,240,0.4);">Low tilt, soft shine</p>
+      <div style="padding:32px 40px; text-align:center; font-family:Inter,system-ui,sans-serif;">
+        <h3 style="margin:0 0 8px; font-size:18px; color:#f4f4f7;">Subtle Mode</h3>
+        <p style="margin:0; font-size:13px; color:rgba(228,228,231,0.4);">Low tilt, soft shine</p>
       </div>
     </kayf-holographic-card>
   `,

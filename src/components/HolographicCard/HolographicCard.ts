@@ -1,3 +1,5 @@
+import { baseCSS } from '../../core/tokens';
+
 export class HolographicCard extends HTMLElement {
   static get observedAttributes() {
     return ['tilt-max', 'shine-opacity', 'scale'];
@@ -17,16 +19,16 @@ export class HolographicCard extends HTMLElement {
     this.attachShadow({ mode: 'open' });
     this.shadowRoot!.innerHTML = `
       <style>
+        ${baseCSS}
         :host {
           display: inline-block;
-          perspective: 800px;
-          cursor: pointer;
+          perspective: 1000px;
         }
         .card {
           position: relative;
-          border-radius: 16px;
-          background: rgba(255,255,255,0.04);
-          border: 1px solid rgba(255,255,255,0.1);
+          border-radius: var(--kayf-radius-md);
+          background: linear-gradient(145deg, rgba(24,24,33,0.86), rgba(11,11,15,0.94));
+          border: 1px solid var(--kayf-border);
           transform-style: preserve-3d;
           transition: box-shadow 0.3s ease;
           will-change: transform;
@@ -118,7 +120,8 @@ export class HolographicCard extends HTMLElement {
   private onEnter = () => {
     this.isHovered = true;
     this.shine.style.opacity = String(parseFloat(this.getAttribute('shine-opacity') || '1'));
-    this.inner.style.boxShadow = '0 30px 60px rgba(0,0,0,0.5), 0 0 40px rgba(99,102,241,0.2)';
+    this.inner.style.boxShadow = '0 28px 64px rgba(0,0,0,0.38), 0 0 40px rgba(139,124,255,0.14)';
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     if (!this.raf) this.loop();
   };
 
@@ -131,10 +134,11 @@ export class HolographicCard extends HTMLElement {
   };
 
   private onMove = (e: MouseEvent) => {
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     const rect = this.getBoundingClientRect();
     const cx = rect.left + rect.width / 2;
     const cy = rect.top + rect.height / 2;
-    const max = parseFloat(this.getAttribute('tilt-max') || '15');
+    const max = parseFloat(this.getAttribute('tilt-max') || '10');
     this.targetX = ((e.clientY - cy) / (rect.height / 2)) * max;
     this.targetY = -((e.clientX - cx) / (rect.width / 2)) * max;
 
@@ -148,7 +152,7 @@ export class HolographicCard extends HTMLElement {
     this.currentX += (this.targetX - this.currentX) * 0.12;
     this.currentY += (this.targetY - this.currentY) * 0.12;
 
-    const scale = this.isHovered ? parseFloat(this.getAttribute('scale') || '1.03') : 1;
+    const scale = this.isHovered ? parseFloat(this.getAttribute('scale') || '1.02') : 1;
     this.inner.style.transform =
       `rotateX(${this.currentX.toFixed(3)}deg) rotateY(${this.currentY.toFixed(3)}deg) scale(${scale})`;
 
@@ -162,4 +166,6 @@ export class HolographicCard extends HTMLElement {
   };
 }
 
-customElements.define('kayf-holographic-card', HolographicCard);
+if (!customElements.get('kayf-holographic-card')) {
+  customElements.define('kayf-holographic-card', HolographicCard);
+}
