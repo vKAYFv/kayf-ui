@@ -41,7 +41,7 @@
     <rect x=".5" y=".5" width="241" height="37" rx="18.5" stroke="#FFFFFF" stroke-opacity=".1"/>
     <circle cx="22" cy="19" r="4" fill="#62DAF7"/>
     <text x="38" y="24" fill="#B8B8C1" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="13">@kayf/ui</text>
-    <text x="168" y="24" fill="#777783" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12">v0.5.0</text>
+    <text x="168" y="24" fill="#777783" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12">v0.5.1</text>
   </g>
 
   <text x="600" y="226" text-anchor="middle" fill="url(#titleGradient)" font-family="Inter, ui-sans-serif, system-ui, sans-serif" font-size="104" font-weight="700" letter-spacing="-7">@kayf/ui</text>

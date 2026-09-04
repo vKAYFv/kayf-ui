@@ -1,4 +1,4 @@
-![A dark @kayf/ui banner showing version 0.5.0 and 13 framework-agnostic Web Components](https://raw.githubusercontent.com/vKAYFv/kayf-ui/refs/heads/main/.github/assets/hero.svg)
+![A dark @kayf/ui banner showing version 0.5.1 and 13 framework-agnostic Web Components](https://raw.githubusercontent.com/vKAYFv/kayf-ui/refs/heads/main/.github/assets/hero.svg)
 
 <div align="center">
 
@@ -6,11 +6,11 @@
 [![npm downloads](https://img.shields.io/npm/dm/%40kayf%2Fui?color=8b7cff&labelColor=07070a)](https://www.npmjs.com/package/@kayf/ui)
 [![Bundle Size](https://img.shields.io/bundlephobia/minzip/@kayf/ui?color=51dfa4&labelColor=07070a)](https://bundlephobia.com/package/@kayf/ui)
 [![License](https://img.shields.io/npm/l/%40kayf%2Fui?color=f8c868&labelColor=07070a)](LICENSE)
-[![Storybook](https://img.shields.io/badge/Storybook-live-ff4785?labelColor=07070a)](https://69a564b0b16ce689ef423df8-xoiwjakvnm.chromatic.com/)
+[![Storybook](https://img.shields.io/badge/Storybook-live-ff4785?labelColor=07070a)](https://main--69a564b0b16ce689ef423df8.chromatic.com/)
 
 Modern, expressive Web Components for dark interfaces. Native browser APIs, TypeScript, Shadow DOM, and no runtime dependencies.
 
-[Storybook](https://69a564b0b16ce689ef423df8-xoiwjakvnm.chromatic.com/) · [npm](https://www.npmjs.com/package/@kayf/ui) · [Issues](https://github.com/vKAYFv/kayf-ui/issues)
+[Storybook](https://main--69a564b0b16ce689ef423df8.chromatic.com/) · [npm](https://www.npmjs.com/package/@kayf/ui) · [Issues](https://github.com/vKAYFv/kayf-ui/issues)
 
 </div>
 
@@ -59,7 +59,7 @@ For a script-tag setup, load the UMD bundle from a CDN:
 | `<kayf-ripple-grid>` | Clickable dot grid with ripple waves |
 | `<kayf-3d-tilt-card>` | Perspective tilt wrapper for slotted content |
 
-Explore every variant and control in the [interactive Storybook](https://69a564b0b16ce689ef423df8-xoiwjakvnm.chromatic.com/).
+Explore every variant and control in the [interactive Storybook](https://main--69a564b0b16ce689ef423df8.chromatic.com/).
 
 ## Examples
 
