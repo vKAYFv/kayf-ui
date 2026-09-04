@@ -54,8 +54,7 @@ For a script-tag setup, use the versioned UMD build:
 <script src="https://unpkg.com/@kayf/ui@0.6.0/dist/kayf-ui.umd.js"></script>
 ```
 
-> [!IMPORTANT]
-> The package registers browser custom elements during import. In SSR frameworks, import `@kayf/ui` from a client-only entry or component.
+> **SSR:** The package registers browser custom elements during import. In SSR frameworks, import `@kayf/ui` from a client-only entry or component.
 
 ## New action system
 
