@@ -19,7 +19,7 @@ const meta: Meta = {
   title:'Components/AuthForm',
   component:'kayf-auth-form',
   tags:['autodocs'],
-  parameters:{docs:{description:{component:'`<kayf-auth-form>` provides polished sign-in and registration flows with native autofill, inline validation, password visibility, signup strength feedback, responsive layout, and luminous hover/focus borders. It emits data through `kayf-submit` and intentionally does not own a backend or session.'}}},
+  parameters:{docs:{description:{component:'`<kayf-auth-form>` provides polished sign-in and registration flows with native autofill, inline validation, password visibility, signup strength feedback, responsive layout, and luminous hover/focus borders. Entries survive loading, error and appearance changes. Switching modes preserves email and clears passwords. Sign-in accepts existing passwords; the 8-character rule applies only to signup. It emits data through `kayf-submit` and intentionally does not own a backend or session.'}}},
   argTypes:{
     mode:{control:'inline-radio',options:['signin','signup'],description:'Authentication flow',table:{defaultValue:{summary:'signin'}}},
     color:{control:'select',options:['cyan','violet','emerald','amber','red','white'],description:'Focus, field, and CTA accent',table:{defaultValue:{summary:'violet'}}},
@@ -53,4 +53,17 @@ export const ErrorAndLoading: Story = {
 export const ProductAuthScreen: Story = {
   parameters:{layout:'fullscreen'},
   render:()=>html`${styles}<section class="auth-stage" style="width:100%;min-height:100vh;border:0;border-radius:0"><div class="auth-product"><div class="auth-pitch"><span>Native interface system</span><h3>A calmer way back to work.</h3><p>Clear field states and purposeful motion keep account access reassuring without turning a familiar task into a visual effect demo.</p><div class="auth-points"><div><i></i>Native password-manager autofill</div><div><i></i>Keyboard-first validation and focus</div><div><i></i>Your backend remains in control</div></div></div><kayf-auth-form color="violet"></kayf-auth-form></div></section>`,
+}
+
+export const RetryWithoutRetyping: Story = {
+  parameters: { docs: { description: { story: 'Submit any valid email and a nonempty password. This local demo shows a loading state followed by a simulated error. Your entries and Remember me choice remain available for a retry. No request is sent.' } } },
+  render: () => html`${styles}<section class="auth-stage"><div><kayf-auth-form hide-switch @kayf-submit=${async (event: Event) => {
+    const form = event.currentTarget as HTMLElement
+    form.removeAttribute('error')
+    form.setAttribute('loading', '')
+    await new Promise(resolve => setTimeout(resolve, 800))
+    if (!form.isConnected) return
+    form.setAttribute('error', 'Demo: the service could not be reached. Your details are still here — try again.')
+    form.removeAttribute('loading')
+  }}></kayf-auth-form><p class="auth-feedback">Local loading → error → retry demonstration</p></div></section>`,
 }

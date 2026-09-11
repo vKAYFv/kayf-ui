@@ -1,5 +1,6 @@
 /** Shared field treatment for form-oriented components. */
 export const formControlCSS = `
+  *, *::before, *::after { box-sizing: border-box; }
   .field-shell {
     position: relative;
     display: flex;
@@ -69,7 +70,7 @@ export const formControlCSS = `
     letter-spacing: -0.012em;
   }
 
-  .field-input::placeholder { color: rgba(228,228,231,0.27); }
+  .field-input::placeholder { color: rgba(228,228,231,0.55); }
   .field-input:disabled { cursor: not-allowed; }
 
   .field-message {
@@ -79,7 +80,7 @@ export const formControlCSS = `
     align-items: flex-start;
     justify-content: space-between;
     gap: 12px;
-    color: rgba(228,228,231,0.38);
+    color: rgba(228,228,231,0.64);
     font: 500 10px/1.45 var(--kayf-font-sans);
   }
 

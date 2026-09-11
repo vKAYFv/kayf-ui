@@ -1,4 +1,4 @@
-![A dark @kayf/ui banner showing version 0.7.0 and 19 framework-agnostic Web Components](https://raw.githubusercontent.com/vKAYFv/kayf-ui/refs/heads/main/.github/assets/hero.svg)
+![A dark @kayf/ui banner showing version 0.8.0 and 24 framework-agnostic Web Components](https://raw.githubusercontent.com/vKAYFv/kayf-ui/refs/heads/main/.github/assets/hero.svg)
 
 <div align="center">
 
@@ -17,7 +17,7 @@ Expressive Web Components for dark interfaces. Native browser APIs, TypeScript, 
 ## Why @kayf/ui
 
 - **Framework-agnostic.** Use the same custom elements in plain HTML, React, Vue, Svelte, Astro, or any other client-side stack.
-- **Designed as a system.** Shared color, surface, radius, typography, and motion decisions keep all 19 components visually coherent.
+- **Designed as a system.** Shared color, surface, radius, typography, and motion decisions keep all 24 components visually coherent.
 - **Interaction-ready.** Keyboard focus, touch behavior, loading and disabled states, composed events, and reduced-motion fallbacks are built in.
 - **Easy to extend.** Attributes configure behavior, slots accept your content, and CSS Shadow Parts expose intentional styling hooks.
 
@@ -51,10 +51,97 @@ Use the components as regular HTML:
 For a script-tag setup, use the versioned UMD build:
 
 ```html
-<script src="https://unpkg.com/@kayf/ui@0.7.0/dist/kayf-ui.umd.js"></script>
+<script src="https://unpkg.com/@kayf/ui@0.8.0/dist/kayf-ui.umd.js"></script>
 ```
 
 > **SSR:** The package registers browser custom elements during import. In SSR frameworks, import `@kayf/ui` from a client-only entry or component.
+
+## New in 0.8: workflow components
+
+Five purposeful additions bring the catalog to **24 components**:
+
+| Component | What it handles |
+| --- | --- |
+| [`<kayf-verification-code>`][verification-docs] | Segmented numeric entry, paste, SMS autofill, native form validation and reset |
+| [`<kayf-file-dropzone>`][dropzone-docs] | Drag/drop and file selection with type, size, count and duplicate feedback |
+| [`<kayf-stepper>`][stepper-docs] | Responsive progress, completed milestones and application-controlled navigation |
+| [`<kayf-segmented-control>`][segmented-docs] | Native radio choices with descriptions, badges, keyboard navigation and form support |
+| [`<kayf-toast-stack>`][toast-docs] | Notifications with optional actions, accessible announcements and pausable timers |
+
+```html
+<form>
+  <kayf-verification-code name="code" length="6" required></kayf-verification-code>
+  <button type="submit">Verify</button>
+</form>
+
+<kayf-file-dropzone
+  multiple accept="image/*,.pdf" max-files="5" max-size="10485760"
+></kayf-file-dropzone>
+
+<kayf-stepper id="setup" value="assets" allow-navigation></kayf-stepper>
+```
+
+```ts
+import type { Stepper, FileDropzone } from '@kayf/ui'
+
+const setup = document.querySelector<Stepper>('#setup')!
+setup.steps = [
+  { id: 'details', title: 'The essentials', description: 'Name your project' },
+  { id: 'assets', title: 'Make it yours', description: 'Bring your files' },
+  { id: 'review', title: 'One last look', description: 'Review and confirm' },
+]
+setup.addEventListener('kayf-step-change', event => {
+  // Validate any unsaved work before applying a navigation request.
+  setup.value = (event as CustomEvent).detail.value
+})
+
+const dropzone = document.querySelector<FileDropzone>('kayf-file-dropzone')!
+dropzone.addEventListener('kayf-change', () => {
+  const body = new FormData()
+  dropzone.files.forEach(file => body.append('files', file))
+  // Send body to your upload service when the user confirms.
+})
+```
+
+`VerificationCode` emits `kayf-input`, `kayf-change` and `kayf-complete` with `{ value, complete }`. `length` is clamped to 4–8 digits. `value` sets the default/reset code; typing updates the property without reflecting it into HTML. An `error` makes the field invalid. Completion describes a filled code; your service verifies it.
+
+`FileDropzone` emits `kayf-reject` with `{ rejections: [{ file, reason, message }] }`. Reasons are `type`, `size`, `count` and `duplicate`. Defaults: 10 MB per file and five files in multiple mode. A valid single-file selection replaces the previous file; rejected replacements preserve it. Constraint changes apply to future selections. `clear()` removes the selection. Files remain local; validate them again on your upload server.
+
+`Stepper` accepts unique `{ id, title, description? }` entries through its `steps` property. Earlier steps are marked complete. `complete` finishes the whole flow; `orientation="vertical"` provides a vertical layout, also used automatically on narrow screens. With `allow-navigation`, completed steps emit `kayf-step-change` containing `{ value, previousValue, index }`; the application owns the active `value` and validation.
+
+### Choices and feedback
+
+```html
+<kayf-segmented-control id="billing" name="billing" value="yearly" required></kayf-segmented-control>
+<kayf-toast-stack id="notifications"></kayf-toast-stack>
+```
+
+```ts
+import type { SegmentedControl, ToastStack } from '@kayf/ui'
+
+const billing = document.querySelector<SegmentedControl>('#billing')!
+billing.options = [
+  { value: 'monthly', label: 'Monthly', description: 'Billed every month' },
+  { value: 'yearly', label: 'Yearly', description: 'One payment a year', badge: 'Save 20%' },
+]
+billing.addEventListener('kayf-change', event => {
+  const { value, previousValue } = (event as CustomEvent).detail
+  // Update your checkout summary.
+})
+
+const notices = document.querySelector<ToastStack>('#notifications')!
+notices.show({ title: 'Changes saved', tone: 'success' })
+notices.show({ id: 'archive', title: 'Project archived', actionLabel: 'Undo archive' })
+notices.addEventListener('kayf-toast-action', event => {
+  const { id } = (event as CustomEvent).detail
+  // Restore the archived item for this id.
+  // event.preventDefault() keeps the notice open while an async action runs.
+})
+```
+
+`SegmentedControl` accepts unique `{ value, label, description?, badge?, disabled? }` options. Native arrow keys skip disabled choices, and Tab enters the group once. `name` participates in parent FormData; `required`, disabled fieldsets, reset and state restoration are supported. The `value` attribute is the reset default; the property and user edits update the current selection. A missing or disabled selection yields `''`. Use `orientation="vertical"` for larger choices; narrow screens stack automatically.
+
+`ToastStack.show()` returns an id. Reusing an id updates that notice and restarts its timer. Tones are `info`, `success`, `warning` and `error`. `duration` is milliseconds: default 6000, 0 for persistent notices, maximum 600000. Notices with `actionLabel` default to persistent. Timers pause on hover, keyboard focus, hidden pages and disconnection. Five notices fit in a stack; the oldest is dismissed on overflow. Use `dismiss(id)`, `clear()` and the read-only `count` property. `kayf-toast-dismiss` emits `{ id, reason }`, where reason is `manual`, `timeout`, `action`, `overflow` or `clear`. Notifications are fixed at the bottom end by default; `position="top-end"` moves them up and `inline` keeps them in the document layout. Removing the element pauses its timers; call `clear()` to discard its notices.
 
 ## Product inputs and flows
 
@@ -151,7 +238,7 @@ Three buttons cover deliberately different jobs:
 | `disabled` | Boolean attribute | `false` | Prevents activation and preserves native disabled semantics |
 | `full-width` | Boolean attribute | `false` | Expands the host and internal control to available width |
 
-`PrismButton` additionally supports `variant="solid|outline"`, `loading`, `icon-left`, and `icon-right` slots. `OrbitButton` supports `variant="solid|ghost"`, `loading`, and an `icon-right` slot.
+`PrismButton` outline masks its refraction gradient to the edge, keeping the translucent center and label clear. `PrismButton` additionally supports `variant="solid|outline"`, `loading`, `icon-left`, and `icon-right` slots. `OrbitButton` supports `variant="solid|ghost"`, `loading`, and an `icon-right` slot.
 
 `HoldButton` adds:
 
@@ -193,6 +280,16 @@ All public component events bubble and cross the Shadow DOM boundary with `compo
 | [`<kayf-hold-button>`][hold-docs] | Hold-to-confirm control for consequential actions |
 | [`<kayf-beam-button>`][beam-docs] | General-purpose solid, outline, or ghost action |
 | [`<kayf-magnetic-btn>`][magnetic-docs] | Proximity-based motion wrapper for slotted content |
+
+### Workflows
+
+| Element | Purpose |
+| --- | --- |
+| [`<kayf-verification-code>`][verification-docs] | Accessible verification entry with native form participation |
+| [`<kayf-file-dropzone>`][dropzone-docs] | Validated local file intake with removable selections |
+| [`<kayf-stepper>`][stepper-docs] | Responsive workflow milestones and controlled navigation |
+| [`<kayf-segmented-control>`][segmented-docs] | Context-rich choices with native radio semantics |
+| [`<kayf-toast-stack>`][toast-docs] | Actionable feedback with accessible, pausable notifications |
 
 ### Inputs and flows
 
@@ -319,11 +416,38 @@ Quality checks:
 npm run type-check
 npm run build
 npm run build-storybook
+npm run type-check:stories
+npx playwright install chromium
+npm test
 ```
+
+Browser checks cover the built library and Storybook examples. To use an installed Google Chrome instead, run `PLAYWRIGHT_CHANNEL=chrome npm test`.
 
 Storybook 10 requires Node.js 20.19 or newer for local development. The published components run in modern browsers and do not install runtime dependencies.
 
-## What changed in 0.7
+## Publishing to npm
+
+From the repository root, after running the quality checks above:
+
+```bash
+npm login --registry=https://registry.npmjs.org
+npm whoami --registry=https://registry.npmjs.org
+npm publish --dry-run --access public --registry=https://registry.npmjs.org
+npm publish --access public --registry=https://registry.npmjs.org
+```
+
+`prepublishOnly` rebuilds the library before publishing. Review the dry-run file list first. npm opens browser authentication when required. The package is already prepared as `0.8.0`; each published version must be unique. For a later release, update `package.json`, `package-lock.json` and the exported `version` in `src/index.ts` together before publishing. Publishing npm does not deploy Storybook; that is handled separately by the Chromatic workflow.
+
+## What changed in 0.8
+
+- Added VerificationCode, FileDropzone, Stepper, SegmentedControl and ToastStack with typed APIs, parts and interactive Storybook examples.
+- Fixed PrismButton outline: refraction stays on the border, preserving center transparency and text contrast. Added all-color, size, loading, disabled and background examples.
+- AuthForm preserves entries across loading/error updates, associates inline errors with fields, and applies signup password rules only during registration. Changing modes preserves email and clears passwords.
+- PhoneInput preserves the caret during formatting, deletes across formatting spaces, and clamps E.164 output to 15 digits.
+- LanguageSwitcher has named compact controls, bounded scrolling, ArrowUp entry, reliable Tab dismissal, and defensive custom options.
+- Updated the Storybook introduction to 24 components; added workflow states, guided demos and browser regression checks. Storybook packages remain on the current stable 10.6.0.
+
+### Previously in 0.7
 
 - Expanded `PhoneInput` to all 245 countries and territories, with calling-code detection, regional formatting, and E.164 events.
 - Added `LanguageSwitcher` with custom language data, compact mode, and keyboard navigation.
@@ -368,3 +492,10 @@ MIT © [KAYF](https://github.com/vKAYFv)
 [counter-docs]: https://main--69a564b0b16ce689ef423df8.chromatic.com/?path=/docs/components-counter--docs
 [typewriter-docs]: https://main--69a564b0b16ce689ef423df8.chromatic.com/?path=/docs/components-typewritertext--docs
 [command-docs]: https://main--69a564b0b16ce689ef423df8.chromatic.com/?path=/docs/components-commandpalette--docs
+
+[verification-docs]: https://main--69a564b0b16ce689ef423df8.chromatic.com/?path=/docs/components-verificationcode--docs
+[dropzone-docs]: https://main--69a564b0b16ce689ef423df8.chromatic.com/?path=/docs/components-filedropzone--docs
+[stepper-docs]: https://main--69a564b0b16ce689ef423df8.chromatic.com/?path=/docs/components-stepper--docs
+
+[segmented-docs]: https://main--69a564b0b16ce689ef423df8.chromatic.com/?path=/docs/components-segmentedcontrol--docs
+[toast-docs]: https://main--69a564b0b16ce689ef423df8.chromatic.com/?path=/docs/components-toaststack--docs

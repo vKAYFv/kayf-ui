@@ -73,6 +73,18 @@ export class PhoneInput extends KayfElement {
   private onCountryChange?: () => void
   private onClear?: () => void
   private onPointerMove?: (event: PointerEvent) => void
+  private onKeydown?: (event: KeyboardEvent) => void
+
+  protected override update(): void {
+    const focused = this.root.activeElement === this.input && Boolean(this.input)
+    const start = this.input?.selectionStart ?? 0
+    const end = this.input?.selectionEnd ?? start
+    super.update()
+    if (focused && !this.boolAttr('disabled')) {
+      this.input?.focus()
+      this.input?.setSelectionRange(start, end)
+    }
+  }
 
   static override get observedAttributes() {
     return ['country', 'value', 'label', 'placeholder', 'hint', 'error', 'disabled', 'required', 'name', 'color']
@@ -239,10 +251,29 @@ export class PhoneInput extends KayfElement {
 
     this.onInput = () => {
       if (!this.input) return
+      const digitsAfterCaret = this.input.value.slice(this.input.selectionStart ?? this.input.value.length).replace(/\D/g, '').length
       this.consumeRawValue(this.input.value)
       this.reflectValue()
-      this.syncView(true)
+      this.syncView()
+      let caret = this.input.value.length
+      let remaining = digitsAfterCaret
+      while (caret > 0 && remaining > 0) {
+        caret--
+        if (/\d/.test(this.input.value[caret])) remaining--
+      }
+      this.input.setSelectionRange(caret, caret)
       this.emitPhoneEvent('kayf-input')
+    }
+
+    this.onKeydown = (event: KeyboardEvent) => {
+      if (!this.input || event.altKey || event.ctrlKey || event.metaKey || this.input.selectionStart !== this.input.selectionEnd) return
+      const caret = this.input.selectionStart ?? 0
+      // Treat formatting spaces as transparent to deletion.
+      if (event.key === 'Backspace' && this.input.value[caret - 1] === ' ') {
+        this.input.setSelectionRange(Math.max(0, caret - 2), caret)
+      } else if (event.key === 'Delete' && this.input.value[caret] === ' ') {
+        this.input.setSelectionRange(caret, caret + 2)
+      }
     }
 
     this.onChange = () => {
@@ -253,6 +284,8 @@ export class PhoneInput extends KayfElement {
     this.onCountryChange = () => {
       if (!this.select) return
       this.selectedCode = this.select.value
+      const country = byCode(this.selectedCode)
+      this.nationalDigits = this.nationalDigits.slice(0, Math.min(country.maxLength, 15 - country.dialCode.length))
       this.syncView()
       this.reflectValue()
       this.emitPhoneEvent('kayf-change')
@@ -276,6 +309,7 @@ export class PhoneInput extends KayfElement {
     }
 
     this.input?.addEventListener('input', this.onInput)
+    this.input?.addEventListener('keydown', this.onKeydown)
     this.input?.addEventListener('change', this.onChange)
     this.select?.addEventListener('change', this.onCountryChange)
     this.root.querySelector('.clear')?.addEventListener('click', this.onClear)
@@ -284,6 +318,7 @@ export class PhoneInput extends KayfElement {
 
   protected cleanup(): void {
     this.input?.removeEventListener('input', this.onInput as EventListener)
+    this.input?.removeEventListener('keydown', this.onKeydown as EventListener)
     this.input?.removeEventListener('change', this.onChange as EventListener)
     this.select?.removeEventListener('change', this.onCountryChange as EventListener)
     this.root.querySelector('.clear')?.removeEventListener('click', this.onClear as EventListener)
@@ -296,14 +331,14 @@ export class PhoneInput extends KayfElement {
     if (hasInternationalPrefix && digits) {
       const country = detectCountry(digits, this.selectedCode || this.attr('country', 'US'))
       this.selectedCode = country.code
-      this.nationalDigits = digits.slice(country.dialCode.length, country.dialCode.length + country.maxLength)
+      this.nationalDigits = digits.slice(country.dialCode.length, Math.min(15, country.dialCode.length + country.maxLength))
       return
     }
     const country = byCode(this.selectedCode || this.attr('country', 'US'))
-    this.nationalDigits = digits.slice(0, country.maxLength)
+    this.nationalDigits = digits.slice(0, Math.min(country.maxLength, 15 - country.dialCode.length))
   }
 
-  private syncView(moveCaret = false): void {
+  private syncView(): void {
     if (!this.input) return
     const country = byCode(this.selectedCode || this.attr('country', 'US'))
     const formattedNational = groupDigits(this.nationalDigits, country.groups)
@@ -322,7 +357,6 @@ export class PhoneInput extends KayfElement {
     }
     const validity = this.root.querySelector('.validity')
     if (validity) validity.textContent = this.nationalDigits ? (this.isValid(country) ? 'Ready' : `${this.nationalDigits.length}/${country.minLength}`) : ''
-    if (moveCaret) this.input.setSelectionRange(this.input.value.length, this.input.value.length)
   }
 
   private isValid(country = byCode(this.selectedCode || 'US')): boolean {

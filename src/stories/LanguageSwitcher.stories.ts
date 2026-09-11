@@ -24,7 +24,7 @@ const meta: Meta = {
   title:'Components/LanguageSwitcher',
   component:'kayf-language-switcher',
   tags:['autodocs'],
-  parameters:{docs:{description:{component:'`<kayf-language-switcher>` is an animated language picker with native focus management, listbox semantics, arrow-key navigation, custom language data, compact mode, and a composed `kayf-language-change` event.'}}},
+  parameters:{docs:{description:{component:'`<kayf-language-switcher>` is an animated language picker with native focus management, listbox semantics, arrow-key navigation, custom language data, compact mode, and a composed `kayf-language-change` event. Compact triggers retain an accessible name. ArrowUp opens at the last option, Home/End jump to menu boundaries, Escape restores focus, and Tab dismisses the menu into normal page navigation.'}}},
   argTypes:{
     value:{control:'select',options:['en','de','uk','fr','es'],description:'Selected language code',table:{defaultValue:{summary:'en'}}},
     label:{control:'text',description:'Accessible and visible picker label',table:{defaultValue:{summary:'Language'}}},
@@ -54,4 +54,9 @@ export const CustomLanguages: Story = {
 
 export const ProductHeader: Story = {
   render:()=>html`${styles}<section class="language-stage"><header class="header-demo"><div><strong>Interface settings</strong><span>Localization</span></div><kayf-language-switcher value="de" compact></kayf-language-switcher></header></section>`,
+}
+
+export const KeyboardNavigation: Story = {
+  parameters: { docs: { description: { story: 'Tab to the picker. Use Enter or arrow keys to open, Home/End to jump, Enter to select and Escape to cancel. Tab moves directly to the next page control.' } } },
+  render: () => html`${styles}<section class="language-stage"><div style="display:grid;gap:24px"><kayf-language-switcher value="en" label="Try the keyboard"></kayf-language-switcher><button type="button" style="padding:12px 16px;border:1px solid #ffffff30;border-radius:10px;background:#17171f;color:#f4f4f7">Next page control</button></div></section>`,
 }

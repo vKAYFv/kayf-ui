@@ -1,7 +1,14 @@
 import type { Meta, StoryObj } from '@storybook/web-components-vite'
 import { html } from 'lit'
+import { version, type ToastStack } from '../index'
+import { ref } from 'lit/directives/ref.js'
 
 const components = [
+  { name: 'Segmented Control', tag: 'kayf-segmented-control', description: 'Context-rich native choices with form support.', docs: 'components-segmentedcontrol--docs', group: 'Workflows' },
+  { name: 'Toast Stack', tag: 'kayf-toast-stack', description: 'Actionable notifications with considerate timing.', docs: 'components-toaststack--docs', group: 'Workflows' },
+  { name: 'Verification Code', tag: 'kayf-verification-code', description: 'Paste-ready code entry with native form support.', docs: 'components-verificationcode--docs', group: 'Workflows' },
+  { name: 'File Dropzone', tag: 'kayf-file-dropzone', description: 'Local file intake with clear validation and removal.', docs: 'components-filedropzone--docs', group: 'Workflows' },
+  { name: 'Stepper', tag: 'kayf-stepper', description: 'Responsive milestones for application-controlled flows.', docs: 'components-stepper--docs', group: 'Workflows' },
   { name: 'Prism Button', tag: 'kayf-prism-button', description: 'High-emphasis CTA with localized refraction.', docs: 'components-prismbutton--docs', group: 'Actions' },
   { name: 'Orbit Button', tag: 'kayf-orbit-button', description: 'Directional action with an orbital status mark.', docs: 'components-orbitbutton--docs', group: 'Actions' },
   { name: 'Hold Button', tag: 'kayf-hold-button', description: 'Deliberate hold-to-confirm interaction.', docs: 'components-holdbutton--docs', group: 'Actions' },
@@ -23,7 +30,7 @@ const components = [
   { name: 'Command Palette', tag: 'kayf-command-palette', description: 'Keyboard-first command navigation.', docs: 'components-commandpalette--docs', group: 'Motion & data' },
 ]
 
-const groups = ['Actions', 'Inputs & flows', 'Surfaces', 'Motion & data']
+const groups = ['Workflows', 'Actions', 'Inputs & flows', 'Surfaces', 'Motion & data']
 
 const meta: Meta = {
   title: 'Welcome',
@@ -185,20 +192,48 @@ export const Introduction: Story = {
         </nav>
 
         <header class="intro__hero">
-          <p class="intro__eyebrow">Native interface system · v0.7.0</p>
+          <p class="intro__eyebrow">Native interface system · v${version}</p>
           <h1>Components that <span class="intro__gradient">earn their motion.</span></h1>
-          <p class="intro__lead">Nineteen expressive Web Components for dark interfaces—built with native browser APIs, typed in TypeScript, and designed to stay useful beyond the first impression.</p>
+          <p class="intro__lead">Twenty-four expressive Web Components for dark interfaces—built with native browser APIs, typed in TypeScript, and designed to stay useful beyond the first impression.</p>
           <div class="intro__actions">
-            <a class="intro__cta" href="/?path=/docs/components-prismbutton--docs" target="_top">Explore components →</a>
+            <a class="intro__cta" href="/?path=/docs/components-verificationcode--docs" target="_top">Explore components →</a>
             <code class="intro__install">npm install @kayf/ui</code>
           </div>
         </header>
 
         <section class="intro__metrics" aria-label="Library highlights">
-          <div class="intro__metric"><strong>19</strong><span>Components</span></div>
+          <div class="intro__metric"><strong>${components.length}</strong><span>Components</span></div>
           <div class="intro__metric"><strong>0</strong><span>Runtime dependencies</span></div>
           <div class="intro__metric"><strong>Native</strong><span>Web Components</span></div>
           <div class="intro__metric"><strong>Typed</strong><span>TypeScript API</span></div>
+        </section>
+
+        <section class="intro__section">
+          <div class="intro__section-head">
+            <p class="intro__section-label">New in 0.8 · Workflows</p>
+            <div><h2>Less friction.<br/>More forward motion.</h2><p class="intro__section-copy">Verify an account, bring in project assets, and guide the next decision. Five purposeful additions, with the detail work already done.</p></div>
+          </div>
+          <div class="intro__product-lab">
+            <div class="intro__product-stack">
+              <kayf-stepper .steps=${[
+                { id: 'account', title: 'Your account', description: 'The essentials' },
+                { id: 'verify', title: 'Verify access', description: 'Keep it yours' },
+                { id: 'ready', title: 'Ready to build', description: 'Make your mark' },
+              ]} value="verify" label="A confident start"></kayf-stepper>
+              <kayf-verification-code label="Confirm it’s you" hint="Paste a code to try the interaction." color="violet"></kayf-verification-code>
+              <a class="intro__cta" href="/?path=/story/components-stepper--guided-flow" target="_top">Try the guided flow →</a>
+            </div>
+            <div class="intro__product-stack"><kayf-file-dropzone multiple accept="image/*,.pdf" label="Bring your ideas along" hint="Drop images or a PDF. Clear feedback, before the upload." color="cyan"></kayf-file-dropzone></div>
+          </div>
+          <div class="intro__product-lab" style="margin-top:20px">
+            <div class="intro__product-stack"><kayf-segmented-control label="A rhythm that fits your team" value="yearly" orientation="vertical" hint="One clear choice, with all the context." .options=${[
+              { value:'monthly', label:'Monthly billing', description:'Keep things flexible.' },
+              { value:'yearly', label:'Yearly billing', description:'More time to build.', badge:'Save 20%' },
+            ]}></kayf-segmented-control></div>
+            <div class="intro__product-stack"><kayf-toast-stack inline ${ref((element?: Element) => {
+              if (element) (element as ToastStack).show({id:'intro',title:'Everything is up to date',description:'Clear feedback, without interrupting your flow.',tone:'success',duration:0})
+            })}></kayf-toast-stack><a class="intro__cta" href="/?path=/story/components-toaststack--undo-action" target="_top">Try an undo notification →</a></div>
+          </div>
         </section>
 
         <section class="intro__section">

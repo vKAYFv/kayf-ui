@@ -36,7 +36,7 @@ const meta: Meta = {
   title: 'Components/PhoneInput',
   component: 'kayf-phone-input',
   tags: ['autodocs'],
-  parameters: { docs: { description: { component: '`<kayf-phone-input>` covers all 245 countries and territories with assigned geographical calling codes. It combines native autofill, country selection, live formatting, automatic detection from pasted calling codes, and E.164 output through composed events.' } } },
+  parameters: { docs: { description: { component: '`<kayf-phone-input>` covers all 245 countries and territories with assigned geographical calling codes. It combines native autofill, country selection, live formatting, automatic detection from pasted calling codes, and E.164 output through composed events. Editing preserves the caret; Backspace and Delete move across formatting spaces. Values are capped at the 15-digit E.164 limit. The valid event flag is a length check, not a carrier lookup.' } } },
   argTypes: {
     country: { control: 'select', options: phoneCountries.map(country => country.code), description: 'ISO country or territory used for calling code and formatting', table: { defaultValue: { summary: 'US' } } },
     value: { control: 'text', description: 'Initial or controlled international phone value' },
@@ -47,7 +47,7 @@ const meta: Meta = {
     color: { control: 'select', options: ['cyan','violet','emerald','amber','red','white'], description: 'Focus and hover accent', table: { defaultValue: { summary: 'cyan' } } },
     disabled: { control: 'boolean', description: 'Disable country and number controls', table: { defaultValue: { summary: 'false' } } },
     required: { control: 'boolean', description: 'Expose required native input semantics', table: { defaultValue: { summary: 'false' } } },
-    name: { control: 'text', description: 'Native input name used by forms', table: { defaultValue: { summary: 'phone' } } },
+    name: { control: 'text', description: 'Name of the internal input. Connect the composed value events to your parent form.', table: { defaultValue: { summary: 'phone' } } },
   },
 }
 
@@ -87,4 +87,9 @@ export const States: Story = {
 
 export const CheckoutContact: Story = {
   render: () => html`${styles}<section class="phone-stage"><div class="checkout"><div class="checkout-copy"><p>Shipping contact</p><h3>Where can the courier reach you?</h3><span>Country-aware formatting reduces errors without hiding the international number that will be submitted.</span></div><kayf-phone-input country="PL" label="Mobile number" hint="We will send one delivery update." required color="violet"></kayf-phone-input></div></section>`,
+}
+
+export const EditInPlace: Story = {
+  parameters: { docs: { description: { story: 'Click in the middle of the number to insert or delete a digit. The caret stays with your edit while formatting updates. Try Backspace immediately after a space.' } } },
+  render: () => html`${styles}<section class="phone-stage"><div class="phone-demo"><kayf-phone-input country="US" value="+12025550123" label="Edit any digit" hint="Place the caret in the middle — it stays with your edit." color="violet"></kayf-phone-input></div></section>`,
 }

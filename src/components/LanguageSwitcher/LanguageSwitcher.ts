@@ -27,22 +27,29 @@ export class LanguageSwitcher extends KayfElement {
   private onMenuClick?: (event: Event) => void
   private onMenuKeydown?: (event: KeyboardEvent) => void
   private onDocumentPointerDown?: (event: PointerEvent) => void
+  private onFocusOut?: () => void
+  private focusFrame = 0
 
   static override get observedAttributes() {
     return ['value', 'label', 'compact', 'disabled', 'color']
   }
 
   get languages(): LanguageOption[] {
-    return [...this.options]
+    return this.options.map(option => ({ ...option }))
   }
 
   set languages(next: LanguageOption[]) {
-    this.options = next.filter(option => option?.code && option?.label).map(option => ({ ...option }))
+    const seen = new Set<string>()
+    this.options = next.filter(option => {
+      if (!option?.code || !option?.label || seen.has(option.code)) return false
+      seen.add(option.code)
+      return true
+    }).map(option => ({ ...option }))
     if (this.isConnected) this.update()
   }
 
   get value(): string {
-    return this.attr('value', this.options[0]?.code ?? '')
+    return this.options.find(option => option.code === this.attr('value'))?.code ?? this.options[0]?.code ?? ''
   }
 
   set value(next: string) {
@@ -60,11 +67,12 @@ export class LanguageSwitcher extends KayfElement {
   protected styles(): string {
     const accent = getColor(this.attr('color', 'violet') as ColorVariant)
     return baseCSS + `
+      *, *::before, *::after { box-sizing: border-box; }
       :host { position: relative; display: inline-block; min-width: 210px; font-family: var(--kayf-font-sans); }
       :host([compact]) { min-width: 74px; }
 
       .switcher { position: relative; }
-      .label { display: block; margin: 0 0 8px 2px; color: rgba(228,228,231,0.5); font-size: 10px; font-weight: 650; letter-spacing: 0.1em; text-transform: uppercase; }
+      .label { display: block; margin: 0 0 8px 2px; color: rgba(228,228,231,0.66); font-size: 10px; font-weight: 650; letter-spacing: 0.1em; text-transform: uppercase; }
       :host([compact]) .label { display: none; }
 
       .trigger {
@@ -108,7 +116,7 @@ export class LanguageSwitcher extends KayfElement {
       .current { min-width: 0; }
       .current strong, .current span { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
       .current strong { font-size: 12px; font-weight: 650; line-height: 1.2; }
-      .current span { margin-top: 2px; color: rgba(228,228,231,0.36); font: 9px/1.2 var(--kayf-font-mono); text-transform: uppercase; }
+      .current span { margin-top: 2px; color: rgba(228,228,231,0.66); font: 9px/1.2 var(--kayf-font-mono); text-transform: uppercase; }
       :host([compact]) .current { display: none; }
 
       .chevron-box { display: grid; width: 28px; height: 28px; place-items: center; border: 1px solid rgba(255,255,255,0.065); border-radius: 9px; color: rgba(228,228,231,0.42); background: rgba(255,255,255,0.025); }
@@ -124,6 +132,9 @@ export class LanguageSwitcher extends KayfElement {
         display: grid;
         gap: 3px;
         padding: 6px;
+        max-height: min(320px, 60vh);
+        overflow-y: auto;
+        overscroll-behavior: contain;
         border: 1px solid rgba(255,255,255,0.1);
         border-radius: 16px;
         background: rgba(12,12,17,0.96);
@@ -161,7 +172,7 @@ export class LanguageSwitcher extends KayfElement {
       .option[aria-selected='true'] { color: #f4f4f7; background: color-mix(in srgb, ${accent} 11%, transparent); }
       .option-copy strong, .option-copy span { display: block; }
       .option-copy strong { font-size: 12px; font-weight: 620; }
-      .option-copy span { margin-top: 3px; color: rgba(228,228,231,0.34); font-size: 10px; }
+      .option-copy span { margin-top: 3px; color: rgba(228,228,231,0.66); font-size: 10px; }
       .check { width: 16px; color: ${accent}; opacity: 0; transform: scale(0.6); transition: opacity 160ms ease, transform 180ms ease; }
       .option[aria-selected='true'] .check { opacity: 1; transform: scale(1); }
 
@@ -179,12 +190,12 @@ export class LanguageSwitcher extends KayfElement {
     return `
       <div class="switcher">
         <span class="label">${escapeHTML(this.attr('label', 'Language'))}</span>
-        <button class="trigger" part="trigger" type="button" aria-haspopup="listbox" aria-expanded="false" ${disabled ? 'disabled' : ''}>
+        <button class="trigger" part="trigger" type="button" aria-label="${escapeHTML(this.attr('label', 'Language'))}: ${escapeHTML(current.nativeLabel ?? current.label)}" aria-controls="language-menu" aria-haspopup="listbox" aria-expanded="false" ${disabled ? 'disabled' : ''}>
           <span class="flag" aria-hidden="true">${escapeHTML(current.flag ?? current.code.toUpperCase())}</span>
           <span class="current"><strong>${escapeHTML(current.nativeLabel ?? current.label)}</strong><span>${escapeHTML(current.code)}</span></span>
           <span class="chevron-box" aria-hidden="true"><svg viewBox="0 0 14 14" fill="none"><path d="m3.5 5.25 3.5 3.5 3.5-3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
         </button>
-        <div class="menu" part="menu" role="listbox" aria-label="${escapeHTML(this.attr('label', 'Language'))}" aria-hidden="true" inert>
+        <div class="menu" id="language-menu" part="menu" role="listbox" aria-label="${escapeHTML(this.attr('label', 'Language'))}" aria-hidden="true" inert>
           ${this.options.map(option => `
             <button class="option" part="option" type="button" role="option" data-code="${escapeHTML(option.code)}" aria-selected="${option.code === current.code}" tabindex="-1">
               <span class="flag" aria-hidden="true">${escapeHTML(option.flag ?? option.code.toUpperCase())}</span>
@@ -205,9 +216,9 @@ export class LanguageSwitcher extends KayfElement {
 
     this.onTriggerClick = () => this.toggleMenu()
     this.onTriggerKeydown = (event: KeyboardEvent) => {
-      if (event.key === 'ArrowDown' || event.key === 'Enter' || event.key === ' ') {
+      if (event.key === 'ArrowDown' || event.key === 'ArrowUp' || event.key === 'Enter' || event.key === ' ') {
         event.preventDefault()
-        this.openMenu(event.key === 'ArrowDown' ? 0 : this.selectedIndex)
+        this.openMenu(event.key === 'ArrowUp' ? this.options.length - 1 : this.selectedIndex)
       }
     }
     this.onMenuClick = (event: Event) => {
@@ -219,6 +230,9 @@ export class LanguageSwitcher extends KayfElement {
       const index = buttons.indexOf(this.root.activeElement as HTMLButtonElement)
       if (event.key === 'Escape') {
         event.preventDefault()
+        this.closeMenu(true)
+      } else if (event.key === 'Tab') {
+        // Resume the browser's normal tab order from the trigger.
         this.closeMenu(true)
       } else if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
         event.preventDefault()
@@ -232,12 +246,16 @@ export class LanguageSwitcher extends KayfElement {
     this.onDocumentPointerDown = (event: PointerEvent) => {
       if (!event.composedPath().includes(this)) this.closeMenu()
     }
+    this.onFocusOut = () => queueMicrotask(() => {
+      if (!this.root.activeElement) this.closeMenu()
+    })
 
     this.trigger?.addEventListener('click', this.onTriggerClick)
     this.trigger?.addEventListener('keydown', this.onTriggerKeydown)
     this.menu?.addEventListener('click', this.onMenuClick)
     this.menu?.addEventListener('keydown', this.onMenuKeydown)
     document.addEventListener('pointerdown', this.onDocumentPointerDown)
+    this.root.addEventListener('focusout', this.onFocusOut)
   }
 
   protected cleanup(): void {
@@ -246,6 +264,8 @@ export class LanguageSwitcher extends KayfElement {
     this.menu?.removeEventListener('click', this.onMenuClick as EventListener)
     this.menu?.removeEventListener('keydown', this.onMenuKeydown as EventListener)
     document.removeEventListener('pointerdown', this.onDocumentPointerDown as EventListener)
+    this.root.removeEventListener('focusout', this.onFocusOut as EventListener)
+    cancelAnimationFrame(this.focusFrame)
   }
 
   private get selectedIndex(): number {
@@ -268,12 +288,14 @@ export class LanguageSwitcher extends KayfElement {
     this.trigger?.setAttribute('aria-expanded', 'true')
     this.menu?.removeAttribute('inert')
     this.menu?.setAttribute('aria-hidden', 'false')
-    this.optionButtons.forEach(button => button.tabIndex = 0)
-    requestAnimationFrame(() => this.optionButtons[index]?.focus())
+    this.focusFrame = requestAnimationFrame(() => {
+      if (this.isConnected && this.hasAttribute('open')) this.optionButtons[index]?.focus()
+    })
   }
 
   private closeMenu(restoreFocus = false): void {
     if (!this.hasAttribute('open')) return
+    cancelAnimationFrame(this.focusFrame)
     this.removeAttribute('open')
     this.trigger?.setAttribute('aria-expanded', 'false')
     this.menu?.setAttribute('inert', '')

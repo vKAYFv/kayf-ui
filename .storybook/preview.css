@@ -16,7 +16,8 @@ body {
 
 .sb-show-main.sb-main-centered #storybook-root {
   width: min(100%, 1120px);
-  padding: clamp(24px, 5vw, 72px);
+  box-sizing: border-box;
+  padding: clamp(16px, 4vw, 56px);
 }
 
 .sb-show-main.sb-main-fullscreen #storybook-root {

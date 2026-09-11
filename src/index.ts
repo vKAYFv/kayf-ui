@@ -37,4 +37,16 @@ export type { LanguageOption } from './components/LanguageSwitcher/LanguageSwitc
 export { AuthForm } from './components/AuthForm/AuthForm'
 export type { AuthMode, AuthSubmitDetail } from './components/AuthForm/AuthForm'
 
-export const version = '0.7.0'
+export const version = '0.8.0'
+
+// Workflow components
+export { VerificationCode } from './components/VerificationCode/VerificationCode'
+export type { VerificationCodeDetail } from './components/VerificationCode/VerificationCode'
+export { FileDropzone } from './components/FileDropzone/FileDropzone'
+export type { FileDropzoneDetail, FileRejection, FileRejectionReason } from './components/FileDropzone/FileDropzone'
+export { Stepper } from './components/Stepper/Stepper'
+export type { StepItem, StepChangeDetail } from './components/Stepper/Stepper'
+export { SegmentedControl } from './components/SegmentedControl/SegmentedControl'
+export type { SegmentOption, SegmentChangeDetail } from './components/SegmentedControl/SegmentedControl'
+export { ToastStack } from './components/ToastStack/ToastStack'
+export type { ToastOptions, ToastTone, ToastDismissDetail, ToastDismissReason } from './components/ToastStack/ToastStack'

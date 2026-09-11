@@ -27,6 +27,15 @@ export class PrismButton extends ActionButtonElement {
   protected styles(): string {
     const color = getColor(this.color)
     const size = actionButtonSizes[this.size]
+    const edgeGradient = `conic-gradient(
+          from 210deg at var(--prism-x) var(--prism-y),
+          rgba(255,255,255,0.16),
+          color-mix(in srgb, ${color} 74%, white) 18%,
+          rgba(98,218,247,0.5) 31%,
+          rgba(255,115,180,0.38) 48%,
+          rgba(255,255,255,0.08) 70%,
+          color-mix(in srgb, ${color} 48%, transparent)
+        )`
     const variantStyles: Record<PrismVariant, string> = {
       solid: `
         color: #f9f9fb;
@@ -67,19 +76,32 @@ export class PrismButton extends ActionButtonElement {
         cursor: pointer;
         isolation: isolate;
         outline: none;
-        background: conic-gradient(
-          from 210deg at var(--prism-x) var(--prism-y),
-          rgba(255,255,255,0.16),
-          color-mix(in srgb, ${color} 74%, white) 18%,
-          rgba(98,218,247,0.5) 31%,
-          rgba(255,115,180,0.38) 48%,
-          rgba(255,255,255,0.08) 70%,
-          color-mix(in srgb, ${color} 48%, transparent)
-        );
+        background: ${edgeGradient};
         box-shadow: 0 16px 34px rgba(0,0,0,0.26);
         transition: transform 180ms cubic-bezier(.2,.8,.2,1), box-shadow 220ms ease, filter 220ms ease;
         user-select: none;
       }
+
+      ${this.variant === 'outline' ? `
+        .button { background: transparent; }
+        .button::before {
+          content: '';
+          position: absolute;
+          inset: 0;
+          padding: 1px;
+          border-radius: inherit;
+          background: ${edgeGradient};
+          -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+          -webkit-mask-composite: xor;
+          mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+          mask-composite: exclude;
+          pointer-events: none;
+        }
+        @media (forced-colors: active) {
+          .button { outline: 1px solid ButtonText; outline-offset: -1px; }
+          .button::before { display: none; }
+        }
+      ` : ''}
 
       .surface {
         position: relative;

@@ -127,3 +127,17 @@ export const ProductCTA: Story = {
     </section>
   `,
 }
+
+export const Outline: Story = {
+  ...Default,
+  args: { ...Default.args, variant: 'outline' },
+  parameters: { docs: { description: { story: 'The refraction gradient is masked to a 1px contour. The translucent center remains clear, keeping text legible on dark and textured product surfaces.' } } },
+}
+
+export const OutlineMatrix: Story = {
+  render: () => html`${stageStyles}<section class="button-stage" style="width:100%;max-width:1000px"><div style="display:grid;width:100%;gap:24px">${['violet','cyan','emerald','amber','red','white'].map(color=>html`<div style="display:flex;flex-wrap:wrap;gap:12px;align-items:center"><span style="width:60px;color:#b9b9c8;font:11px system-ui">${color}</span><kayf-prism-button variant="outline" color=${color} size="sm">Small</kayf-prism-button><kayf-prism-button variant="outline" color=${color}>Default</kayf-prism-button><kayf-prism-button variant="outline" color=${color} size="lg">Large</kayf-prism-button><kayf-prism-button variant="outline" color=${color} loading>Saving</kayf-prism-button><kayf-prism-button variant="outline" color=${color} disabled>Disabled</kayf-prism-button></div>`)}</div></section>`,
+}
+
+export const OutlineSurfaces: Story = {
+  render: () => html`${stageStyles}<section class="button-stage" style="width:100%;max-width:900px"><div style="display:grid;width:100%;gap:20px">${['#07070a','#20202b','repeating-linear-gradient(135deg,#12121b 0 12px,#242434 12px 24px)'].map(background=>html`<div style=${`padding:24px;border-radius:18px;background:${background}`}><kayf-prism-button variant="outline" color="cyan" full-width><svg slot="icon-left" class="story-icon" viewBox="0 0 18 18" fill="none" aria-hidden="true"><path d="m4 9 3 3 7-7" stroke="currentColor" stroke-width="1.5"/></svg>Review changes</kayf-prism-button></div>`)}</div></section>`,
+}

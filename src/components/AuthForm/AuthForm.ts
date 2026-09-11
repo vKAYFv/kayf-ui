@@ -19,6 +19,28 @@ export class AuthForm extends KayfElement {
   private onInput?: (event: Event) => void
   private onClick?: (event: Event) => void
   private onPointerMove?: (event: PointerEvent) => void
+  private renderedMode?: AuthMode
+
+  protected override update(): void {
+    if (!this.isConnected) return
+    // Keep user input across server state and appearance changes, never in attributes.
+    const sameMode = this.renderedMode === this.mode
+    const fields = Array.from(this.root.querySelectorAll<HTMLInputElement>('input'))
+      .filter(input => sameMode || input.name === 'email')
+      .map(input => ({ name: input.name, value: input.value, checked: input.checked }))
+    const active = this.root.activeElement as HTMLInputElement | null
+    const focusedName = active?.name
+    super.update()
+    for (const field of fields) {
+      const input = this.form?.elements.namedItem(field.name) as HTMLInputElement | null
+      if (input) { input.value = field.value; input.checked = field.checked }
+    }
+    const password = this.form?.elements.namedItem('password') as HTMLInputElement | null
+    if (this.mode === 'signup') this.updateStrength(password?.value ?? '')
+    if (focusedName && sameMode && !this.boolAttr('loading')) {
+      (this.form?.elements.namedItem(focusedName) as HTMLElement | null)?.focus()
+    }
+  }
 
   static override get observedAttributes() {
     return ['mode', 'color', 'loading', 'error', 'heading', 'description', 'action-label', 'forgot-href', 'terms-href', 'hide-switch']
@@ -71,7 +93,7 @@ export class AuthForm extends KayfElement {
       .brand-name { color: rgba(244,244,247,0.68); font-size: 12px; font-weight: 680; letter-spacing: -0.01em; }
       .eyebrow { margin: 0 0 9px; color: color-mix(in srgb, ${accent} 70%, white); font: 650 9px/1 var(--kayf-font-mono); letter-spacing: 0.13em; text-transform: uppercase; }
       h2 { margin: 0; font-size: clamp(27px, 8vw, 34px); font-weight: 680; line-height: 1; letter-spacing: -0.045em; }
-      .description { margin: 12px 0 27px; color: rgba(228,228,231,0.46); font-size: 12px; line-height: 1.55; }
+      .description { margin: 12px 0 27px; color: rgba(228,228,231,0.66); font-size: 12px; line-height: 1.55; }
 
       .server-error { display: flex; margin: -8px 0 18px; padding: 11px 12px; align-items: flex-start; gap: 9px; border: 1px solid rgba(255,115,131,0.2); border-radius: 12px; color: #ff9aa6; background: rgba(255,115,131,0.065); font-size: 11px; line-height: 1.45; }
       .server-error::before { content: '!'; display: grid; width: 17px; height: 17px; flex: none; place-items: center; border: 1px solid rgba(255,115,131,0.32); border-radius: 50%; font: 700 9px/1 var(--kayf-font-mono); }
@@ -114,8 +136,8 @@ export class AuthForm extends KayfElement {
       .field-group.is-invalid .field-shell { border-color: rgba(255,115,131,0.62); box-shadow: 0 0 0 3px rgba(255,115,131,0.09); }
 
       .form-row { display: flex; margin-top: -2px; align-items: center; justify-content: space-between; gap: 16px; }
-      .remember { display: inline-flex; align-items: center; gap: 8px; color: rgba(228,228,231,0.48); cursor: pointer; font-size: 11px; }
-      .remember input { position: absolute; opacity: 0; }
+      .remember { position: relative; display: inline-flex; align-items: center; gap: 8px; color: rgba(228,228,231,0.68); cursor: pointer; font-size: 11px; }
+      .remember input { position: absolute; z-index: 1; left: 0; top: 0; width: 17px; height: 17px; margin: 0; opacity: 0; cursor: pointer; }
       .check-box { display: grid; width: 17px; height: 17px; place-items: center; border: 1px solid rgba(255,255,255,0.13); border-radius: 5px; background: rgba(255,255,255,0.025); transition: border-color 160ms ease, background 160ms ease, box-shadow 160ms ease; }
       .check-box svg { width: 11px; color: #09090b; opacity: 0; transform: scale(0.55); transition: opacity 160ms ease, transform 180ms ease; }
       .remember input:checked + .check-box { border-color: ${accent}; background: ${accent}; box-shadow: 0 0 16px color-mix(in srgb, ${accent} 18%, transparent); }
@@ -160,7 +182,7 @@ export class AuthForm extends KayfElement {
       .spinner { display: none; width: 15px; height: 15px; border: 2px solid rgba(9,9,12,0.25); border-top-color: #09090c; border-radius: 50%; animation: auth-spin 720ms linear infinite; }
       :host([loading]) .spinner { display: block; }
 
-      .switch-copy { margin: 7px 0 0; color: rgba(228,228,231,0.38); font-size: 11px; text-align: center; }
+      .switch-copy { margin: 7px 0 0; color: rgba(228,228,231,0.64); font-size: 11px; text-align: center; }
       .mode-switch { padding: 5px; border: 0; color: color-mix(in srgb, ${accent} 70%, white); background: transparent; cursor: pointer; font: 650 11px/1 var(--kayf-font-sans); }
       .mode-switch:hover { text-decoration: underline; text-underline-offset: 3px; }
       .mode-switch:focus-visible { outline: 2px solid ${accent}; outline-offset: 2px; border-radius: 6px; }
@@ -179,16 +201,16 @@ export class AuthForm extends KayfElement {
     const description = this.attr('description', signup ? 'Start building expressive interfaces in a few seconds.' : 'Enter your details to continue to your workspace.')
     const actionLabel = this.attr('action-label', signup ? 'Create account' : 'Sign in')
     const field = (name: string, label: string, type: string, autocomplete: string, icon: string, placeholder: string) => `
-      <label class="field-group" data-field="${name}">
-        <span class="field-label">${label}</span>
+      <div class="field-group" data-field="${name}">
+        <label class="field-label" for="auth-${name}">${label}</label>
         <span class="field-shell">
           ${icon}
-          <input class="field-input" type="${type}" name="${name}" autocomplete="${autocomplete}" placeholder="${placeholder}" required ${loading ? 'disabled' : ''}/>
+          <input class="field-input" id="auth-${name}" part="input" type="${type}" name="${name}" autocomplete="${autocomplete}" placeholder="${placeholder}" aria-describedby="${name}-validation" required ${loading ? 'disabled' : ''}/>
           ${type === 'password' ? `<button class="reveal" type="button" data-reveal="${name}" aria-label="Show ${label.toLowerCase()}" aria-pressed="false" ${loading ? 'disabled' : ''}>${this.eyeIcon}</button>` : ''}
         </span>
-        ${name === 'password' && signup ? '<span class="strength" data-score="0" aria-label="Password strength"><span></span><span></span><span></span><span></span></span>' : ''}
-        <span class="validation" aria-live="polite"></span>
-      </label>
+        ${name === 'password' && signup ? '<span class="strength" data-score="0" role="meter" aria-valuemin="0" aria-valuemax="4" aria-valuenow="0" aria-label="Password strength"><span></span><span></span><span></span><span></span></span>' : ''}
+        <span class="validation" id="${name}-validation" aria-live="polite"></span>
+      </div>
     `
 
     return `
@@ -198,18 +220,18 @@ export class AuthForm extends KayfElement {
         <h2>${escapeHTML(heading)}</h2>
         <p class="description">${escapeHTML(description)}</p>
         ${error ? `<div class="server-error" role="alert">${escapeHTML(error)}</div>` : ''}
-        <form novalidate>
+        <form novalidate aria-busy="${loading}">
           ${signup ? field('name', 'Full name', 'text', 'name', this.userIcon, 'Alex Morgan') : ''}
           ${field('email', 'Email address', 'email', 'email', this.mailIcon, 'you@company.com')}
           ${field('password', 'Password', 'password', signup ? 'new-password' : 'current-password', this.lockIcon, signup ? 'At least 8 characters' : 'Enter your password')}
           ${signup ? field('confirm', 'Confirm password', 'password', 'new-password', this.lockIcon, 'Repeat your password') : ''}
           ${signup ? `
             <label class="remember terms">
-              <input type="checkbox" name="terms" required ${loading ? 'disabled' : ''}/>
+              <input type="checkbox" name="terms" aria-describedby="terms-validation" required ${loading ? 'disabled' : ''}/>
               <span class="check-box">${this.checkIcon}</span>
               <span>I agree to the <a href="${escapeHTML(this.attr('terms-href', '#'))}">Terms and Privacy Policy</a>.</span>
             </label>
-            <span class="terms-validation" aria-live="polite">Accept the terms to create your account.</span>
+            <span class="terms-validation" id="terms-validation" aria-live="polite">Accept the terms to create your account.</span>
           ` : `
             <div class="form-row">
               <label class="remember"><input type="checkbox" name="remember" ${loading ? 'disabled' : ''}/><span class="check-box">${this.checkIcon}</span><span>Remember me</span></label>
@@ -225,6 +247,7 @@ export class AuthForm extends KayfElement {
 
   protected setup(): void {
     this.cleanup()
+    this.renderedMode = this.mode
     this.form = this.root.querySelector('form') as HTMLFormElement | null ?? undefined
 
     this.onSubmit = (event: SubmitEvent) => {
@@ -235,16 +258,17 @@ export class AuthForm extends KayfElement {
       const data = new FormData(this.form)
       const detail: AuthSubmitDetail = {
         mode: this.mode,
-        email: String(data.get('email') ?? ''),
+        email: String(data.get('email') ?? '').trim(),
         password: String(data.get('password') ?? ''),
         remember: data.get('remember') === 'on',
       }
-      if (this.mode === 'signup') detail.name = String(data.get('name') ?? '')
+      if (this.mode === 'signup') detail.name = String(data.get('name') ?? '').trim()
       this.dispatchEvent(new CustomEvent<AuthSubmitDetail>('kayf-submit', { bubbles: true, composed: true, detail }))
     }
 
     this.onInput = (event: Event) => {
       const input = event.target as HTMLInputElement
+      input.removeAttribute('aria-invalid')
       const group = input.closest<HTMLElement>('.field-group')
       group?.classList.remove('is-invalid')
       const validation = group?.querySelector('.validation')
@@ -269,6 +293,7 @@ export class AuthForm extends KayfElement {
       if (target.closest('.mode-switch')) {
         const next: AuthMode = this.mode === 'signin' ? 'signup' : 'signin'
         this.setAttribute('mode', next)
+        this.focus()
         this.dispatchEvent(new CustomEvent('kayf-mode-change', { bubbles: true, composed: true, detail: { mode: next } }))
       }
     }
@@ -295,9 +320,13 @@ export class AuthForm extends KayfElement {
 
   private validate(): boolean {
     if (!this.form) return false
+    this.form.querySelectorAll('.is-invalid').forEach(group => group.classList.remove('is-invalid'))
+    this.form.querySelectorAll('[aria-invalid]').forEach(input => input.removeAttribute('aria-invalid'))
+    this.form.querySelectorAll('.validation').forEach(output => output.textContent = '')
     let firstInvalid: HTMLInputElement | undefined
     const setInvalid = (name: string, message: string): void => {
       const input = this.form?.elements.namedItem(name) as HTMLInputElement | null
+      input?.setAttribute('aria-invalid', 'true')
       const group = input?.closest<HTMLElement>('.field-group')
       group?.classList.add('is-invalid')
       const output = group?.querySelector('.validation')
@@ -312,10 +341,12 @@ export class AuthForm extends KayfElement {
     const confirm = String(data.get('confirm') ?? '')
     if (this.mode === 'signup' && name.length < 2) setInvalid('name', 'Enter at least 2 characters.')
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) setInvalid('email', 'Enter a valid email address.')
-    if (password.length < 8) setInvalid('password', 'Password must contain at least 8 characters.')
+    if (this.mode === 'signup' && password.length < 8) setInvalid('password', 'Password must contain at least 8 characters.')
+    if (this.mode === 'signin' && !password) setInvalid('password', 'Enter your password.')
     if (this.mode === 'signup' && confirm !== password) setInvalid('confirm', 'Passwords do not match.')
     if (this.mode === 'signup' && data.get('terms') !== 'on') {
       const terms = this.form.querySelector<HTMLInputElement>('input[name="terms"]')
+      terms?.setAttribute('aria-invalid', 'true')
       terms?.closest('.terms')?.classList.add('is-invalid')
       if (!firstInvalid && terms) firstInvalid = terms
     }
@@ -329,7 +360,10 @@ export class AuthForm extends KayfElement {
     if (/[A-Z]/.test(password) && /[a-z]/.test(password)) score++
     if (/\d/.test(password)) score++
     if (/[^\w\s]/.test(password)) score++
-    this.root.querySelector('.strength')?.setAttribute('data-score', String(score))
+    const strength = this.root.querySelector('.strength')
+    strength?.setAttribute('data-score', String(score))
+    strength?.setAttribute('aria-valuenow', String(score))
+    strength?.setAttribute('aria-label', `Password strength: ${['Empty or very weak', 'Weak', 'Fair', 'Good', 'Strong'][score]}`)
   }
 
   private get mailIcon(): string { return '<svg class="field-icon" viewBox="0 0 20 20" fill="none" aria-hidden="true"><rect x="2.5" y="4" width="15" height="12" rx="3" stroke="currentColor" stroke-width="1.4"/><path d="m4 6 6 4.5L16 6" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>' }

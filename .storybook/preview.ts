@@ -28,7 +28,7 @@ export default definePreview({
     },
     options: {
       storySort: {
-        order: ['Welcome', 'Components'],
+        order: ['Welcome', 'Components', ['SegmentedControl', 'ToastStack', 'VerificationCode', 'FileDropzone', 'Stepper', 'PhoneInput', 'LanguageSwitcher', 'AuthForm', '*']],
       },
     },
   },
