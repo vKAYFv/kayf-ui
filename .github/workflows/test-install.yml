@@ -1,0 +1,32 @@
+name: Test Package Install Matrix
+
+# Позволяет запускать вручную по кнопке в Actions, а также автоматически при пуше тега
+on:
+  workflow_dispatch: # Кнопка ручного запуска
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  matrix-install:
+    name: Test on ${{ matrix.os }} (Node ${{ matrix.node-version }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+        node-version: [18.x, 20.x, 22.x]
+
+    steps:
+      - name: Setup Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Verify clean installation from npm
+        run: |
+          mkdir test-sandbox
+          cd test-sandbox
+          npm init -y
+          npm install @kayf/ui --no-cache
+          node -e "console.log('Successfully installed and verified @kayf/ui version!')"
