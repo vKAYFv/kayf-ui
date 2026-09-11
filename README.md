@@ -4,7 +4,7 @@
 
 [![npm version](https://img.shields.io/npm/v/%40kayf%2Fui?color=62daf7&labelColor=07070a&label=version)](https://www.npmjs.com/package/@kayf/ui)
 [![npm downloads](https://img.shields.io/npm/dm/%40kayf%2Fui?color=8b7cff&labelColor=07070a)](https://www.npmjs.com/package/@kayf/ui)
-[![Bundle Size](https://img.shields.io/bundlephobia/minzip/@kayf/ui?color=51dfa4&labelColor=07070a)](https://bundlephobia.com/package/@kayf/ui)
+[![Bundle Size](https://badgen.net/bundlephobia/minzip/@kayf/ui?color=51dfa4&labelColor=07070a&label=bundlephobia)](https://bundlephobia.com/package/@kayf/ui)
 [![License](https://img.shields.io/npm/l/%40kayf%2Fui?color=f8c868&labelColor=07070a)](LICENSE)
 [![Storybook](https://img.shields.io/badge/Storybook-live-ff4785?labelColor=07070a)](https://main--69a564b0b16ce689ef423df8.chromatic.com/)
 
